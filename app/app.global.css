@@ -23,6 +23,10 @@ h2 {
   color: #fff;
 }
 
+p {
+  margin: 0;
+}
+
 .jigsaw-light {
   font-family: "Jigsaw Light";
   font-style: normal;

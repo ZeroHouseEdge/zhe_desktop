@@ -4,7 +4,7 @@ import Home from '../components/Home';
 
 export default class HomePage extends Component {
   componentWillMount() {
-    if (!process.env.walletSeed) {
+    if (!process.env.zheWalletSeed) {
       this.context.router.push('/signup')
     }
   }
