@@ -3,37 +3,46 @@ import { browserHistory } from 'react-router'
 import { Link } from 'react-router';
 import Logo from './Logo';
 import styles from './Signup.css';
+import Default from './Signup/Default';
+import Create from './Signup/Create';
+import Load from './Signup/Load';
 
 export default class Signup extends Component {
    constructor(props, context) {
       super(props, context);
-      this.goToCreateWallet = this.goToCreateWallet.bind(this);
-      this.goToLoadWallet = this.goToLoadWallet.bind(this);
+      this.createWallet = this.createWallet.bind(this);
+      this.loadWallet = this.loadWallet.bind(this);
+      this.backToDefault = this.backToDefault.bind(this);
+
+      this.state = { show: false };
    }
 
-   goToCreateWallet() {
-      alert("create wallet");
+   backToDefault() {
+      this.setState({ show: false });
    }
 
-   goToLoadWallet() {
-      alert("load wallet");
+   createWallet() {
+      this.setState({ show: "create" });
+   }
+
+   loadWallet() {
+      this.setState({ show: "load" });
    }
 
    render() {
       return (
          <div className={styles.container}>
             <Logo />
-            <div className={styles.buttonContainer}>
-               <div className={styles.buttonAction} onClick={this.goToCreateWallet}>Create new wallet</div>
-               <div onClick={this.goToLoadWallet}>Load existing wallet</div>
+            <div>
+               {(() => {
+                  switch (this.state.show) {
+                     case "create": return <Create back={this.backToDefault} />;
+                     case "load": return <Load back={this.backToDefault} />;
+                     default: return <Default create={this.createWallet} load={this.loadWallet} />;
+                  }
+               })()}
             </div>
          </div>
       );
    }
 }
-
-Signup.contextTypes = {
-  router: function () {
-    return React.PropTypes.func.isRequired;
-  }
-};

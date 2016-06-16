@@ -10,6 +10,8 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} />
     <Route path="/signup" component={SignupContainer} />
+    <Route path="/signup/create" component={SignupContainer} />
+    <Route path="/signup/load" component={SignupContainer} />
     <Route path="/counter" component={CounterPage} />
   </Route>
 );
