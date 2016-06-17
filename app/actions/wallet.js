@@ -1,5 +1,6 @@
 import ZHEWallet from 'zhe-wallet';
 import WalletHelper from '../helpers/wallet/main';
+import fs from 'fs';
 
 export const CREATE_MNEMONIC = 'CREATE_MNEMONIC';
 export const MNEMONIC_CREATED = 'MNEMONIC_CREATED';
@@ -56,8 +57,14 @@ export function saveWallet(mnemonic) {
     dispatch(registerWallet());
     console.log("mnemonic: ", mnemonic);
     process.env.zheWalletSeed = mnemonic;
-    dispatch(walletRegistered());
+    fs.writeFile("./wallet.txt", mnemonic, function(err) {
+      if(err) {
+        return console.log(err);
+      }
 
-    return true;
+      dispatch(walletRegistered());
+      return true;
+    });
+
   }
 }

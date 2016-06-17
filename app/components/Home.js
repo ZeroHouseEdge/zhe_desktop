@@ -10,7 +10,6 @@ export default class Home extends Component {
         <div className={styles.container}>
           <h2>Zero House Edge</h2>
           <Link to="/counter">to Counter</Link>
-          <Link to="/signup">Signup</Link>
         </div>
       </div>
     );
