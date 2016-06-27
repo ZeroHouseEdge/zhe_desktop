@@ -101,10 +101,13 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "bitcoinjs-lib": "^2.2.0",
+    "blockchain.info": "^2.4.2",
     "css-modules-require-hook": "^4.0.0",
     "electron-debug": "^1.0.0",
     "font-awesome": "^4.6.3",
     "postcss": "^5.0.21",
+    "python-shell": "^0.4.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",

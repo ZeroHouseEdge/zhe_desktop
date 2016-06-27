@@ -1,40 +1,34 @@
-import { CREATE_MNEMONIC, MNEMONIC_CREATED, REGISTER_WALLET, WALLET_REGISTERED } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
-   isAuthenticated: false,
-   mnemonic: ''
+   balance: null,
+   address: null
 };
 
-export default function counter(state = initialState, action) {
+export default function wallet(state = initialState, action) {
   switch (action.type) {
-    case CREATE_MNEMONIC:
-      return Object.assign({}, state, {
-         isLoading: true,
-         isAuthenticated: false,
-         mnemonic: null
-      })
-
-    case MNEMONIC_CREATED:
-      return Object.assign({}, state, {
-        isLoading: false,
-        isAuthenticated: false,
-        mnemonic: action.mnemonic
-      })
-
     case REGISTER_WALLET:
       return Object.assign({}, state, {
         isLoading: true,
-        isAuthenticated: false,
-        mnemonic: state.mnemonic
+        balance: state.balance,
+        address: state.address
       })
 
     case WALLET_REGISTERED:
       return Object.assign({}, state, {
         isLoading: false,
-        isAuthenticated: true,
-        mnemonic: state.mnemonic
+        balance: action.balance,
+        address: action.address
       })
+
+    case WALLET_FAILED:
+      return Object.assign({}, state, {
+        isLoading: false,
+        balance: null,
+        address: ''
+      })
+
     default:
       return state;
   }

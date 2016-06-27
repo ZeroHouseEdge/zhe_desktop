@@ -1,24 +1,14 @@
 import ZHEWallet from 'zhe-wallet';
+import bitcoin from 'bitcoinjs-lib';
+import fetch from 'isomorphic-fetch';
 import WalletHelper from '../helpers/wallet/main';
-import fs from 'fs';
+import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
 
-export const CREATE_MNEMONIC = 'CREATE_MNEMONIC';
-export const MNEMONIC_CREATED = 'MNEMONIC_CREATED';
+
+
 export const REGISTER_WALLET = 'REGISTER_WALLET';
 export const WALLET_REGISTERED = 'WALLET_REGISTERED';
-
-export function create_mnemonic() {
-  return {
-    type: CREATE_MNEMONIC
-  };
-}
-
-export function mnemonic_created(mnemonic) {
-  return {
-    type: MNEMONIC_CREATED,
-    mnemonic: mnemonic
-  };
-}
+export const WALLET_FAILED = 'WALLET_FAILED';
 
 export function registerWallet() {
   return {
@@ -26,45 +16,18 @@ export function registerWallet() {
   };
 }
 
-export function walletRegistered() {
+export function walletRegistered(balance, address) {
   return {
-    type: WALLET_REGISTERED
+    type: WALLET_REGISTERED,
+    balance: balance,
+    address: address
   };
 }
 
-export function createWallet() {
-   return (dispatch) => {
-      dispatch(create_mnemonic());
-
-      WalletHelper.createWallet(null, 'bitcoin', (err, data) => {
-         dispatch(mnemonic_created(data.mnemonic));
-         let res = {};
-         if (err) {
-            res.err = err
-            res.data = null;
-         }
-
-         res.err = null;
-         res.data = data;
-
-         return res;
-      });
-   }
+export function walletFailed() {
+  return {
+    type: WALLET_FAILED,
+  };
 }
 
-export function saveWallet(mnemonic) {
-  return (dispatch) => {
-    dispatch(registerWallet());
-    console.log("mnemonic: ", mnemonic);
-    process.env.zheWalletSeed = mnemonic;
-    fs.writeFile("./wallet.txt", mnemonic, function(err) {
-      if(err) {
-        return console.log(err);
-      }
 
-      dispatch(walletRegistered());
-      return true;
-    });
-
-  }
-}

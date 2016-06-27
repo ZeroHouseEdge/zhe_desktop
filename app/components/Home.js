@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Logo from './Logo';
 import styles from './Home.css';
 
-
 export default class Home extends Component {
-  render() {
-    return (
-      <div>
-        <div className={styles.container}>
-          <h2>Zero House Edge</h2>
-          <Link to="/counter">to Counter</Link>
-        </div>
-      </div>
-    );
-  }
+   render() {
+      return (
+         <div>
+            <div className={styles.container}>
+               <Link to="/wallet">Wallet</Link>
+            </div>
+         </div>
+      );
+   }
 }

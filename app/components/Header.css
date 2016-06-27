@@ -1,0 +1,29 @@
+.container {
+   padding: 10px;
+   margin: 0;
+   font-size: 32px;
+   background: #2E2B44;
+}
+
+.container li {
+   display: inline-block;
+   width: 33%;
+   font-family: 'Jigsaw Light';
+   vertical-align: middle;
+}
+
+.logo {
+   text-align: center;
+}
+
+.balance {
+   text-align: right;
+   cursor: pointer;
+}
+
+.currency {
+   font-size: 14px;
+   padding-top: 5px;
+   margin-left: 3px;
+   vertical-align: top;
+}
