@@ -29,3 +29,41 @@
    justify-content: center;
    position: relative;
 }
+
+/* Modal */
+.modal {
+  width: 400px;
+  margin: 0 auto;
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+  background: #FFF;
+  outline: none;
+  color: #707070;
+  height: 396px;
+}
+
+.modalClose {
+  position: absolute;
+  top: -13px;
+  right: -13px;
+  display: block;
+  font-size: 16px;
+  line-height: 27px;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border-radius: 50%;
+  color: #747474;
+  cursor: pointer;
+  text-align: center;
+}
+
+.modalClose:hover {
+  background: #f0f0f0;
+}
+
+.closeIcon {
+  vertical-align: middle;
+  font-size: 1.2em;
+}
