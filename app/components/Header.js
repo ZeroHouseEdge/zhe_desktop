@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 import Logo from './Logo';
 import styles from './Header.css';
 
@@ -15,19 +16,23 @@ class Header extends Component {
             <ul className={styles.container}>
                <li></li>
                <li className={styles.logo}>
-                  <Logo />
+                  <Link to="/">
+                    <Logo />
+                  </Link>
                </li>
                <li className={styles.balance}>
-                  <span>
-                  {
-                    this.props.wallet.balance || 'Loading balance...'
-                  }
-                  </span>
-                  <span className={styles.currency}>
-                  {
-                    this.props.wallet.balance ? 'satoshis' : null
-                  }
-                  </span>
+                  <Link to="/wallet">
+                    <span>
+                    {
+                      this.props.wallet.balance || <FontAwesome name='refresh fa-spin' />
+                    }
+                    </span>
+                    <span className={styles.currency}>
+                    {
+                      this.props.wallet.balance ? this.props.wallet.currency : null
+                    }
+                    </span>
+                  </Link>
                </li>
             </ul>
          </div>

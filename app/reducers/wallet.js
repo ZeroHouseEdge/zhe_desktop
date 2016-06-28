@@ -3,7 +3,8 @@ import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED } from '../actions/wa
 const initialState = {
    isLoading: false,
    balance: null,
-   address: null
+   address: null,
+   currency: 'satoshis'
 };
 
 export default function wallet(state = initialState, action) {

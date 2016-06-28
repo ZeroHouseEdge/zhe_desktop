@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import bitcoin from 'bitcoinjs-lib';
+import FontAwesome from 'react-fontawesome';
+import QRCode from 'qrcode.react';
+import styles from './Wallet.css';
 
 class Wallet extends Component {
    constructor(props, context) {
@@ -10,11 +12,10 @@ class Wallet extends Component {
 
    render() {
       return (
-         <div>
-            <h1>Your wallet</h1>
+         <div className={styles.container}>
             <p>
             {
-              this.props.wallet.isLoading ? 'Loading...' : null
+              this.props.wallet.isLoading ? <FontAwesome name='refresh fa-spin' /> : null
             }
             </p>
             <p>
@@ -27,17 +28,16 @@ class Wallet extends Component {
               this.props.wallet.address ? this.props.wallet.address : null
             }
             </p>
+            <p>
+              <QRCode value={this.props.wallet.address} size={200} />
+            </p>
          </div>
       );
    }
 }
 
 Wallet.propTypes = {
-  wallet: PropTypes.shape({
-    isLoading: PropTypes.bool.isRequired,
-    balance: PropTypes.number.isRequired,
-    address: PropTypes.string.isRequired
-  }).isRequired
+
 };
 
 function mapStateToProps(store) {

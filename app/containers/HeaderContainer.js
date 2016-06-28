@@ -22,10 +22,6 @@ class HeaderContainer extends Component {
       <Header />
     );
   }
-
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  }
 }
 
 HeaderContainer.contextTypes = {
@@ -35,7 +31,7 @@ HeaderContainer.contextTypes = {
 };
 
 HeaderContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(store) {

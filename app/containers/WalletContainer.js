@@ -5,8 +5,8 @@ import * as WalletActions from '../actions/wallet';
 import Wallet from '../components/Wallet/Wallet';
 import WalletHelper from '../helpers/wallet/main';
 import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
+import Header from '../components/Header';
 import * as API from '../helpers/two1wallet/main';
-import bitcoin from 'bitcoinjs-lib';
 import PythonShell from 'python-shell';
 
 class WalletContainer extends Component {
@@ -24,9 +24,7 @@ class WalletContainer extends Component {
   render() {
     return (
       <div>
-        <Link to="/">
-          <i className="fa fa-arrow-left fa-3x" />
-        </Link>
+        <Header />
         <Wallet />
       </div>
     )
@@ -34,11 +32,6 @@ class WalletContainer extends Component {
 }
 
 WalletContainer.propTypes = {
-  wallet: PropTypes.shape({
-    isLoading: PropTypes.bool.isRequired,
-    balance: PropTypes.number.isRequired,
-    address: PropTypes.string.isRequired
-  }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
