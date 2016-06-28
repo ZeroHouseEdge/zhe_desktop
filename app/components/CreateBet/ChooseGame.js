@@ -10,29 +10,27 @@ class ChooseGame extends Component {
       super(props, context);
    }
 
+   gameClicked = (game) => {
+      this.props.saveValues({
+        game: {
+          homeTeamName: game.homeTeamName,
+          awayTeamName: game.awayTeamName,
+          date: game.date,
+          matchday: game.matchday
+        }
+      });
+
+      this.props.nextStep()
+   };
+
    render() {
       return (
          <div className={styles.container}>
-            <div className={styles.header}>
-              <h3>Choose a game</h3>
-            </div>
             {
               this.props.games.map((game, i) => {
-                return <Game game={game} key={i} />
+                return <Game game={game} key={i} gameClicked={this.gameClicked} />
               })
             }
-            <div className={styles.buttons}>
-              <div className='buttonContainer circleContainer'>
-                <div className='buttonSecondary circle' onClick={this.props.previousStep}>
-                  <FontAwesome name='arrow-left' />
-                </div>
-              </div>
-              <div className='buttonContainer circleContainer'>
-                <div className='buttonPrimary circle'  onClick={this.props.nextStep}>
-                  <FontAwesome name='arrow-right' />
-                </div>
-              </div>
-            </div>
          </div>
       );
    }

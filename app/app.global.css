@@ -153,3 +153,13 @@ a:hover {
   display: inline-block;
   border-radius: 50px;
 }
+
+/* Slider */
+.InputRange-track {
+  height: 0.8rem;
+}
+
+.InputRange-slider {
+  margin-top: -1rem;
+  border: 3px solid #3f51b5;
+}

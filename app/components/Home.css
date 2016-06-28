@@ -35,10 +35,11 @@
   width: 500px;
   margin: 0 auto;
   position: absolute;
-  top: calc(50% - 200px);
+  top: calc(50% - 250px);
   left: calc(50% - 250px);
   background: #464368;
   outline: none;
+  z-index: -2;
 }
 
 .modalClose {
@@ -50,15 +51,16 @@
   line-height: 27px;
   width: 32px;
   height: 32px;
-  background: #fff;
+  background: #2E2B44;
   border-radius: 50%;
-  color: #747474;
+  color: #FFF;
   cursor: pointer;
   text-align: center;
+  z-index: 2;
 }
 
 .modalClose:hover {
-  background: #f0f0f0;
+  background: #464368;
 }
 
 .closeIcon {
