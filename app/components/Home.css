@@ -32,15 +32,13 @@
 
 /* Modal */
 .modal {
-  width: 400px;
+  width: 500px;
   margin: 0 auto;
   position: absolute;
   top: calc(50% - 200px);
-  left: calc(50% - 200px);
-  background: #FFF;
+  left: calc(50% - 250px);
+  background: #464368;
   outline: none;
-  color: #707070;
-  height: 396px;
 }
 
 .modalClose {

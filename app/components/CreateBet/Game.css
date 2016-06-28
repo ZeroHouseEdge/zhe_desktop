@@ -1,0 +1,30 @@
+.container {
+   margin: 10px auto;
+   width: 80%;
+   display: table;
+   white-space: nowrap;
+}
+
+.teams {
+   width: 100%;
+   display: table-cell;
+   vertical-align: middle;
+   height: 100%;
+}
+
+.teams h5 {
+   display: inline-block;
+   margin: 0;
+}
+
+.time {
+   display: table-cell;
+   vertical-align: middle;
+   height: 100%;
+}
+
+.flag {
+   width: 50px;
+   vertical-align: middle;
+   margin: 5px;
+}

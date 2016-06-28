@@ -13,6 +13,10 @@ class CreateBetContainer extends Component {
     this.state = { step: 1, games: null, game: null, team: null, line: null, value: null };
   }
 
+  componentWillMount() {
+    this.props.dispatch(fetchGames());
+  }
+
   nextStep = () => {
     this.setState({
       step: this.state.step + 1
@@ -28,7 +32,7 @@ class CreateBetContainer extends Component {
   render() {
     switch (this.state.step) {
       case 1:
-        return <ChooseGame nextStep={this.nextStep} previousStep={this.previousStep} />
+        return <ChooseGame games={this.props.soccer.games} nextStep={this.nextStep} previousStep={this.previousStep} />
       case 2:
         return <ChooseTeam nextStep={this.nextStep} previousStep={this.previousStep} />
       case 3:
@@ -37,8 +41,6 @@ class CreateBetContainer extends Component {
   }
 }
 
-// CreateBetContainer.need = [() => { return fetchGames(); }];
-
 CreateBetContainer.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
@@ -46,12 +48,15 @@ CreateBetContainer.contextTypes = {
 };
 
 CreateBetContainer.propTypes = {
+  soccer: PropTypes.object.isRequired,
+  wallet: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(store) {
   return {
-    wallet: store.wallet
+    wallet: store.wallet,
+    soccer: store.soccer
   };
 }
 
