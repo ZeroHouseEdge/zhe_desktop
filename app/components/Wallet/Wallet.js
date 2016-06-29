@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import QRCode from 'qrcode.react';
+import Sign from '../Sign';
 import styles from './Wallet.css';
 
 class Wallet extends Component {
@@ -20,16 +21,23 @@ class Wallet extends Component {
             </p>
             <p>
             {
-              this.props.wallet.balance ? this.props.wallet.balance : null
+              this.props.wallet.balance ? this.props.wallet.balance : "Loading..."
             }
             </p>
             <p>
             {
-              this.props.wallet.address ? this.props.wallet.address : null
+              this.props.wallet.address ? this.props.wallet.address : "Loading..."
             }
             </p>
             <p>
-              <QRCode value={this.props.wallet.address} size={200} />
+              {
+                this.props.wallet.address ? <QRCode value={this.props.wallet.address} size={200} /> : "Loading..."
+              }
+            </p>
+            <p>
+            {
+              this.props.wallet.currency ? <Sign currency={this.props.wallet.currency} /> : "Loading..."
+            }
             </p>
          </div>
       );

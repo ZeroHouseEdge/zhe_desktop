@@ -5,7 +5,7 @@ import * as WalletActions from '../actions/wallet';
 import Wallet from '../components/Wallet/Wallet';
 import WalletHelper from '../helpers/wallet/main';
 import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
-import Header from '../components/Header';
+import HeaderContainer from './HeaderContainer';
 import * as API from '../helpers/two1wallet/main';
 import PythonShell from 'python-shell';
 
@@ -15,16 +15,13 @@ class WalletContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(WalletActions.registerWallet())
-    API.fetchTwo1(['balance', 'get_payout_address', 'transaction_history']).then((results) => {
-      this.props.dispatch(WalletActions.walletRegistered(results[0].balance, results[1].get_payout_address));
-    });
+
   }
 
   render() {
     return (
       <div>
-        <Header />
+        <HeaderContainer />
         <Wallet />
       </div>
     )

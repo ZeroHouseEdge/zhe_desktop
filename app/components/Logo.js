@@ -7,9 +7,7 @@ export default class Logo extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <Isvg src="../app/logo.svg">
-          yoyoyo
-        </Isvg>
+        <Isvg src="../app/logo.svg"></Isvg>
       </div>
     );
   }

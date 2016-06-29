@@ -10,20 +10,40 @@ class Header extends Component {
       super(props, context);
    }
 
+   currencyClicked = (currency) => {
+      if (this.props.wallet.currency === currency) { return; }
+      this.props.changeCurrency(currency);
+   };
+
+  isActive = (currency) => {
+    const active = {
+      color: '#D7A060',
+      fontWeight: 'bold',
+      fontSize: '1.3em'
+    }
+    return this.props.wallet.currency === currency ? active : null;
+  };
+
    render() {
       return (
          <div>
             <ul className={styles.container}>
                <li className={styles.currencies}>
-                 <span>
-                   <FontAwesome name='usd' />
-                 </span>
-                 <span>
-                   <FontAwesome name='btc' />
-                 </span>
-                 <span className={styles.active}>
-                   シ
-                 </span>
+                 {
+                   this.props.wallet.isLoading ?
+                   <FontAwesome name='refresh fa-spin' /> :
+                   <currencies>
+                     <span style={this.isActive('BTC')} onClick={() => this.currencyClicked('BTC')}>
+                       <FontAwesome name='btc' />
+                     </span>
+                     <span style={this.isActive('satoshis')} onClick={() => this.currencyClicked('satoshis')}>
+                       シ
+                     </span>
+                     <span style={this.isActive('USD')} onClick={() => this.currencyClicked('USD')}>
+                       <FontAwesome name='usd' />
+                     </span>
+                   </currencies>
+                 }
                </li>
                <li className={styles.logo}>
                   <Link to="/">

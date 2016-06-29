@@ -1,14 +1,9 @@
-import ZHEWallet from 'zhe-wallet';
-import bitcoin from 'bitcoinjs-lib';
-import fetch from 'isomorphic-fetch';
-import WalletHelper from '../helpers/wallet/main';
-import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
-
-
+import * as Ticker from '../helpers/ticker/main';
 
 export const REGISTER_WALLET = 'REGISTER_WALLET';
 export const WALLET_REGISTERED = 'WALLET_REGISTERED';
 export const WALLET_FAILED = 'WALLET_FAILED';
+export const CHANGE_CURRENCY = 'CHANGE_CURRENCY';
 
 export function registerWallet() {
   return {
@@ -16,11 +11,12 @@ export function registerWallet() {
   };
 }
 
-export function walletRegistered(balance, address) {
+export function walletRegistered(balance, address, rate) {
   return {
     type: WALLET_REGISTERED,
     balance: balance,
-    address: address
+    address: address,
+    rate: rate
   };
 }
 
@@ -28,6 +24,16 @@ export function walletFailed() {
   return {
     type: WALLET_FAILED,
   };
+}
+
+export function changeCurrency(currencies, balance, rate) {
+  var balance = Ticker.calculateBalance(currencies, balance, rate);
+
+  return {
+    type: CHANGE_CURRENCY,
+    balance: balance,
+    currency: currencies.to
+  }
 }
 
 

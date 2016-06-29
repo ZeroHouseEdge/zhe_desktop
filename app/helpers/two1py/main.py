@@ -3,6 +3,7 @@ import sys
 import json
 from os.path import expanduser
 from two1.wallet import Two1Wallet
+from two1.commands.util.currency import Price
 
 with open('{}/.two1/wallet/default_wallet.json'.format(expanduser('~'))) as data_file:
     wallet_data = json.load(data_file)
@@ -18,6 +19,10 @@ def execute(wallet_method):
 # Loop through methods
 del sys.argv[0]
 for arg in sys.argv:
-   execute(arg)
+   if arg == 'USD':
+      rate = Price(wallet.balance())._get_usd_rate()
+      print(rate)
+   else:
+      execute(arg)
 
 
