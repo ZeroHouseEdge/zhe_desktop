@@ -35,6 +35,55 @@
 }
 
 .lineContainer {
-   width: 85%;
-   margin: 20px auto;
+   width: 100%;
+   padding: 20px 0;
+   background: #2E2B44;
 }
+
+.lineContainer h3 {
+   display: inline-block;
+   vertical-align: top;
+   margin-left: 10px;
+   text-transform: uppercase;
+   margin-right: 50px;
+}
+
+.lineContainer input[type=number] {
+   font-size: 70px;
+   border: none;
+   background: transparent;
+   outline: none;
+   color: #FFF;
+   text-align: center;
+   width: 250px;
+}
+
+.valueContainer {
+   padding: 20px;
+}
+
+.valueContainer section {
+   display: inline-block;
+   width: 50%;
+   vertical-align: middle;
+   text-align: center;
+}
+
+.valueContainer section h3 {
+   text-transform: uppercase;
+}
+
+.valueContainer section span {
+   font-size: 30px;
+   width: 100%;
+}
+
+.valueContainer section input[type=number] {
+   background: transparent;
+   outline: none;
+   border: none;
+   font-size: 30px;
+   width: 100px;
+   color: #FFF;
+}
+

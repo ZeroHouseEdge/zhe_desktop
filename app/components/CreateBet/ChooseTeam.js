@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import InputRange from 'react-input-range';
 import styles from './ChooseTeam.css';
 import { getFlag } from '../../api/soccer/main';
 
@@ -20,19 +19,19 @@ class ChooseTeam extends Component {
 
   isActive = (value) => {
     const active = {
-      // background : '#2E2B44',
       opacity: 1,
       boxShadow: '0px 5px 15px rgba(0,0,0,0.3)'
     }
     return this.state.team === value ? active : null;
   };
 
-  handleLineChange = (component, value) => {
-    console.log(value);
-    this.setState({
-      line: value,
-    });
-  }
+  lineChange = (event) => {
+    this.setState({ line: event.target.value });
+  };
+
+  calcWinnings = () => {
+    return 100
+  };
 
   render() {
     const game = this.props.game;
@@ -50,16 +49,30 @@ class ChooseTeam extends Component {
             </div>
           </div>
           <div className={styles.lineContainer}>
-            <input type="number" ref={(input) => this.setState({ line: input })}></input>
-            <InputRange
-              maxValue={1000}
-              minValue={-1000}
-              value={0}
-              onChange={this.handleLineChange.bind(this)}
+            <h3>Set your line:</h3>
+            <input
+              type="number"
+              defaultValue={this.state.value}
+              onChange={this.lineChange}
             />
           </div>
-          <div>
-            Value
+          <div className={styles.valueContainer}>
+            <section>
+              <h3>Risk</h3>
+              <span>
+                $
+                <input
+                  type="number"
+                  defaultValue={this.state.value}
+                />
+              </span>
+            </section>
+            <section>
+              <h3>Win</h3>
+              <span>
+                ${this.calcWinnings()}
+              </span>
+            </section>
           </div>
         </div>
         <div className='buttonContainer circleContainer' onClick={this.props.previousStep}>

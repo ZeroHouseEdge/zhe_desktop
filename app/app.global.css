@@ -29,6 +29,12 @@ p {
   margin: 0;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .jigsaw-light {
   font-family: "Jigsaw Light";
   font-style: normal;
