@@ -12,6 +12,18 @@
    vertical-align: middle;
 }
 
+.currencies span {
+   margin: 0 5px;
+   cursor: pointer;
+   vertical-align: middle;
+}
+
+.active {
+   color: #D7A060;
+   font-weight: bold;
+   font-size: 1.3em;
+}
+
 .logo {
    text-align: center;
 }

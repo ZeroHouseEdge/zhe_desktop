@@ -14,7 +14,17 @@ class Header extends Component {
       return (
          <div>
             <ul className={styles.container}>
-               <li></li>
+               <li className={styles.currencies}>
+                 <span>
+                   <FontAwesome name='usd' />
+                 </span>
+                 <span>
+                   <FontAwesome name='btc' />
+                 </span>
+                 <span className={styles.active}>
+                   シ
+                 </span>
+               </li>
                <li className={styles.logo}>
                   <Link to="/">
                     <Logo />

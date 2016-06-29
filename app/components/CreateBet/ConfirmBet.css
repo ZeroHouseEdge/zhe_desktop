@@ -1,0 +1,14 @@
+.container {
+   padding: 20px;
+}
+
+.container h2 {
+   text-transform: uppercase;
+   font-family: "Jigsaw Bold";
+   text-align: center;
+}
+.container img {
+   width: 300px;
+   display: block;
+   margin: 0 auto;
+}

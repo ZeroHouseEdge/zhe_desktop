@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import styles from './ChooseTeam.css';
 import { getFlag } from '../../api/soccer/main';
+import { calculatePayout } from '../../helpers/betting/main';
 
 class ChooseTeam extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { team: '',  line: 0, value: 0 };
+    this.state = { team: '',  line: 0, value: 0.00 };
   }
 
   teamClicked = (team) => {
@@ -34,12 +35,13 @@ class ChooseTeam extends Component {
   };
 
   calcWinnings = () => {
-    const money = parseInt(this.state.value);
-    const odds = parseInt(this.state.line);
+    return calculatePayout(this.state.value, this.state.line);
+  };
 
-    if (odds === 0) { return money };
-    const multiplier = odds > 0 ? odds / 100 : 100 / Math.abs(odds);
-    return (money * multiplier).toFixed(2);
+  finished = () => {
+    if (!this.state.team.length || this.state.value <=0) { return };
+    this.props.saveValues(this.state);
+    this.props.nextStep();
   };
 
   render() {
@@ -84,14 +86,16 @@ class ChooseTeam extends Component {
             </section>
           </div>
         </div>
-        <div className='buttonContainer circleContainer' onClick={this.props.previousStep}>
-          <div className='buttonSecondary circle'>
-            <FontAwesome name='arrow-left' />
+        <div className={styles.buttons}>
+          <div className='buttonContainer circleContainer' onClick={this.props.previousStep}>
+            <div className='buttonSecondary circle'>
+              <FontAwesome name='arrow-left' />
+            </div>
           </div>
-        </div>
-        <div className='buttonContainer circleContainer' onClick={this.props.nextStep}>
-          <div className='buttonPrimary circle'>
-            <FontAwesome name='arrow-right' />
+          <div className='buttonContainer circleContainer' onClick={this.finished}>
+            <div className='buttonPrimary circle'>
+              <FontAwesome name='arrow-right' />
+            </div>
           </div>
         </div>
       </div>
