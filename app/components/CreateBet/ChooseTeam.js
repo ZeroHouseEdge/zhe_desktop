@@ -29,8 +29,17 @@ class ChooseTeam extends Component {
     this.setState({ line: event.target.value });
   };
 
+  valueChange = (event) => {
+    this.setState({ value: event.target.value });
+  };
+
   calcWinnings = () => {
-    return 100
+    const money = parseInt(this.state.value);
+    const odds = parseInt(this.state.line);
+
+    if (odds === 0) { return money };
+    const multiplier = odds > 0 ? odds / 100 : 100 / Math.abs(odds);
+    return (money * multiplier).toFixed(2);
   };
 
   render() {
@@ -60,10 +69,10 @@ class ChooseTeam extends Component {
             <section>
               <h3>Risk</h3>
               <span>
-                $
                 <input
                   type="number"
                   defaultValue={this.state.value}
+                  onChange={this.valueChange}
                 />
               </span>
             </section>
