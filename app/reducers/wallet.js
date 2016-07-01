@@ -3,6 +3,7 @@ import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY } fr
 const initialState = {
    isLoading: false,
    balance: null,
+   unconfirmed: null,
    address: null,
    currency: 'satoshis',
    rate: null
@@ -15,6 +16,7 @@ export default function wallet(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: true,
         balance: state.balance,
+        unconfirmed: state.unconfirmed,
         address: state.address,
         currency: state.currency,
         rate: state.rate
@@ -24,6 +26,7 @@ export default function wallet(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: false,
         balance: action.balance,
+        unconfirmed: action.unconfirmed,
         address: action.address,
         currency: state.currency,
         rate: action.rate
@@ -33,6 +36,7 @@ export default function wallet(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: false,
         balance: null,
+        unconfirmed: null,
         address: '',
         currency: '',
         rate: null
@@ -42,6 +46,7 @@ export default function wallet(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: false,
         balance: action.balance,
+        unconfirmed: action.unconfirmed,
         address: state.address,
         currency: action.currency,
         rate: state.rate

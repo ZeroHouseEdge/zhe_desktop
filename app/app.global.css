@@ -6,10 +6,7 @@ body {
   position: relative;
   color: white;
   background: #464368;
-  /*background-color: #f6db35;*/
-  /*background-image: linear-gradient(45deg, rgba(0, 0, 0, .5) 10%, rgba(251, 10, 42, .7));*/
   font-family: Arial, Helvetica, Helvetica Neue;
-  overflow-y: hidden;
   font-family: "Jigsaw Medium";
   font-style: normal;
   font-weight: normal;

@@ -1,5 +1,58 @@
 .container {
    width: 50%;
-   margin: 0 auto;
+   margin: 30px auto;
    font-family: "Jigsaw Medium";
+}
+
+.header {
+   text-align: center;
+}
+
+.container header balance {
+   display: block;
+   margin-bottom: 20px;
+   position: relative;
+   border-bottom: 1px solid #eee;
+   padding-bottom: 20px;
+}
+
+.container header balance:after {
+   content:"";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 50%;
+   border-left: 1px solid #eee;
+}
+
+.container header balance section span {
+   font-size: 30px;
+}
+
+.confirmed, .unconfirmed {
+   display: inline-block;
+   width: 50%;
+
+}
+
+.confirmed h3, .unconfirmed h3 {
+   text-transform: uppercase;
+   font-family: "Jigsaw Light";
+}
+
+
+.container header address {
+   background-color: #2E2B44;
+   width: 60%;
+   margin: 0 auto;
+   padding: 10px 0;
+   font-style: normal;
+   font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+   border-radius: 5px;
+}
+
+.txs {
+   background: #2E2B44;
+   padding: 0;
 }

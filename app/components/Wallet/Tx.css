@@ -1,0 +1,86 @@
+.container {
+   margin: 20px 0;
+}
+
+.container header {
+   text-transform: uppercase;
+   font-family: "Jigsaw Light";
+   font-size: 18px;
+   padding: 5px 0 5px 25px;
+   background: #eee;
+   background-image: linear-gradient(to bottom,#d7d7d7 0%,#eeeeee 116px);
+   color: #707070;
+}
+
+.main {
+   margin-top: 10px;
+}
+
+.left, .right {
+   display: inline-block;
+   vertical-align: middle;
+}
+
+.left {
+   width: 40%;
+}
+
+.left message {
+   text-transform: uppercase;
+   font-family: "Jigsaw Light";
+}
+
+.icon {
+   display: inline-block;
+   vertical-align: middle;
+   margin: 0 30px;
+}
+
+.iconWrapper {
+   display: inline-block;
+}
+
+.customIcon {
+  font-size: 30px;
+  background:#666;
+  background:rgba(0,0,0,0.4);
+  padding: 20px;
+  -webkit-border-radius:1100%;
+  -moz-border-radius:100%;
+  -o-border-radius:100%;
+  border-radius:100%;
+  border:6px solid #fff;
+  color:#fff;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.46);
+  text-align:center;
+  display:table-cell;
+  vertical-align:middle;
+  width: 15px;
+  height: 15px;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  -o-transition:.5s;
+  transition:.5s;
+}
+
+.customIcon:hover {
+  background:rgba(0,0,0,0.6);
+}
+
+.fixEditor {
+   display: none;
+}
+
+.right {
+   width: 60%;
+}
+
+.right div {
+   float: right;
+   margin-right: 30px;
+}
+
+.value {
+   display: block;
+   margin: 5px 0;
+}

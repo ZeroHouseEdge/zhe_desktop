@@ -11,10 +11,11 @@ export function registerWallet() {
   };
 }
 
-export function walletRegistered(balance, address, rate) {
+export function walletRegistered(balance, unconfirmed, address, rate) {
   return {
     type: WALLET_REGISTERED,
     balance: balance,
+    unconfirmed: unconfirmed,
     address: address,
     rate: rate
   };
