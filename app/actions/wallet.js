@@ -1,4 +1,5 @@
 import * as Ticker from '../helpers/ticker/main';
+import * as API from '../helpers/two1wallet/main';
 
 export const REGISTER_WALLET = 'REGISTER_WALLET';
 export const WALLET_REGISTERED = 'WALLET_REGISTERED';
@@ -27,12 +28,22 @@ export function walletFailed() {
   };
 }
 
-export function changeCurrency(currencies, balance, rate) {
-  var balance = Ticker.calculateBalance(currencies, balance, rate);
+export function refreshWallet() {
+  return (dispatch) => {
+    dispatch(registerWallet());
+    return API.fetchTwo1(['balance', 'unconfirmed_balance', 'get_payout_address', 'USD']).then((results) => {
+      dispatch(walletRegistered(results[0].balance, results[1].unconfirmed_balance, results[2].get_payout_address, results[3]));
+    });
+  }
+}
+
+export function changeCurrency(currencies, balance, unconfirmed, rate) {
+  var res = Ticker.calculateBalance(currencies, balance, unconfirmed, rate);
 
   return {
     type: CHANGE_CURRENCY,
-    balance: balance,
+    balance: res[0],
+    unconfirmed: res[1],
     currency: currencies.to
   }
 }

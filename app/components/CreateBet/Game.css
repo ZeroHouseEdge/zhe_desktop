@@ -1,6 +1,6 @@
 .container {
-   padding: 10px;
-   display: table;
+   width: 50%;
+   display: inline-block;
    white-space: nowrap;
    cursor: pointer;
    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
@@ -16,9 +16,16 @@
    display: table-cell;
    vertical-align: middle;
    height: 100%;
+   padding: 10px;
 }
 
-.teams h5 {
+.teams img {
+   width: 30px;
+   vertical-align: middle;
+   margin: 5px;
+}
+
+.teams h4 {
    display: inline-block;
    margin: 0;
 }
@@ -27,10 +34,5 @@
    display: table-cell;
    vertical-align: middle;
    height: 100%;
-}
-
-.flag {
-   width: 50px;
-   vertical-align: middle;
-   margin: 5px;
+   padding-right: 10px;
 }

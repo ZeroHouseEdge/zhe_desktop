@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchGames } from '../actions/soccer';
+import { fetchGames } from '../actions/mlb';
 import Main from '../components/CreateBet/Main';
 
 

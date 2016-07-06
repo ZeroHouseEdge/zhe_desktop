@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
+import Sign from '../Sign';
 import styles from './ChooseTeam.css';
 import { getFlag } from '../../api/soccer/main';
 import { calculatePayout } from '../../helpers/betting/main';
@@ -35,10 +36,12 @@ class ChooseTeam extends Component {
   };
 
   calcWinnings = () => {
+    if (!this.state.value.length) { return 0 };
     return calculatePayout(this.state.value, this.state.line);
   };
 
   finished = () => {
+    console.log(this.state.team);
     if (!this.state.team.length || this.state.value <=0) { return };
     this.props.saveValues(this.state);
     this.props.nextStep();
@@ -46,17 +49,19 @@ class ChooseTeam extends Component {
 
   render() {
     const game = this.props.game;
+    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.away_file_code._value}@2x.png`
+    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.home_file_code._value}@2x.png`
     return (
       <div>
         <div>
           <div className={styles.teams}>
-            <div className={styles.team} style={this.isActive(game.awayTeamName)} onClick={() => this.teamClicked(game.awayTeamName)}>
-              <h3>{game.awayTeamName}</h3>
-              <img src={getFlag(game.awayTeamName)} className={styles.flag}></img>
+            <div className={styles.team} style={this.isActive(game._attr.away_team_name._value)} onClick={() => this.teamClicked(game._attr.away_team_name._value)}>
+              <h3>{game._attr.away_team_name._value}</h3>
+              <img src={awayLogo} className={styles.logo}></img>
             </div>
-            <div className={styles.team} style={this.isActive(game.homeTeamName)} onClick={() => this.teamClicked(game.homeTeamName)}>
-              <h3>{game.homeTeamName}</h3>
-              <img src={getFlag(game.homeTeamName)} className={styles.flag}></img>
+            <div className={styles.team} style={this.isActive(game._attr.home_team_name._value)} onClick={() => this.teamClicked(game._attr.home_team_name._value)}>
+              <h3>{game._attr.home_team_name._value}</h3>
+              <img src={homeLogo} className={styles.logo}></img>
             </div>
           </div>
           <div className={styles.lineContainer}>
@@ -75,6 +80,7 @@ class ChooseTeam extends Component {
                   type="number"
                   defaultValue={this.state.value}
                   onChange={this.valueChange}
+                  size='auto'
                 />
               </span>
             </section>

@@ -2,31 +2,73 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import QRCode from 'qrcode.react';
+import Modal from 'react-modal';
 import Sign from '../Sign';
 import Tx from './Tx';
+import Deposit from './Deposit';
 import styles from './Wallet.css';
 import * as API from '../../helpers/two1wallet/main';
 
 class Wallet extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { tx_history: [] };
+    this.state = { tx_history: [], isDepositing: false, isWidthdrawing: false, isOpen: false };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     API.fetchTwo1(['transaction_history']).then((results) => {
       this.setState({ tx_history: results[0].transaction_history });
     });
   }
 
-  renderTxs = () => {
-    this.state.tx_history.length ? <Tx /> : 'Loading...'
+  toggleModal = (mode) => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  };
+
+  setMode = (mode) => {
+    const data = mode === 'deposit' ? { isDepositing: true, isWidthdrawing: false } : { isDepositing: false, isWidthdrawing: true };
+    this.setState(data);
+    this.toggleModal();
   };
 
   render() {
     return (
       <div className={styles.container}>
+        <Modal className='modal' isOpen={this.state.isOpen}>
+          <div onClick={this.toggleModal} className='modalClose'>
+            <FontAwesome name='times' className='closeIcon' />
+          </div>
+          {
+            this.state.isDepositing ? <Deposit address={this.props.wallet.address} /> : null
+          }
+          {
+            this.state.isWidthdrawing ? "widthdraw" : null
+          }
+        </Modal>
+
+        <div className={styles.buttonContainer}>
+          <div className='buttonContainer' onClick={() => this.setMode('deposit')}>
+            <btn className='buttonPrimary'>
+              Deposit
+            </btn>
+          </div>
+          <div className='buttonContainer circleContainer' onClick={this.props.refresh}>
+            <div className='buttonSecondary circle small'>
+              {
+                this.props.wallet.isLoading ?
+                <FontAwesome name='refresh fa-spin' /> :
+                <FontAwesome name='refresh' />
+              }
+            </div>
+          </div>
+          <div className='buttonContainer' onClick={() => this.setMode('widthdraw')}>
+            <btn className='buttonPrimary'>
+              Withdraw
+            </btn>
+          </div>
+        </div>
         <header className={styles.header}>
           <balance>
             <section className={styles.confirmed}>
@@ -37,7 +79,7 @@ class Wallet extends Component {
                 {
                   this.props.wallet.balance ?
                   <span><Sign currency={this.props.wallet.currency} /> {this.props.wallet.balance}</span>
-                  : "Loading..."
+                  : 'Loading...'
                 }
               </span>
             </section>
@@ -54,16 +96,6 @@ class Wallet extends Component {
               </span>
             </section>
           </balance>
-          <qrcode>
-            {
-              this.props.wallet.address ? <QRCode value={this.props.wallet.address} size={200} /> : "Loading..."
-            }
-          </qrcode>
-          <address>
-            {
-              this.props.wallet.address ? this.props.wallet.address : "Loading..."
-            }
-          </address>
         </header>
         <ul className={styles.txs}>
           {

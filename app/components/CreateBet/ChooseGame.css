@@ -1,6 +1,8 @@
 .container {
    overflow: auto;
    zoom: 1;
+   max-height: 550px;
+   overflow-y: auto;
 }
 
 .container h3 {

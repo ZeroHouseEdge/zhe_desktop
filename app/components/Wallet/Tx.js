@@ -8,7 +8,6 @@ import styles from './Tx.css';
 class Tx extends Component {
   constructor(props, context) {
     super(props, context);
-    console.log("tx: ", this.props.tx);
   }
 
   render() {

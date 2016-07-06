@@ -12,12 +12,7 @@ class ChooseGame extends Component {
 
    gameClicked = (game) => {
       this.props.saveValues({
-        game: {
-          homeTeamName: game.homeTeamName,
-          awayTeamName: game.awayTeamName,
-          date: game.date,
-          matchday: game.matchday
-        }
+        game: game
       });
 
       this.props.nextStep()

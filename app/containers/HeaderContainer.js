@@ -12,15 +12,11 @@ class HeaderContainer extends Component {
 
   componentWillMount() {
     if (this.props.wallet.balance) { return; }
-    this.props.dispatch(WalletActions.registerWallet())
-    API.fetchTwo1(['balance', 'unconfirmed_balance', 'get_payout_address', 'USD']).then((results) => {
-      console.log(results);
-      this.props.dispatch(WalletActions.walletRegistered(results[0].balance, results[1].unconfirmed_balance, results[2].get_payout_address, results[3]));
-    });
+    this.props.dispatch(WalletActions.refreshWallet());
   }
 
   changeCurrency = (currency) => {
-    this.props.dispatch(WalletActions.changeCurrency({from: this.props.wallet.currency, to: currency}, this.props.wallet.balance, this.props.wallet.rate))
+    this.props.dispatch(WalletActions.changeCurrency({from: this.props.wallet.currency, to: currency}, this.props.wallet.balance, this.props.wallet.unconfirmed, this.props.wallet.rate))
   };
 
   render() {

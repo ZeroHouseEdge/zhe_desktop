@@ -1,0 +1,15 @@
+.container {
+   text-align: center;
+   padding: 30px;
+}
+
+.address {
+   background-color: #2E2B44;
+   padding: 10px 0;
+   font-style: normal;
+   font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+   border-radius: 5px;
+   display: block;
+   width: 90%;
+   margin: 20px auto;
+}

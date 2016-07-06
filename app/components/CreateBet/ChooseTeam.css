@@ -12,7 +12,7 @@
    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
    height: 150px;
    cursor: pointer;
-   opacity: 0.5;
+   opacity: 0.3;
 }
 
 .team:hover {
@@ -30,8 +30,8 @@
    font-weight: 200;
 }
 
-.flag {
-   width: 150px;
+.logo {
+   width: 75px;
 }
 
 .lineContainer {

@@ -29,9 +29,9 @@ export default class Home extends Component {
    render() {
       return (
          <div>
-            <Modal className={styles.modal} isOpen={this.state.open}>
-               <div onClick={this.closeModal} className={styles.modalClose}>
-                  <FontAwesome name='times' className={styles.closeIcon} />
+            <Modal className='modal' isOpen={this.state.open}>
+               <div onClick={this.closeModal} className='modalClose'>
+                  <FontAwesome name='times' className='closeIcon' />
                </div>
                <CreateBetContainer />
             </Modal>

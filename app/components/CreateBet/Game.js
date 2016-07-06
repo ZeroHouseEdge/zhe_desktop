@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { getFlag } from '../../api/soccer/main';
 import styles from './Game.css';
-import { formatKickoff } from '../../api/soccer/main';
+import { formatStart } from '../../api/mlb/main';
 
 export default class Game extends Component {
   clicked = () => {
@@ -9,20 +8,22 @@ export default class Game extends Component {
   }
 
   render() {
+    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game._attr.away_file_code._value}@2x.png`
+    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game._attr.home_file_code._value}@2x.png`
     return (
       <div className={styles.container} onClick={this.clicked}>
         <div className={styles.teams}>
           <div>
-            <img src={getFlag(this.props.game.awayTeamName)} className={styles.flag}></img>
-            <h5>{this.props.game.awayTeamName}</h5>
+            <img src={awayLogo} />
+            <h4>{this.props.game._attr.away_team_name._value}</h4>
           </div>
           <div>
-            <img src={getFlag(this.props.game.homeTeamName)} className={styles.flag}></img>
-            <h5>{this.props.game.homeTeamName}</h5>
+            <img src={homeLogo} />
+            <h4>{this.props.game._attr.home_team_name._value}</h4>
           </div>
         </div>
         <div className={styles.time}>
-          {formatKickoff(this.props.game.date)}
+          {formatStart(this.props.game._attr.start._value)}
         </div>
       </div>
     );

@@ -1,14 +1,27 @@
 .container {
    padding: 20px;
+   text-align: center;
 }
 
 .container h2 {
    text-transform: uppercase;
    font-family: "Jigsaw Bold";
-   text-align: center;
 }
 .container img {
-   width: 300px;
+   width: 200px;
    display: block;
    margin: 0 auto;
+}
+
+.container msg {
+   display: block;
+   font-size: 20px;
+}
+
+.buttons {
+
+}
+
+.confirmContainer {
+   width: 50%;
 }
