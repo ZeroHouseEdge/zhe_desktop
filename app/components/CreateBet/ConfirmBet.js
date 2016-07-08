@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import styles from './ConfirmBet.css';
 import { calculatePayout, formatLine } from '../../helpers/betting/main';
+import { getLogo } from '../../api/mlb/main';
 
 class ConfirmBet extends Component {
   constructor(props, context) {
@@ -20,7 +21,7 @@ class ConfirmBet extends Component {
 
   render() {
     const game = this.props.data.game;
-    const logo = this.props.data.team === this.props.data.game.away_team_name ? `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.away_file_code}@2x.png` : `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.home_file_code}@2x.png`;
+    const logo = this.props.data.team === this.props.data.game.away_team_name ? getLogo(game.away_file_code) : getLogo(game.home_file_code);
     return (
       <div className={styles.container}>
         <header>

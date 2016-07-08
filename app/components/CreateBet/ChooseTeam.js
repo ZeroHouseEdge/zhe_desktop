@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import Sign from '../Sign';
 import styles from './ChooseTeam.css';
-import { getFlag } from '../../api/soccer/main';
+import { getLogo } from '../../api/mlb/main';
 import { calculatePayout } from '../../helpers/betting/main';
 
 class ChooseTeam extends Component {
@@ -49,19 +49,17 @@ class ChooseTeam extends Component {
 
   render() {
     const game = this.props.game;
-    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.away_file_code}@2x.png`
-    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.home_file_code}@2x.png`
     return (
       <div>
         <div>
           <div className={styles.teams}>
             <div className={styles.team} style={this.isActive(game.away_team_name)} onClick={() => this.teamClicked(game.away_team_name)}>
               <h3>{game.away_team_name}</h3>
-              <img src={awayLogo} className={styles.logo}></img>
+              <img src={getLogo(game.away_file_code)} className={styles.logo}></img>
             </div>
             <div className={styles.team} style={this.isActive(game.home_team_name)} onClick={() => this.teamClicked(game.home_team_name)}>
               <h3>{game.home_team_name}</h3>
-              <img src={homeLogo} className={styles.logo}></img>
+              <img src={getLogo(game.home_file_code)} className={styles.logo}></img>
             </div>
           </div>
           <div className={styles.lineContainer}>

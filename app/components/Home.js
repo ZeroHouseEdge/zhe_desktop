@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
+import OpenWagersContainer from '../containers/OpenWagersContainer';
 import CreateBetContainer from '../containers/CreateBetContainer';
 import Logo from './Logo';
 import styles from './Home.css';
@@ -38,7 +39,7 @@ export default class Home extends Component {
             <div className={styles.container}>
                <div className={styles.main}>
                   <div className={styles.graph}>
-                     graph
+                     <OpenWagersContainer />
                   </div>
                </div>
                <div className={styles.buttons}>

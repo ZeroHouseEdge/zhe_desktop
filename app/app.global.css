@@ -162,6 +162,19 @@ a:hover {
   padding: 10px 0;
 }
 
+.buttonContainer.small {
+  min-width: auto;
+  padding: 0;
+  border: none;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.buttonContainer.small .buttonPrimary {
+  padding: 10px 5px;
+  font-size: 15px;
+}
+
 /* Slider */
 .InputRange-track {
   height: 0.8rem;

@@ -32,7 +32,7 @@ export default function wallet(state = initialState, action) {
         address: action.address,
         currency: action.currency,
         rate: action.rate,
-        pubkey: state.pubkey
+        pubkey: action.pubkey
       })
 
     case WALLET_FAILED:
