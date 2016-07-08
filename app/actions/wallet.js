@@ -12,13 +12,15 @@ export function registerWallet() {
   };
 }
 
-export function walletRegistered(balance, unconfirmed, address, rate) {
+export function walletRegistered(balance, unconfirmed, address, currency, rate, pubkey) {
   return {
     type: WALLET_REGISTERED,
     balance: balance,
     unconfirmed: unconfirmed,
     address: address,
-    rate: rate
+    currency: currency,
+    rate: rate,
+    pubkey: pubkey
   };
 }
 
@@ -31,8 +33,9 @@ export function walletFailed() {
 export function refreshWallet() {
   return (dispatch) => {
     dispatch(registerWallet());
-    return API.fetchTwo1(['balance', 'unconfirmed_balance', 'get_payout_address', 'USD']).then((results) => {
-      dispatch(walletRegistered(results[0].balance, results[1].unconfirmed_balance, results[2].get_payout_address, results[3]));
+    return API.fetchTwo1(['balance', 'unconfirmed_balance', 'get_payout_address', 'USD', 'to_dict']).then((results) => {
+      console.log(results[4]);
+      dispatch(walletRegistered(results[0].balance, results[1].unconfirmed_balance, results[2].get_payout_address, 'satoshis', results[3], results[4].to_dict.accounts[0].public_key));
     });
   }
 }

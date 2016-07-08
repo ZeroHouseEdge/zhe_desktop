@@ -24,7 +24,7 @@ class Tx extends Component {
               <a href={txLink}  target="_blank">
                 <div className={styles.iconWrapper}>
                   {
-                    tx.classification === 'deposit' ? <FontAwesome className={styles.customIcon} name='download'><span className={styles.fixEditor}>&nbsp;</span></FontAwesome> : <FontAwesome className={styles.customIcon} name='upload'>&nbsp;</FontAwesome>
+                    tx.classification === 'deposit' ? <FontAwesome className={styles.customIcon} name='download'><span className={styles.fixEditor}>&nbsp;</span></FontAwesome> : <FontAwesome className={styles.customIcon} name='upload'><span className={styles.fixEditor}>&nbsp;</span></FontAwesome>
                   }
                 </div>
               </a>

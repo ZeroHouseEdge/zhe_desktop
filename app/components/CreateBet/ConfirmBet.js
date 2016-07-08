@@ -11,7 +11,7 @@ class ConfirmBet extends Component {
   }
 
   oppositeTeam = () => {
-    return this.props.data.team === this.props.data.game._attr.away_team_name._value ? this.props.data.game._attr.home_team_name._value : this.props.data.game._attr.away_team_name._value;
+    return this.props.data.team === this.props.data.game.away_team_name ? this.props.data.game.home_team_name : this.props.data.game.away_team_name;
   };
 
   finished = () => {
@@ -20,7 +20,7 @@ class ConfirmBet extends Component {
 
   render() {
     const game = this.props.data.game;
-    const logo = this.props.data.team === this.props.data.game._attr.away_team_name._value ? `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.away_file_code._value}@2x.png` : `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.home_file_code._value}@2x.png`;
+    const logo = this.props.data.team === this.props.data.game.away_team_name ? `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.away_file_code}@2x.png` : `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.home_file_code}@2x.png`;
     return (
       <div className={styles.container}>
         <header>

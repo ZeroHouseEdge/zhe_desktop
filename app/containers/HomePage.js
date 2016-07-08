@@ -1,15 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Home from '../components/Home';
-import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
 import HeaderContainer from './HeaderContainer';
-import * as MLB from '../api/mlb/main';
-import * as Soccer from '../api/soccer/main';
+import * as API from '../api/server/main';
 
 class HomePage extends Component {
   constructor(props, context) {
     super(props, context);
+  }
+
+  componentDidMount() {
+    API.openWagers((res) => {
+      console.log(res);
+    });
   }
 
   render() {

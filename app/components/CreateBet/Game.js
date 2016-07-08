@@ -8,22 +8,22 @@ export default class Game extends Component {
   }
 
   render() {
-    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game._attr.away_file_code._value}@2x.png`
-    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game._attr.home_file_code._value}@2x.png`
+    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game.away_file_code}@2x.png`
+    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${this.props.game.home_file_code}@2x.png`
     return (
       <div className={styles.container} onClick={this.clicked}>
         <div className={styles.teams}>
           <div>
             <img src={awayLogo} />
-            <h4>{this.props.game._attr.away_team_name._value}</h4>
+            <h4>{this.props.game.away_team_name}</h4>
           </div>
           <div>
             <img src={homeLogo} />
-            <h4>{this.props.game._attr.home_team_name._value}</h4>
+            <h4>{this.props.game.home_team_name}</h4>
           </div>
         </div>
         <div className={styles.time}>
-          {formatStart(this.props.game._attr.start._value)}
+          {this.props.game.time}{this.props.game.ampm}
         </div>
       </div>
     );

@@ -49,18 +49,18 @@ class ChooseTeam extends Component {
 
   render() {
     const game = this.props.game;
-    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.away_file_code._value}@2x.png`
-    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game._attr.home_file_code._value}@2x.png`
+    const awayLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.away_file_code}@2x.png`
+    const homeLogo = `http://mlb.mlb.com/mlb/images/team_logos/124x150/${game.home_file_code}@2x.png`
     return (
       <div>
         <div>
           <div className={styles.teams}>
-            <div className={styles.team} style={this.isActive(game._attr.away_team_name._value)} onClick={() => this.teamClicked(game._attr.away_team_name._value)}>
-              <h3>{game._attr.away_team_name._value}</h3>
+            <div className={styles.team} style={this.isActive(game.away_team_name)} onClick={() => this.teamClicked(game.away_team_name)}>
+              <h3>{game.away_team_name}</h3>
               <img src={awayLogo} className={styles.logo}></img>
             </div>
-            <div className={styles.team} style={this.isActive(game._attr.home_team_name._value)} onClick={() => this.teamClicked(game._attr.home_team_name._value)}>
-              <h3>{game._attr.home_team_name._value}</h3>
+            <div className={styles.team} style={this.isActive(game.home_team_name)} onClick={() => this.teamClicked(game.home_team_name)}>
+              <h3>{game.home_team_name}</h3>
               <img src={homeLogo} className={styles.logo}></img>
             </div>
           </div>
