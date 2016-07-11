@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchGames } from '../actions/mlb';
 import Main from '../components/CreateBet/Main';
+import * as WagerActions from '../actions/wager';
 
 
 class CreateBetContainer extends Component {
@@ -14,9 +15,14 @@ class CreateBetContainer extends Component {
     this.props.dispatch(fetchGames());
   }
 
+  done = (data) => {
+    this.props.dispatch(WagerActions.createWagerRequest(data));
+    this.props.finished();
+  };
+
   render() {
     return (
-      <Main />
+      <Main done={this.done} />
     );
   }
 }
@@ -28,7 +34,6 @@ CreateBetContainer.contextTypes = {
 };
 
 CreateBetContainer.propTypes = {
-  soccer: PropTypes.object.isRequired,
   wallet: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };

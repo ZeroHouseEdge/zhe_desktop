@@ -34,7 +34,7 @@ export default class Home extends Component {
                <div onClick={this.closeModal} className='modalClose'>
                   <FontAwesome name='times' className='closeIcon' />
                </div>
-               <CreateBetContainer />
+               <CreateBetContainer finished={this.closeModal}  />
             </Modal>
             <div className={styles.container}>
                <div className={styles.main}>
