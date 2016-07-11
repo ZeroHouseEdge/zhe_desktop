@@ -8,6 +8,12 @@ class HomePage extends Component {
     super(props, context);
   }
 
+  componentWillMount() {
+    this.props.socket.io.on('msg', (data) => {
+      console.log('socket data: ', data);
+    })
+  }
+
   render() {
     return (
       <div>
@@ -24,7 +30,8 @@ class HomePage extends Component {
 
 function mapStateToProps(store) {
   return {
-    wallet: store.wallet
+    wallet: store.wallet,
+    socket: store.socket
   };
 }
 

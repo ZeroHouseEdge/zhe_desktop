@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { addSocket } from '../actions/socket';
 
-export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired
-  };
+class App extends Component {
+  componentWillMount() {
+    this.props.dispatch(addSocket())
+  }
 
   render() {
     return (
@@ -21,3 +23,16 @@ export default class App extends Component {
     );
   }
 }
+
+function mapStateToProps(store) {
+  return {
+    socket: store.socket
+  };
+}
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+};
+
+export default connect(mapStateToProps)(App);

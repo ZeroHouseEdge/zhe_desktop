@@ -4,13 +4,15 @@ import wallet from './wallet';
 import soccer from './soccer';
 import mlb from './mlb';
 import wagers from './wager';
+import socket from './socket';
 
 const rootReducer = combineReducers({
   routing,
   wallet,
   soccer,
   mlb,
-  wagers
+  wagers,
+  socket
 });
 
 export default rootReducer;

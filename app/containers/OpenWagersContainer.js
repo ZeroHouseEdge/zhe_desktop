@@ -40,7 +40,8 @@ class OpenWagersContainer extends Component {
 function mapStateToProps(store) {
   return {
     wallet: store.wallet,
-    wagers: store.wagers
+    wagers: store.wagers,
+    socket: store.socket
   };
 }
 
