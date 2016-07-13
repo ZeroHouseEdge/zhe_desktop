@@ -1,4 +1,4 @@
-import { ADD_WAGERS, GET_WAGERS, CREATE_WAGER, ADD_WAGER } from '../actions/wager';
+import { ADD_WAGERS, GET_WAGERS, CREATE_WAGER, ADD_WAGER, UPDATE_WAGER, UPDATED_WAGER } from '../actions/wager';
 
 const initialState = {
    isLoading: false,
@@ -28,6 +28,18 @@ export default function wager(state = initialState, action) {
          return {
             isLoading: false,
             openWagers: [action.wager, ...state.openWagers],
+         };
+
+      case UPDATE_WAGER:
+         return Object.assign({}, state, {
+            isLoading: true,
+            openWagers: state.openWagers
+         })
+
+      case UPDATED_WAGER:
+         return {
+            isLoading: false,
+            openWagers: action.wagers,
          };
 
       default:

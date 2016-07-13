@@ -29,9 +29,9 @@ class App extends Component {
     this.state.socket.on('bet created', (data) => {
       // 1NmJ6M2sy1bVE6pq2UtwD8RavRSrJt3pRM
       console.log('bet created data: ', data)
-      API.fetchTwo1(['send: 1111']).then((res) => {
-        console.log('res: ', res);
-      });
+      // API.fetchTwo1(['send: 1111']).then((res) => {
+      //   console.log('res: ', res);
+      // });
     })
   }
 

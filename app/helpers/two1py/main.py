@@ -4,6 +4,7 @@ import json
 from os.path import expanduser
 from two1.wallet import Two1Wallet
 from two1.commands.util.currency import Price
+from two1.bitcoin.utils import bytes_to_str
 
 with open('{}/.two1/wallet/default_wallet.json'.format(expanduser('~'))) as data_file:
     wallet_data = json.load(data_file)
@@ -30,6 +31,15 @@ for arg in sys.argv:
          res.append(tx['txid'])
 
       print(json.dumps({ 'tx_ids': res }))
+   elif '>' in arg:
+      commands = arg.split('>')
+      result = None
+      for command in commands:
+         toCallOn = result or wallet
+         methodToCall = getattr(toCallOn, command)
+         result = methodToCall()
+
+      print(json.dumps({ 'data': bytes_to_str(result) }))
    else:
       execute(arg)
 

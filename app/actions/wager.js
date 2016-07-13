@@ -4,6 +4,8 @@ export const ADD_WAGERS = 'ADD_WAGERS';
 export const GET_WAGERS = 'GET_WAGERS';
 export const CREATE_WAGER = 'CREATE_WAGER';
 export const ADD_WAGER = 'ADD_WAGER';
+export const UPDATE_WAGER = 'UPDATE_WAGER';
+export const UPDATED_WAGER = 'UPDATED_WAGER';
 
 export function addWagers(wagers) {
   return {
@@ -40,12 +42,33 @@ export function addWager(wager) {
   };
 }
 
+export function updateWager() {
+  return {
+    type: UPDATE_WAGER
+  };
+}
+
+export function updatedWager(wagers) {
+  return {
+    type: UPDATED_WAGER,
+    wagers,
+  };
+}
+
 export function createWagerRequest(data) {
   return (dispatch) => {
     dispatch(createWager());
     API.createWager(data).then((res) => {
-      console.log("res: ", res);
       dispatch(addWager(res.wager));
+    });
+  }
+}
+
+export function updateWagerRequest(id, data) {
+  return (dispatch) => {
+    dispatch(updateWager());
+    API.acceptWager(id, data).then((res) => {
+      dispatch(updatedWager(res.wagers));
     });
   }
 }

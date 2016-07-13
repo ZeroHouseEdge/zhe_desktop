@@ -7,7 +7,8 @@ const initialState = {
    address: null,
    currency: 'satoshis',
    rate: null,
-   pubkey: null
+   pubkey: null,
+   payout_pubkey: null
 };
 
 
@@ -21,7 +22,8 @@ export default function wallet(state = initialState, action) {
         address: state.address,
         currency: state.currency,
         rate: state.rate,
-        pubkey: state.pubkey
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey
       })
 
     case WALLET_REGISTERED:
@@ -32,7 +34,8 @@ export default function wallet(state = initialState, action) {
         address: action.address,
         currency: action.currency,
         rate: action.rate,
-        pubkey: action.pubkey
+        pubkey: action.pubkey,
+        payout_pubkey: action.payout_pubkey
       })
 
     case WALLET_FAILED:
@@ -43,7 +46,8 @@ export default function wallet(state = initialState, action) {
         address: '',
         currency: '',
         rate: null,
-        pubkey: null
+        pubkey: null,
+        payout_pubkey: null
       })
 
     case CHANGE_CURRENCY:
@@ -54,7 +58,8 @@ export default function wallet(state = initialState, action) {
         address: state.address,
         currency: action.currency,
         rate: state.rate,
-        pubkey: state.pubkey
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey
       })
 
     default:

@@ -14,8 +14,23 @@ class OpenWagersContainer extends Component {
   }
 
   clicked = (wager) => {
-    console.log("user: ", this.props.wallet.pubkey);
-    console.log("wager: ", wager);
+    if (this.props.wallet.isLoading) { return };
+
+    const user = this.props.wallet.pubkey;
+    const pubkey = this.props.wallet.payout_pubkey;
+    var data = {
+      acceptor_id: user
+    };
+
+    if (wager.original_side === 'home') {
+      data.away_id = user;
+      data.away_pubkey = pubkey
+    } else {
+      data.home_id = user;
+      data.home_pubkey = pubkey
+    }
+
+    this.props.dispatch(WagerActions.updateWagerRequest(wager._id, data))
   };
 
   render() {
