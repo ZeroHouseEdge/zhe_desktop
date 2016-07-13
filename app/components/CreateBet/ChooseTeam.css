@@ -1,6 +1,5 @@
 .teams {
    white-space: nowrap;
-   margin-top: 10px;
 }
 
 .team {
@@ -24,8 +23,7 @@
 }
 
 .team h3 {
-   margin: 0;
-   margin-bottom: 5px;
+   margin: 5px 0;
    text-transform: uppercase;
    font-weight: 200;
 }

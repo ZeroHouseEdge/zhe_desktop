@@ -22,6 +22,14 @@ for arg in sys.argv:
    if arg == 'USD':
       rate = Price(wallet.balance())._get_usd_rate()
       print(rate)
+   elif ':' in arg:
+      amount = arg.split(':')[1].strip()
+      txs = wallet.send_to('1JNozjULWXRdih5HUKbC9KLzqXgJqYNzCu', 20000)
+      res = []
+      for tx in txs:
+         res.append(tx['txid'])
+
+      print(json.dumps({ 'tx_ids': res }))
    else:
       execute(arg)
 

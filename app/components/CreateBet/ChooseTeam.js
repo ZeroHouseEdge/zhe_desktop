@@ -6,11 +6,12 @@ import Sign from '../Sign';
 import styles from './ChooseTeam.css';
 import { getLogo } from '../../api/mlb/main';
 import { calculatePayout } from '../../helpers/betting/main';
+import { usdToBTC } from '../../helpers/ticker/main';
 
 class ChooseTeam extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { team: '',  line: 0, value: 0.00 };
+    this.state = { team: '',  line: 0, value: 0.00, winnings: 0.00 };
   }
 
   teamClicked = (team) => {
@@ -28,20 +29,21 @@ class ChooseTeam extends Component {
   };
 
   lineChange = (event) => {
-    this.setState({ line: event.target.value });
+    const winnings = this.calcWinnings(this.state.value, event.target.value);
+    this.setState({ line: event.target.value, winnings: winnings });
   };
 
   valueChange = (event) => {
-    this.setState({ value: event.target.value });
+    const value = event.target.value.length ? event.target.value : 0;
+    const winnings = this.calcWinnings(event.target.value, this.state.line);
+    this.setState({ value: value, winnings: winnings });
   };
 
-  calcWinnings = () => {
-    if (!this.state.value.length) { return 0 };
-    return calculatePayout(this.state.value, this.state.line);
+  calcWinnings = (value, line) => {
+    return value.length ? calculatePayout(value, line) : 0;
   };
 
   finished = () => {
-    console.log(this.state.team);
     if (!this.state.team.length || this.state.value <=0) { return };
     this.props.saveValues(this.state);
     this.props.nextStep();
@@ -81,12 +83,18 @@ class ChooseTeam extends Component {
                   size='auto'
                 />
               </span>
+              <div>
+                <FontAwesome  name='btc' />0
+              </div>
             </section>
             <section>
               <h3>Win</h3>
               <span>
-                ${this.calcWinnings()}
+                ${this.state.winnings}
               </span>
+              <div>
+                <FontAwesome  name='btc' />0
+              </div>
             </section>
           </div>
         </div>

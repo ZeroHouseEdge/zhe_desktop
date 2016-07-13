@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import * as WalletActions from '../actions/wallet';
-import * as API from '../helpers/two1wallet/main';
 
 class HeaderContainer extends Component {
   constructor(props, context) {

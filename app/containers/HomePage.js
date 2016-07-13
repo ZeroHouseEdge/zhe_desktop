@@ -8,12 +8,6 @@ class HomePage extends Component {
     super(props, context);
   }
 
-  componentWillMount() {
-    this.props.socket.io.on('msg', (data) => {
-      console.log('socket data: ', data);
-    })
-  }
-
   render() {
     return (
       <div>

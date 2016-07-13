@@ -5,6 +5,7 @@ export const REGISTER_WALLET = 'REGISTER_WALLET';
 export const WALLET_REGISTERED = 'WALLET_REGISTERED';
 export const WALLET_FAILED = 'WALLET_FAILED';
 export const CHANGE_CURRENCY = 'CHANGE_CURRENCY';
+export const ADD_PUBKEY = 'ADD_PUBKEY';
 
 export function registerWallet() {
   return {
