@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = `http://${process.env.HOST}:5000/api`;
 
 export function openWagers() {
    const URL = `${BASE_URL}/wagers/open`;

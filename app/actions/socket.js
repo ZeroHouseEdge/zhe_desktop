@@ -11,7 +11,7 @@ export function addSocket(socket) {
 
 export function createSocket() {
    return (dispatch) => {
-      const socket = io(`http://localhost:5000`);
+      const socket = io(`http://${process.env.HOST}:5000`);
       dispatch(addSocket(socket));
       return socket;
    }
