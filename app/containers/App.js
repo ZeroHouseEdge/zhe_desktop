@@ -29,12 +29,7 @@ class App extends Component {
       this.state.socket.emit('register user', this.state.user)
     })
 
-    this.state.socket.on('test', (data) => {
-      console.log('test data: ', data)
-    })
-
     this.state.socket.on('bet created', (data) => {
-      console.log('bet created data: ', data)
       this.props.dispatch(addWager(data.wager));
     })
   }

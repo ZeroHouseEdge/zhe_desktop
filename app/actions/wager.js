@@ -59,7 +59,7 @@ export function createWagerRequest(data) {
   return (dispatch) => {
     dispatch(createWager());
     API.createWager(data).then((res) => {
-      dispatch(addWager(res.wager));
+      // dispatch(addWager(res.wager));
     });
   }
 }
