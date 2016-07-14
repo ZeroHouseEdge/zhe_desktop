@@ -51,7 +51,7 @@ class Header extends Component {
                   </Link>
                   {
                     this.props.socket.io.disconnected ?
-                    <span className={styles.disconnected} data-hint="Hold on we're working on connecting you">
+                    <span className={styles.disconnected} data-hint="Not connected">
                       <FontAwesome name='exclamation-circle' />
                     </span>
                     : null

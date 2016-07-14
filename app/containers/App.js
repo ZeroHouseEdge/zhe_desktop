@@ -33,8 +33,10 @@ class App extends Component {
     })
 
     this.state.socket.on('bet accepted', (data) => {
-      console.log('here at bet accepted: ', data);
       this.props.dispatch(updatedWager(data.wagers));
+      const notif = new window.Notification('Wager accepted', {
+        body: 'Your wager has been accepted'
+      })
     })
   }
 
