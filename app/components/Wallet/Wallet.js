@@ -77,9 +77,9 @@ class Wallet extends Component {
               </h3>
               <span>
                 {
-                  this.props.wallet.balance ?
+                  this.props.wallet.isLoading ?
+                  'Loading...' :
                   <span><Sign currency={this.props.wallet.currency} /> {this.props.wallet.balance}</span>
-                  : 'Loading...'
                 }
               </span>
             </section>
@@ -89,9 +89,9 @@ class Wallet extends Component {
               </h3>
               <span>
                 {
-                  this.props.wallet.balance ?
+                  this.props.wallet.isLoading ?
+                  "Loading..." :
                   <span><Sign currency={this.props.wallet.currency} /> {this.props.wallet.unconfirmed}</span>
-                  : "Loading..."
                 }
               </span>
             </section>
