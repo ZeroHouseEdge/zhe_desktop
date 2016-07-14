@@ -24,6 +24,15 @@
 .logo {
    text-align: center;
 }
+.disconnected {
+   vertical-align: top;
+}
+
+.disconnected > span {
+   vertical-align: top;
+   color: #E64A19;
+   margin-left: 5px;
+}
 
 .balance {
    text-align: right;

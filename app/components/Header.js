@@ -49,6 +49,13 @@ class Header extends Component {
                   <Link to="/">
                     <Logo />
                   </Link>
+                  {
+                    this.props.socket.io.disconnected ?
+                    <span className={styles.disconnected} data-hint="Hold on we're working on connecting you">
+                      <FontAwesome name='exclamation-circle' />
+                    </span>
+                    : null
+                  }
                </li>
                <li className={styles.balance}>
                   <Link to="/wallet">
@@ -72,6 +79,7 @@ class Header extends Component {
 
 function mapStateToProps(store) {
   return {
+    socket: store.socket,
     wallet: store.wallet
   };
 }

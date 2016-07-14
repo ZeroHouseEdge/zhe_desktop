@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSocket, addSocket } from '../actions/socket';
 import io from 'socket.io-client';
 import * as API from '../helpers/two1wallet/main';
-import { addWager } from '../actions/wager';
+import { addWager, updatedWager } from '../actions/wager';
 const config = fs.readFileSync(`${os.homedir()}/.two1/wallet/default_wallet.json`);
 const socket = io(`http://${process.env.HOST}:5000`);
 
@@ -16,7 +16,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-
     this.props.dispatch(addSocket(socket))
     this.setState({
       socket: socket,
@@ -31,6 +30,11 @@ class App extends Component {
 
     this.state.socket.on('bet created', (data) => {
       this.props.dispatch(addWager(data.wager));
+    })
+
+    this.state.socket.on('bet accepted', (data) => {
+      console.log('here at bet accepted: ', data);
+      this.props.dispatch(updatedWager(data.wagers));
     })
   }
 

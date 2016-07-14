@@ -68,7 +68,7 @@ export function updateWagerRequest(id, data) {
   return (dispatch) => {
     dispatch(updateWager());
     API.acceptWager(id, data).then((res) => {
-      dispatch(updatedWager(res.wagers));
+      // dispatch(updatedWager(res.wagers));
     });
   }
 }
