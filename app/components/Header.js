@@ -54,12 +54,12 @@ class Header extends Component {
                   <Link to="/wallet">
                     <span>
                     {
-                      this.props.wallet.balance || <FontAwesome name='refresh fa-spin' />
+                      this.props.wallet.isLoading ? <FontAwesome name='refresh fa-spin' /> : this.props.wallet.balance
                     }
                     </span>
                     <span className={styles.currency}>
                     {
-                      this.props.wallet.balance ? this.props.wallet.currency : null
+                      this.props.wallet.isLoading ? null : this.props.wallet.currency
                     }
                     </span>
                   </Link>
