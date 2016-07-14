@@ -3,7 +3,6 @@ import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as WalletActions from '../actions/wallet';
 import Wallet from '../components/Wallet/Wallet';
-import WalletHelper from '../helpers/wallet/main';
 import FontAwesome from 'react-fontawesome';
 import HeaderContainer from './HeaderContainer';
 import PythonShell from 'python-shell';
