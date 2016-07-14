@@ -27,7 +27,7 @@ class HeaderContainer extends Component {
 
 HeaderContainer.contextTypes = {
   router: function () {
-    return React.PropTypes.object;
+    return React.PropTypes.object
   }
 };
 
