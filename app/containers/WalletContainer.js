@@ -5,7 +5,6 @@ import * as WalletActions from '../actions/wallet';
 import Wallet from '../components/Wallet/Wallet';
 import WalletHelper from '../helpers/wallet/main';
 import FontAwesome from 'react-fontawesome';
-import two1wallet from '/Users/jackmallers/.two1/wallet/default_wallet.json';
 import HeaderContainer from './HeaderContainer';
 import PythonShell from 'python-shell';
 import styles from '../components/Wallet/Wallet.css';

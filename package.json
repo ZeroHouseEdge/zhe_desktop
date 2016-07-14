@@ -121,8 +121,7 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "socket.io-client": "^1.4.8",
-    "source-map-support": "^0.4.0",
-    "zhe-wallet": "0.0.2"
+    "source-map-support": "^0.4.0"
   },
   "devEngines": {
     "node": "4.x || 5.x || 6.x",
