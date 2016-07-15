@@ -53,3 +53,25 @@ export function acceptWager(id, body) {
       error => error
    );
 }
+
+export function userWagers(id) {
+   const URL = `${BASE_URL}/${id}/wagers`;
+   return fetch(URL, {
+      headers: { 'content-type': 'application/json' },
+      method: 'get'
+   })
+   .then(response => response.json().then(json => ({ json, response })))
+   .then(({ json, response }) => {
+      if (!response.ok) {
+         return Promise.reject(json);
+      }
+
+      return json;
+   })
+   .then(
+      response => response,
+      error => error
+   );
+}
+
+

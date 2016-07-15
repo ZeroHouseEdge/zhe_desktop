@@ -37,9 +37,7 @@
 
 .container header balance {
    display: block;
-   margin-bottom: 20px;
    position: relative;
-   border-bottom: 1px solid #eee;
    padding-bottom: 20px;
 }
 
@@ -78,7 +76,40 @@
    border-radius: 5px;
 }
 
+.tabList {
+   white-space: nowrap;
+   padding: 0;
+   background: #2E2B44;
+   margin-bottom: 0;
+}
+
+.tab {
+   width: 50%;
+   display: inline-block;
+   white-space: normal;
+   padding: 0 !important;
+   border-radius: initial !important;
+   border: none !important;
+}
+
+.tabIcon {
+   display: block;
+   margin: 2px auto 5px auto;
+   width: 50%;
+   text-align: center;
+   font-size: 25px;
+}
+
+.tabText {
+   text-transform: uppercase;
+   margin: 0;
+   font-family: 'Jigsaw Light';
+   font-size: 14px;
+   text-align: center;
+}
+
 .txs {
    background: #2E2B44;
    padding: 0;
+   margin-top: 0;
 }

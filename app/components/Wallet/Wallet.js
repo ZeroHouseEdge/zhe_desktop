@@ -3,21 +3,26 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import Modal from 'react-modal';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Sign from '../Sign';
 import Tx from './Tx';
 import Deposit from './Deposit';
 import styles from './Wallet.css';
 import * as API from '../../helpers/two1wallet/main';
+import * as ServerAPI from '../../api/server/main';
 
 class Wallet extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { tx_history: [], isDepositing: false, isWidthdrawing: false, isOpen: false };
+    this.state = { tx_history: [], isDepositing: false, isWidthdrawing: false, isOpen: false, wagers: [] };
   }
 
   componentDidMount() {
     API.fetchTwo1(['transaction_history']).then((results) => {
       this.setState({ tx_history: results[0].transaction_history });
+    });
+    ServerAPI.userWagers(this.props.wallet.pubkey).then((results) => {
+      this.setState({ wagers: results.wagers });
     });
   }
 
@@ -31,6 +36,10 @@ class Wallet extends Component {
     const data = mode === 'deposit' ? { isDepositing: true, isWidthdrawing: false } : { isDepositing: false, isWidthdrawing: true };
     this.setState(data);
     this.toggleModal();
+  };
+
+  handleSelect = (index, last) => {
+    console.log('Selected tab: ' + index + ', Last tab: ' + last);
   };
 
   render() {
@@ -97,16 +106,43 @@ class Wallet extends Component {
             </section>
           </balance>
         </header>
-        <ul className={styles.txs}>
-          {
-            this.state.tx_history.length ?
-            this.state.tx_history.map((tx, i) => {
-              return <Tx tx={tx} key={i} />
-            })
-            :
-            <FontAwesome name='refresh fa-spin' />
-          }
-        </ul>
+        <Tabs
+          onSelect={this.handleSelect}
+          selectedIndex={0}
+        >
+          <TabList className={styles.tabList}>
+            <Tab className={styles.tab}>
+              <FontAwesome name='history' className={styles.tabIcon} />
+              <h4 className={styles.tabText}>Transaction History</h4>
+            </Tab>
+            <Tab className={styles.tab}>
+              <FontAwesome name='trophy' className={styles.tabIcon} />
+              <h4 className={styles.tabText}>Bets</h4>
+            </Tab>
+          </TabList>
+
+          <TabPanel>
+            <ul className={styles.txs}>
+              {
+                this.state.tx_history.length ?
+                this.state.tx_history.map((tx, i) => {
+                  return <Tx tx={tx} key={i} />
+                })
+                :
+                "Loading your transaction history..."
+              }
+            </ul>
+          </TabPanel>
+          <TabPanel>
+            <ul>
+              {
+                this.state.wagers.length ?
+                "Wagers are in" :
+                "No wagers brotha"
+              }
+            </ul>
+          </TabPanel>
+        </Tabs>
       </div>
     );
   }
