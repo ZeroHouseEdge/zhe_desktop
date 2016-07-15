@@ -358,3 +358,36 @@ a:hover {
   vertical-align: middle;
   font-size: 1.2em;
 }
+
+/* TABS */
+.react-tabs [role=tablist] {
+  border: none;
+  margin: 0;
+}
+
+.react-tabs [role=tab] {
+  opacity: 0.4;
+  width: 50%;
+  display: inline-block;
+  white-space: normal;
+  border: none;
+  background: transparent;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.react-tabs [role=tab]:hover {
+  opacity: 0.8;
+}
+
+.react-tabs [role=tab][aria-selected=true] {
+  width: 50%;
+  display: inline-block;
+  white-space: normal;
+  border: none;
+  border-bottom: 5px solid #858DF0;
+  background: transparent;
+  color: #fff;
+  opacity: 1.0;
+  padding: 10px 0;
+}

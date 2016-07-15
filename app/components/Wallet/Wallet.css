@@ -38,7 +38,7 @@
 .container header balance {
    display: block;
    position: relative;
-   padding-bottom: 20px;
+   padding-bottom: 40px;
 }
 
 .container header balance:after {
@@ -83,15 +83,6 @@
    margin-bottom: 0;
 }
 
-.tab {
-   width: 50%;
-   display: inline-block;
-   white-space: normal;
-   padding: 0 !important;
-   border-radius: initial !important;
-   border: none !important;
-}
-
 .tabIcon {
    display: block;
    margin: 2px auto 5px auto;
@@ -113,3 +104,4 @@
    padding: 0;
    margin-top: 0;
 }
+

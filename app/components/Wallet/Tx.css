@@ -2,6 +2,10 @@
    margin: 20px 0;
 }
 
+.container:first-child {
+   margin-top: 0;
+}
+
 .container header {
    text-transform: uppercase;
    font-family: "Jigsaw Medium";
