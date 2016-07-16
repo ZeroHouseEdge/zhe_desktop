@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Sign from '../Sign';
 import Tx from './Tx';
+import Bet from './Bet';
 import Deposit from './Deposit';
 import styles from './Wallet.css';
 import * as API from '../../helpers/two1wallet/main';
@@ -137,7 +138,10 @@ class Wallet extends Component {
             <ul>
               {
                 this.state.wagers.length ?
-                "Wagers are in" :
+                this.state.wagers.map((wager, i) => {
+                  return <Bet wager={wager} key={i} />
+                })
+                :
                 "No wagers brotha"
               }
             </ul>
