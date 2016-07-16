@@ -34,9 +34,16 @@ class App extends Component {
 
     this.state.socket.on('bet accepted', (data) => {
       this.props.dispatch(updatedWager(data.wagers));
+    })
+
+    this.state.socket.on('notify author', (data) => {
+      console.log('notify author data: ', data)
       const notif = new window.Notification('Wager accepted', {
         body: 'Your wager has been accepted'
       })
+      // notif.onclick = function () {
+      //   ipcRenderer.send('focusWindow', 'main')
+      // }
     })
   }
 

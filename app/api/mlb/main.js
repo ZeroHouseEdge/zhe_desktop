@@ -1,7 +1,6 @@
 export function todaysGames() {
    const today = new Date();
-   // const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_${today.getFullYear()}/month_${('0' + (today.getMonth() + 1)).slice(-2)}/day_${('0' + (today.getDate())).slice(-2)}/master_scoreboard.json`;
-   const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_2016/month_07/day_10/master_scoreboard.json`;
+   const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_${today.getFullYear()}/month_${('0' + (today.getMonth() + 1)).slice(-2)}/day_${('0' + (today.getDate())).slice(-2)}/master_scoreboard.json`;
    return fetch(URL)
    .then((res) => {
       return res.json();
