@@ -25,9 +25,11 @@ class OpenWagersContainer extends Component {
     if (wager.original_side === 'home') {
       data.away_id = user;
       data.away_pubkey = pubkey
+      data.home_pubkey = wager.home_pubkey
     } else {
       data.home_id = user;
       data.home_pubkey = pubkey
+      data.away_pubkey = wager.away_pubkey
     }
 
     this.props.dispatch(WagerActions.updateWagerRequest(wager._id, data))

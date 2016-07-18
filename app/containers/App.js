@@ -57,9 +57,9 @@ class App extends Component {
         var arg = `send:${wager.script_address}:${amount}`;
       }
       console.log('arg: ', arg);
-      // API.fetchTwo1([arg]).then((results) => {
-      //   console.log('results: ', results);
-      // });
+      API.fetchTwo1([arg]).then((results) => {
+        console.log('results: ', results);
+      });
     });
   }
 
