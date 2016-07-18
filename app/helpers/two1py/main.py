@@ -5,6 +5,7 @@ from os.path import expanduser
 from two1.wallet import Two1Wallet
 from two1.commands.util.currency import Price
 from two1.bitcoin.utils import bytes_to_str
+from two1.wallet.base_wallet import convert_to_satoshis
 
 with open('{}/.two1/wallet/default_wallet.json'.format(expanduser('~'))) as data_file:
     wallet_data = json.load(data_file)
@@ -24,8 +25,9 @@ for arg in sys.argv:
       rate = Price(wallet.balance())._get_usd_rate()
       print(rate)
    elif ':' in arg:
-      amount = arg.split(':')[1].strip()
-      txs = wallet.send_to('1JNozjULWXRdih5HUKbC9KLzqXgJqYNzCu', 20000)
+      address = arg.split(':')[1].strip()
+      amount = convert_to_satoshis(arg.split(':')[2].strip())
+      txs = wallet.send_to(address, amount)
       res = []
       for tx in txs:
          res.append(tx['txid'])

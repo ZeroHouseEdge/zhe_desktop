@@ -8,6 +8,7 @@ import Sign from '../Sign';
 import Tx from './Tx';
 import Bet from './Bet';
 import Deposit from './Deposit';
+import Withdraw from './Withdraw';
 import styles from './Wallet.css';
 import * as API from '../../helpers/two1wallet/main';
 import * as ServerAPI from '../../api/server/main';
@@ -15,7 +16,7 @@ import * as ServerAPI from '../../api/server/main';
 class Wallet extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { tx_history: [], isDepositing: false, isWidthdrawing: false, isOpen: false, wagers: [] };
+    this.state = { tx_history: [], isDepositing: false, isWithdrawing: false, isOpen: false, wagers: [] };
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class Wallet extends Component {
   };
 
   setMode = (mode) => {
-    const data = mode === 'deposit' ? { isDepositing: true, isWidthdrawing: false } : { isDepositing: false, isWidthdrawing: true };
+    const data = mode === 'deposit' ? { isDepositing: true, isWithdrawing: false } : { isDepositing: false, isWithdrawing: true };
     this.setState(data);
     this.toggleModal();
   };
@@ -54,7 +55,7 @@ class Wallet extends Component {
             this.state.isDepositing ? <Deposit address={this.props.wallet.address} /> : null
           }
           {
-            this.state.isWidthdrawing ? "widthdraw" : null
+            this.state.isWithdrawing ? <Withdraw /> : null
           }
         </Modal>
 
@@ -73,7 +74,7 @@ class Wallet extends Component {
               }
             </div>
           </div>
-          <div className='buttonContainer' onClick={() => this.setMode('widthdraw')}>
+          <div className='buttonContainer' onClick={() => this.setMode('withdraw')}>
             <btn className='buttonPrimary'>
               Withdraw
             </btn>

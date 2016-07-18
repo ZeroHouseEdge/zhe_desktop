@@ -1,0 +1,42 @@
+.container {
+   padding: 30px;
+}
+
+section {
+   margin-bottom: 20px;
+}
+
+.inputContainer {
+   position: relative;
+}
+
+.inputContainer span {
+   position: absolute;
+   top: 13px;
+   left: 10px;
+   color: #ccc;
+   font-size: 25px;
+}
+
+label {
+   display: block;
+   text-transform: uppercase;
+   font-family: 'Jigsaw Light';
+}
+
+input {
+   padding: 10px;
+   border-radius: 2px;
+   height: auto;
+   border: 1px solid #CCCDC8;
+   background-color: #FAFAFA;
+   font-size: 16px;
+   margin: 5px auto 0px auto;
+   width: 90%;
+   text-indent: 25px;
+}
+
+input:active, input:focus {
+   outline: 0;
+   border: 1px solid #58A1FF;
+}

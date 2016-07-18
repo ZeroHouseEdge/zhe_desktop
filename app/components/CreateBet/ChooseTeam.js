@@ -103,7 +103,7 @@ class ChooseTeam extends Component {
               <value>
                 {this.state.winnings}
               </value>
-              <div>
+              <div className={styles.btc}>
                 <FontAwesome  name='btc' /> {this.state.btcWinnings}
               </div>
             </section>
