@@ -56,10 +56,10 @@ class App extends Component {
         const amount = calculatePayout(wager.value, wager.spread);
         var arg = `send:${wager.script_address}:${amount}`;
       }
-
-      API.fetchTwo1([arg]).then((results) => {
-        console.log('results: ', results);
-      });
+      console.log('arg: ', arg);
+      // API.fetchTwo1([arg]).then((results) => {
+      //   console.log('results: ', results);
+      // });
     });
   }
 
