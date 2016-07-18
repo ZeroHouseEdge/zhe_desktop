@@ -1,20 +1,55 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Sign from '../Sign';
 import styles from './OpenWager.css';
 import { getLogo } from '../../api/mlb/main';
 import { formatLine, formatOppositeLine, calculatePayout } from '../../helpers/betting/main';
+import * as Ticker from '../../helpers/ticker/main';
 
 export default class OpenWager extends Component {
    constructor(props) {
       super(props);
    }
 
+   risk = () => {
+      const val = calculatePayout(this.formatValue(), this.props.wager.spread);
+      switch(this.props.wallet.currency) {
+         case 'satoshis':
+            return Math.floor(val);
+            break;
+         case 'BTC':
+            return val.toFixed(7);
+         case 'USD':
+            return val.toFixed(2);
+            break;
+         default:
+            return val.toFixed(7);
+      }
+   };
+
+   formatValue = () => {
+      switch(this.props.wallet.currency) {
+         case 'satoshis':
+            var val = Ticker.btcToSatoshi(this.props.wager.value, this.props.wallet.rate);
+            return val;
+            break;
+         case 'BTC':
+            return this.props.wager.value;
+         case 'USD':
+            var val = Ticker.btcToUSD(this.props.wager.value, this.props.wallet.rate);
+            return val;
+            break;
+         default:
+            return this.props.wager.value;
+      }
+   };
+
    render() {
       const wager = this.props.wager;
       return (
          <div className={styles.container}>
             <header>
-               <h1>${calculatePayout(wager.value, wager.spread)} to win ${wager.value}</h1>
+               <h1><Sign currency={this.props.wallet.currency} />{this.risk()} to win <Sign currency={this.props.wallet.currency} />{this.formatValue()}</h1>
             </header>
             <article>
                <h2>

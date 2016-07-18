@@ -18,10 +18,10 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
-    frame: false
+    frame: false,
   });
+
+  mainWindow.maximize();
 
   mainWindow.loadURL(`file://${__dirname}/app/app.html`);
 

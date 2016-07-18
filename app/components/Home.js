@@ -44,12 +44,12 @@ export default class Home extends Component {
                </div>
                <div className={styles.buttons}>
                   <div className='buttonContainer'>
-                     <div className='buttonPrimary'>
+                     <div className='buttonPrimary' onClick={this.openModal}>
                         Create a bet
                      </div>
                   </div>
                   <div className='buttonContainer'>
-                     <div className='buttonSecondary' onClick={this.openModal}>
+                     <div className='buttonSecondary'>
                         Bet with a friend
                      </div>
                   </div>

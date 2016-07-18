@@ -31,7 +31,7 @@ class ConfirmBet extends Component {
         <section>
           <msg>{this.props.data.team} over {this.oppositeTeam()} at {formatLine(this.props.data.line)} odds</msg>
           <msg>
-            <span>${this.props.data.value}</span> to win <span>${calculatePayout(this.props.data.value, this.props.data.line)}</span>
+            <span>${this.props.data.value}</span> to win <span>${this.props.data.winnings}</span>
           </msg>
         </section>
         <div className={styles.buttons}>

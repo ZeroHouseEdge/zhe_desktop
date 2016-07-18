@@ -1,10 +1,10 @@
 export function calculatePayout(m, o){
-   const money = parseInt(m);
-   const odds = parseInt(o);
+   const money = parseFloat(m);
+   const odds = parseFloat(o);
 
    if (odds === 0) { return money };
    const multiplier = odds > 0 ? odds / 100 : 100 / Math.abs(odds);
-   return (money * multiplier).toFixed(2);
+   return (money * multiplier);
 }
 
 export function formatLine(line){

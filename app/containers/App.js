@@ -45,6 +45,10 @@ class App extends Component {
       //   ipcRenderer.send('focusWindow', 'main')
       // }
     })
+
+    this.state.socket.on('pay to script', (data) => {
+      console.log('time to pay the money to the wager: ', data);
+    });
   }
 
   render() {

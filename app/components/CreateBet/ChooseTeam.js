@@ -11,7 +11,7 @@ import { usdToBTC } from '../../helpers/ticker/main';
 class ChooseTeam extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { team: '',  line: 0, value: 0.00, winnings: 0.00 };
+    this.state = { team: '',  line: 0, value: 0.00, winnings: 0.00, btcValue: 0.00000000, btcWinnings: 0.00000000 };
   }
 
   teamClicked = (team) => {
@@ -30,17 +30,28 @@ class ChooseTeam extends Component {
 
   lineChange = (event) => {
     const winnings = this.calcWinnings(this.state.value, event.target.value);
-    this.setState({ line: event.target.value, winnings: winnings });
+    const btcWinnings = this.btcWinnings(winnings, this.props.wallet.rate);
+    this.setState({ line: event.target.value, winnings: winnings, btcWinnings: btcWinnings });
   };
 
   valueChange = (event) => {
     const value = event.target.value.length ? event.target.value : 0;
-    const winnings = this.calcWinnings(event.target.value, this.state.line);
-    this.setState({ value: value, winnings: winnings });
+    const btcValue = this.btcValue(value, this.props.wallet.rate);
+    const winnings = this.calcWinnings(value, this.state.line);
+    const btcWinnings = this.btcWinnings(winnings, this.props.wallet.rate);
+    this.setState({ value: value, winnings: winnings, btcValue: btcValue, btcWinnings: btcWinnings });
   };
 
   calcWinnings = (value, line) => {
-    return value.length ? calculatePayout(value, line) : 0;
+    return value.length ? calculatePayout(value, line).toFixed(2) : 0;
+  };
+
+  btcValue = (value) => {
+    return usdToBTC(value, this.props.wallet.rate);
+  };
+
+  btcWinnings = (winnings) => {
+    return usdToBTC(winnings, this.props.wallet.rate);
   };
 
   finished = () => {
@@ -75,25 +86,25 @@ class ChooseTeam extends Component {
           <div className={styles.valueContainer}>
             <section>
               <h3>Risk</h3>
-              <span>
+              <value>
                 <input
                   type="number"
                   defaultValue={this.state.value}
                   onChange={this.valueChange}
                   size='auto'
                 />
-              </span>
-              <div>
-                <FontAwesome  name='btc' />0
+              </value>
+              <div className={styles.btc}>
+                <FontAwesome name='btc' /> {this.state.btcValue}
               </div>
             </section>
             <section>
               <h3>Win</h3>
-              <span>
-                ${this.state.winnings}
-              </span>
+              <value>
+                {this.state.winnings}
+              </value>
               <div>
-                <FontAwesome  name='btc' />0
+                <FontAwesome  name='btc' /> {this.state.btcWinnings}
               </div>
             </section>
           </div>

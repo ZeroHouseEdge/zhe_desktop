@@ -40,7 +40,7 @@ class OpenWagersContainer extends Component {
           this.props.wagers.isLoading ?
           "Loading open wagers..." :
           this.props.wagers.openWagers.map((wager, i) => {
-            return <OpenWager wager={wager} clicked={this.clicked} key={i} />
+            return <OpenWager wallet={this.props.wallet} wager={wager} clicked={this.clicked} key={i} />
           })
         }
       </div>

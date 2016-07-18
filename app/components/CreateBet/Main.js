@@ -10,7 +10,7 @@ import styles from './Main.css';
 class Main extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { step: 1, game: {}, team: '', line: 0, value: 0 };
+    this.state = { step: 1, game: {}, team: '', line: 0, value: 0, btcValue: 0.00000000, btcWinnings:  0.00000000 };
   }
 
   saveValues = (data) => {
@@ -40,7 +40,7 @@ class Main extends Component {
       home_file_code: this.state.game.home_file_code,
       away_file_code: this.state.game.away_file_code,
       spread: this.state.line,
-      value: this.state.value
+      value: this.state.btcValue
     };
 
     const original_side = this.state.team === this.state.game.home_team_name ? 'home' : 'away';

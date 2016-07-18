@@ -68,9 +68,23 @@
    text-transform: uppercase;
 }
 
-.valueContainer section span {
-   font-size: 30px;
-   width: 100%;
+.valueContainer section value:before {
+   font-family: 'FontAwesome';
+   position: relative;
+   left: -5px;
+   content: "\f155";
+}
+
+.valueContainer section value {
+    font-size: 30px;
+    display: block;
+    text-align: left;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.valueContainer section input[type=number]:before {
+   position: relative;
 }
 
 .valueContainer section input[type=number] {
@@ -78,9 +92,13 @@
    outline: none;
    border: none;
    font-size: 30px;
-   width: 100px;
+   width: 70px;
    color: #FFF;
-   text-align: center;
+}
+
+.btc {
+   width: auto;
+   font-size: 15px;
 }
 
 .buttons {
