@@ -28,6 +28,10 @@ class Wallet extends Component {
     });
   }
 
+  updateTxs = () => {
+    this.toggleModal();
+  };
+
   toggleModal = (mode) => {
     this.setState({
       isOpen: !this.state.isOpen
@@ -38,10 +42,6 @@ class Wallet extends Component {
     const data = mode === 'deposit' ? { isDepositing: true, isWithdrawing: false } : { isDepositing: false, isWithdrawing: true };
     this.setState(data);
     this.toggleModal();
-  };
-
-  handleSelect = (index, last) => {
-    console.log('Selected tab: ' + index + ', Last tab: ' + last);
   };
 
   render() {
@@ -55,7 +55,7 @@ class Wallet extends Component {
             this.state.isDepositing ? <Deposit address={this.props.wallet.address} /> : null
           }
           {
-            this.state.isWithdrawing ? <Withdraw /> : null
+            this.state.isWithdrawing ? <Withdraw updateTxs={this.updateTxs} /> : null
           }
         </Modal>
 
@@ -109,7 +109,6 @@ class Wallet extends Component {
           </balance>
         </header>
         <Tabs
-          onSelect={this.handleSelect}
           selectedIndex={0}
         >
           <TabList className={styles.tabList}>

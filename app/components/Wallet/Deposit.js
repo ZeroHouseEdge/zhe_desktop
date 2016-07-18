@@ -12,16 +12,21 @@ class Deposit extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <qrcode>
-          {
-            <QRCode value={this.props.wallet.address} size={200} />
-          }
-        </qrcode>
-        <address className={styles.address}>
-          {
-            this.props.wallet.address
-          }
-        </address>
+        <header className={styles.depositHeader}>
+          <h3>Deposit</h3>
+        </header>
+        <section className={styles.depositSection}>
+          <qrcode>
+            {
+              <QRCode value={this.props.wallet.address} size={200} />
+            }
+          </qrcode>
+          <address className={styles.address}>
+            {
+              this.props.wallet.address
+            }
+          </address>
+        </section>
       </div>
     );
   }

@@ -26,8 +26,9 @@ for arg in sys.argv:
       print(rate)
    elif ':' in arg:
       address = arg.split(':')[1].strip()
-      amount = convert_to_satoshis(arg.split(':')[2].strip())
-      txs = wallet.send_to(address, amount)
+      btc_amount = float(arg.split(':')[2].strip())
+      sat_amount = convert_to_satoshis(btc_amount)
+      txs = wallet.send_to(address, sat_amount)
       res = []
       for tx in txs:
          res.append(tx['txid'])

@@ -1,5 +1,21 @@
 .container {
    text-align: center;
+}
+
+.depositHeader {
+   background: #2E2B44;
+   margin-bottom: 20px;
+}
+
+.depositHeader h3 {
+   margin: 0;
+   padding: 10px 0;
+   text-align: center;
+   text-transform: uppercase;
+   font-family: 'Jigsaw Light';
+}
+
+.depositSection {
    padding: 30px;
 }
 
