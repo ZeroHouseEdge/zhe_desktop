@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createSocket, addSocket } from '../actions/socket';
 import io from 'socket.io-client';
 import * as API from '../helpers/two1wallet/main';
+import { calculatePayout } from '../helpers/betting/main';
 import { addWager, updatedWager } from '../actions/wager';
 const config = fs.readFileSync(`${os.homedir()}/.two1/wallet/default_wallet.json`);
 const socket = io(`http://${process.env.HOST}:5000`);
@@ -48,6 +49,17 @@ class App extends Component {
 
     this.state.socket.on('pay to script', (data) => {
       console.log('time to pay the money to the wager: ', data);
+      const wager = data.wager;
+      if(wager.author_id === this.props.wallet.pubkey) {
+        var arg = `send:${wager.script_address}:${wager.value}`;
+      } else {
+        const amount = calculatePayout(wager.value, wager.spread);
+        var arg = `send:${wager.script_address}:${amount}`;
+      }
+
+      API.fetchTwo1([arg]).then((results) => {
+        console.log('results: ', results);
+      });
     });
   }
 
@@ -70,7 +82,8 @@ class App extends Component {
 
 function mapStateToProps(store) {
   return {
-    socket: store.socket
+    socket: store.socket,
+    wallet: store.wallet
   };
 }
 

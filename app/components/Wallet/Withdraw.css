@@ -31,13 +31,13 @@
    font-size: 25px;
 }
 
-label {
+.withdrawSection label {
    display: block;
    text-transform: uppercase;
    font-family: 'Jigsaw Light';
 }
 
-input {
+.withdrawSection input {
    padding: 10px;
    border-radius: 2px;
    height: auto;
@@ -49,7 +49,7 @@ input {
    text-indent: 25px;
 }
 
-input:active, input:focus {
+.withdrawSection input:active, input:focus {
    outline: 0;
    border: 1px solid #58A1FF;
 }

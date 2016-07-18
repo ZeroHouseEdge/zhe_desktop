@@ -29,11 +29,12 @@ for arg in sys.argv:
       btc_amount = float(arg.split(':')[2].strip())
       sat_amount = convert_to_satoshis(btc_amount)
       txs = wallet.send_to(address, sat_amount)
-      res = []
-      for tx in txs:
-         res.append(tx['txid'])
+      tx = txs[0]
+      obj = {}
+      obj['txid'] = tx['txid']
+      obj['hex'] = tx['txn'].to_hex()
 
-      print(json.dumps({ 'tx_ids': res }))
+      print(json.dumps({ 'tx': obj }))
    elif '>' in arg:
       commands = arg.split('>')
       result = None

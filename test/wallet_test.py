@@ -10,13 +10,19 @@ with open('{}/.two1/wallet/default_wallet.json'.format(expanduser('~'))) as data
 
 wallet = Two1Wallet.import_from_mnemonic(mnemonic=wallet_data['master_seed'])
 
-pubkey_bytes = wallet.get_payout_public_key().__bytes__()
-pubkey_str = bytes_to_str(pubkey_bytes)
+# pubkey_bytes = wallet.get_payout_public_key().__bytes__()
+# pubkey_str = bytes_to_str(pubkey_bytes)
 
-print(pubkey_str)
+# print(pubkey_str)
 
-pubkey_obj = HDKey.from_hex(pubkey_str)
-print(pubkey_obj)
+# pubkey_obj = HDKey.from_hex(pubkey_str)
+# print(pubkey_obj)
 
-x = convert_to_satoshis(0.0024529)
-print(x)
+# x = convert_to_satoshis(0.0024529)
+# print(x)
+
+txs = wallet.send_to('1n8wrM3MTLadkb2ZRVrZJocuFgBKfNVf8', 20000)
+for tx in txs:
+   print(tx['txid'])
+   print(tx['txn'].to_hex())
+   print(dir(tx['txn']))
