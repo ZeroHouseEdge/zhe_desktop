@@ -9,6 +9,9 @@ if (process.env.NODE_ENV === 'development') {
   require('electron-debug')(); // eslint-disable-line global-require
 }
 
+app.setName('ZHE')
+app.dock.setIcon('./app/images/logo.png')
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
