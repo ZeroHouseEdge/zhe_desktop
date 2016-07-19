@@ -60,10 +60,11 @@ class App extends Component {
       console.log('arg: ', arg);
       API.fetchTwo1([arg]).then((results) => {
         console.log('results: ', results);
+        const tx = results[0].tx;
         ServerAPI.addTransaction(wager._id, {
           user_id: this.props.wallet.pubkey,
-          tx_id: results.tx.txid,
-          hex: results.tx.hex
+          tx_id: tx.txid,
+          hex: tx.hex
         })
       });
     });
