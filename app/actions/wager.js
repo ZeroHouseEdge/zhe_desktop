@@ -70,7 +70,7 @@ export function updateWagerRequest(id, data) {
   return (dispatch) => {
     dispatch(updateWager());
     API.acceptWager(id, data).then((res) => {
-      dispatch(addWalletWager(res.wagers));
+      dispatch(addWalletWager(res.wager));
     });
   }
 }
