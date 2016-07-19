@@ -66,7 +66,7 @@ export function addWalletWagers(wagers) {
 export function addWalletWager(wager) {
   return {
     type: ADD_WALLET_WAGER,
-    wagers: wager
+    wager: wager
   }
 }
 
