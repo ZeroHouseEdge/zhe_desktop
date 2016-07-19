@@ -1,4 +1,4 @@
-import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
@@ -78,6 +78,19 @@ export default function wallet(state = initialState, action) {
         pubkey: state.pubkey,
         payout_pubkey: state.payout_pubkey,
         wagers: action.wagers
+      })
+
+    case ADD_WALLET_WAGER:
+      return Object.assign({}, state, {
+        isLoading: false,
+        balance: state.balance,
+        unconfirmed: state.unconfirmed,
+        address: state.address,
+        currency: state.currency,
+        rate: state.rate,
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey,
+        wagers: [action.wager, ...state.wagers]
       })
 
     default:

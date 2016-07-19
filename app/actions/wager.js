@@ -1,5 +1,7 @@
 import * as API from '../api/server/main';
 
+import { addWalletWager } from './wallet';
+
 export const ADD_WAGERS = 'ADD_WAGERS';
 export const GET_WAGERS = 'GET_WAGERS';
 export const CREATE_WAGER = 'CREATE_WAGER';
@@ -59,7 +61,7 @@ export function createWagerRequest(data) {
   return (dispatch) => {
     dispatch(createWager());
     API.createWager(data).then((res) => {
-      // dispatch(addWager(res.wager));
+      dispatch(addWalletWager(res.wager));
     });
   }
 }
@@ -68,7 +70,7 @@ export function updateWagerRequest(id, data) {
   return (dispatch) => {
     dispatch(updateWager());
     API.acceptWager(id, data).then((res) => {
-      // dispatch(updatedWager(res.wagers));
+      dispatch(addWalletWager(res.wagers));
     });
   }
 }
