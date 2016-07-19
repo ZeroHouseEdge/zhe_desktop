@@ -7,7 +7,7 @@ export const WALLET_REGISTERED = 'WALLET_REGISTERED';
 export const WALLET_FAILED = 'WALLET_FAILED';
 export const CHANGE_CURRENCY = 'CHANGE_CURRENCY';
 export const ADD_PUBKEY = 'ADD_PUBKEY';
-export const ADD_WAGERS = 'ADD_WAGERS';
+export const ADD_WALLET_WAGERS = 'ADD_WALLET_WAGERS';
 
 export function registerWallet() {
   return {
@@ -37,8 +37,10 @@ export function walletFailed() {
 export function refreshWallet() {
   return (dispatch) => {
     dispatch(registerWallet());
+    console.log('registerWallet')
     return API.fetchTwo1(['balance', 'unconfirmed_balance', 'get_payout_address', 'USD', 'to_dict', 'get_payout_public_key>__bytes__']).then((results) => {
       dispatch(walletRegistered(results[0].balance, results[1].unconfirmed_balance, results[2].get_payout_address, 'satoshis', results[3], results[4].to_dict.accounts[0].public_key, results[5].data));
+      console.log('walletRegistered')
       dispatch(fetchWagers(results[4].to_dict.accounts[0].public_key))
     });
   }
@@ -57,7 +59,7 @@ export function changeCurrency(currencies, balance, unconfirmed, rate) {
 
 export function addWagers(wagers) {
   return {
-    type: ADD_WAGERS,
+    type: ADD_WALLET_WAGERS,
     wagers: wagers
   }
 }
