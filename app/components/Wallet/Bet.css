@@ -1,0 +1,35 @@
+.container {
+   background: #FFF;
+   color: #707070;
+   height: 224px;
+}
+
+.gameDetails {
+   height: 200px;
+   width: 30%;
+   display: inline-block;
+   vertical-align: top;
+   text-align: center;
+}
+
+.gameDetails img {
+   width: 50px;
+   margin: 0 10px;
+   padding: 50px 0;
+   vertical-align: middle;
+}
+
+.gameDetails span {
+   padding: 50px 0;
+   vertical-align: middle;
+}
+
+.betDetails {
+   height: 200px;
+   background-color: blue;
+   width: 70%;
+   display: inline-block;
+   vertical-align: top;
+}
+
+

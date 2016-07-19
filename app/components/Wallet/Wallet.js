@@ -135,10 +135,10 @@ class Wallet extends Component {
             </ul>
           </TabPanel>
           <TabPanel>
-            <ul>
+            <ul className={styles.bets}>
               {
-                this.state.wagers.length ?
-                this.state.wagers.map((wager, i) => {
+                this.props.wallet.wagers.length ?
+                this.props.wallet.wagers.map((wager, i) => {
                   return <Bet wager={wager} key={i} />
                 })
                 :

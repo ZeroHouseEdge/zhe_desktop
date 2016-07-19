@@ -105,3 +105,13 @@
    margin-top: 0;
 }
 
+.bets {
+   padding: 0;
+   margin: 0;
+}
+
+.bets > li:nth-child(even) {
+   background-color: #f4f4f4;
+}
+
+

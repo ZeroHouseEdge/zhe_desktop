@@ -1,4 +1,4 @@
-import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WAGERS } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
@@ -8,7 +8,8 @@ const initialState = {
    currency: 'satoshis',
    rate: null,
    pubkey: null,
-   payout_pubkey: null
+   payout_pubkey: null,
+   wagers: []
 };
 
 
@@ -23,7 +24,8 @@ export default function wallet(state = initialState, action) {
         currency: state.currency,
         rate: state.rate,
         pubkey: state.pubkey,
-        payout_pubkey: state.payout_pubkey
+        payout_pubkey: state.payout_pubkey,
+        wagers: state.wagers
       })
 
     case WALLET_REGISTERED:
@@ -35,7 +37,8 @@ export default function wallet(state = initialState, action) {
         currency: action.currency,
         rate: action.rate,
         pubkey: action.pubkey,
-        payout_pubkey: action.payout_pubkey
+        payout_pubkey: action.payout_pubkey,
+        wagers: state.wagers
       })
 
     case WALLET_FAILED:
@@ -47,7 +50,8 @@ export default function wallet(state = initialState, action) {
         currency: '',
         rate: null,
         pubkey: null,
-        payout_pubkey: null
+        payout_pubkey: null,
+        wagers: []
       })
 
     case CHANGE_CURRENCY:
@@ -59,7 +63,21 @@ export default function wallet(state = initialState, action) {
         currency: action.currency,
         rate: state.rate,
         pubkey: state.pubkey,
-        payout_pubkey: state.payout_pubkey
+        payout_pubkey: state.payout_pubkey,
+        wagers: state.wagers
+      })
+
+    case ADD_WAGERS:
+      return Object.assign({}, state, {
+        isLoading: false,
+        balance: state.balance,
+        unconfirmed: state.unconfirmed,
+        address: state.address,
+        currency: state.currency,
+        rate: state.rate,
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey,
+        wagers: action.wagers
       })
 
     default:

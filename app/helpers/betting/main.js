@@ -4,7 +4,6 @@ export function calculatePayout(m, o){
 
    if (odds === 0) { return money };
    const multiplier = odds > 0 ? odds / 100 : 100 / Math.abs(odds);
-   console.log('multiplier: ', multiplier)
    return (money * multiplier);
 }
 

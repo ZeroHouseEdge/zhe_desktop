@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import styles from './Bet.css';
+import { formatStart, getLogo } from '../../api/mlb/main';
 
 class Bet extends Component {
   constructor(props, context) {
@@ -15,9 +16,14 @@ class Bet extends Component {
   render() {
     const linkUrl = `/wager/${this.props.wager._id}`;
     return (
-      <li>
+      <li className={styles.container}>
         <Link to={linkUrl}>
-          wager
+          <div className={styles.gameDetails}>
+            <img src={getLogo(this.props.wager.away_file_code)} />
+            <span>vs</span>
+            <img src={getLogo(this.props.wager.home_file_code)} />
+          </div>
+          <div className={styles.betDetails}></div>
         </Link>
       </li>
     );
