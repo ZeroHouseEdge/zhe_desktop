@@ -9,6 +9,8 @@ export const CHANGE_CURRENCY = 'CHANGE_CURRENCY';
 export const ADD_PUBKEY = 'ADD_PUBKEY';
 export const ADD_WALLET_WAGERS = 'ADD_WALLET_WAGERS';
 export const ADD_WALLET_WAGER = 'ADD_WALLET_WAGER';
+export const PAY_SCRIPT = 'PAY_SCRIPT';
+export const SCRIPT_PAYED = 'SCRIPT_PAYED';
 
 export function registerWallet() {
   return {
@@ -76,6 +78,20 @@ export function fetchWagers(pubkey) {
     ServerAPI.userWagers(pubkey).then((results) => {
       dispatch(addWalletWagers(results.wagers))
     });
+  }
+}
+
+export function payScript() {
+  return {
+    type: PAY_SCRIPT
+  }
+}
+
+export function scriptPayed(wager_id, txs) {
+  return {
+    type: SCRIPT_PAYED,
+    wager_id: wager_id,
+    txs: txs
   }
 }
 

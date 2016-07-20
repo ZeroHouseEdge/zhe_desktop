@@ -1,7 +1,8 @@
-import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER, PAY_SCRIPT, SCRIPT_PAYED } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
+   isPayingScript: false,
    balance: null,
    unconfirmed: null,
    address: null,
@@ -18,6 +19,7 @@ export default function wallet(state = initialState, action) {
     case REGISTER_WALLET:
       return Object.assign({}, state, {
         isLoading: true,
+        isPayingScript: false,
         balance: state.balance,
         unconfirmed: state.unconfirmed,
         address: state.address,
@@ -31,6 +33,7 @@ export default function wallet(state = initialState, action) {
     case WALLET_REGISTERED:
       return Object.assign({}, state, {
         isLoading: false,
+        isPayingScript: false,
         balance: action.balance,
         unconfirmed: action.unconfirmed,
         address: action.address,
@@ -44,6 +47,7 @@ export default function wallet(state = initialState, action) {
     case WALLET_FAILED:
       return Object.assign({}, state, {
         isLoading: false,
+        isPayingScript: false,
         balance: null,
         unconfirmed: null,
         address: '',
@@ -57,6 +61,7 @@ export default function wallet(state = initialState, action) {
     case CHANGE_CURRENCY:
       return Object.assign({}, state, {
         isLoading: false,
+        isPayingScript: false,
         balance: action.balance,
         unconfirmed: action.unconfirmed,
         address: state.address,
@@ -70,6 +75,7 @@ export default function wallet(state = initialState, action) {
     case ADD_WALLET_WAGERS:
       return Object.assign({}, state, {
         isLoading: false,
+        isPayingScript: false,
         balance: state.balance,
         unconfirmed: state.unconfirmed,
         address: state.address,
@@ -83,6 +89,7 @@ export default function wallet(state = initialState, action) {
     case ADD_WALLET_WAGER:
       return Object.assign({}, state, {
         isLoading: false,
+        isPayingScript: false,
         balance: state.balance,
         unconfirmed: state.unconfirmed,
         address: state.address,
@@ -91,6 +98,42 @@ export default function wallet(state = initialState, action) {
         pubkey: state.pubkey,
         payout_pubkey: state.payout_pubkey,
         wagers: [action.wager, ...state.wagers]
+      })
+
+    case PAY_SCRIPT:
+      return Object.assign({}, state, {
+        isLoading: false,
+        isPayingScript: true,
+        balance: state.balance,
+        unconfirmed: state.unconfirmed,
+        address: state.address,
+        currency: state.currency,
+        rate: state.rate,
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey,
+        wagers: state.wagers
+      })
+
+    case SCRIPT_PAYED:
+      const wagers = state.wagers.map((w, i) => {
+        if (action.wager_id === w._id) {
+          return Object.assign({}, w, {
+            transactions: action.txs
+          })
+        }
+        return w;
+      });
+      return Object.assign({}, state, {
+        isLoading: false,
+        isPayingScript: false,
+        balance: state.balance,
+        unconfirmed: state.unconfirmed,
+        address: state.address,
+        currency: state.currency,
+        rate: state.rate,
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey,
+        wagers: wagers
       })
 
     default:

@@ -12,7 +12,7 @@ class Tx extends Component {
 
   render() {
     const tx = this.props.tx;
-    const txLink = `https://blockexplorer.com/tx/${tx.txid}`
+    const txLink = `https://blockchain.info/tx/${tx.txid}`
     return (
       <li className={styles.container}>
         <header>
