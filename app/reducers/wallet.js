@@ -1,4 +1,4 @@
-import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER, UPDATE_WAGER, PAY_SCRIPT, SCRIPT_PAYED } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER, UPDATE_WALLET_WAGER, PAY_SCRIPT, SCRIPT_PAYED } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
@@ -100,7 +100,7 @@ export default function wallet(state = initialState, action) {
         wagers: [action.wager, ...state.wagers]
       })
 
-    case UPDATE_WAGER:
+    case UPDATE_WALLET_WAGER:
       var wagers = state.wagers.map((w, i) => {
         if(action.wager._id === w._id) {
           return Object.assign({}, action.wager)

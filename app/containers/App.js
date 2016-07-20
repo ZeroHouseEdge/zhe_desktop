@@ -42,7 +42,7 @@ class App extends Component {
 
     this.state.socket.on('notify author', (data) => {
       console.log('notify author data: ', data)
-      WalletActions.updateWager(data.wager);
+      // WalletActions.updateWager(data.wager);
       const notif = new window.Notification('Wager accepted', {
         body: 'Your wager has been accepted'
       })
@@ -60,21 +60,23 @@ class App extends Component {
       console.log('arg: ', arg);
       this.props.dispatch(WalletActions.payScript())
       this.props.router.push(`/wager/${wager._id}`)
-      API.fetchTwo1([arg]).then((results) => {
-        console.log('results: ', results);
-        const tx = results[0].tx;
-        const real = {
-          user_id: this.props.wallet.pubkey,
-          tx_id: tx.txid,
-          hex: tx.hex
-        };
-        // const fake = {
+      // API.fetchTwo1([arg]).then((results) => {
+        // console.log('results: ', results);
+        // const tx = results[0].tx;
+        // const real = {
         //   user_id: this.props.wallet.pubkey,
-        //   tx_id: 'bc91b066ca26a14ad772e552b3a12e100eadda38303a9dc03f24dec0ce4de783',
-        //   hex: '01000000011e36283b486e1ac14b0d28736dd47601f774325e296f8ed2e9cac07db6fff3b1010000006a4730440220710a384adf81bd54d84e5735bc96a9d37624ff3714047fbcb9025b1fb2e4a81002206aacc83ff8caa3980e3540001c40d9775a3d934f9ef1a599654487babc544bd6012103d55305bb9b480b4d5bda12a069ef63ffae30bb837a01aeeabb56cbfd36e9b1d4ffffffff027eb11700000000001976a9140d8cfbc26dcccdc96a1180fa92d04bc47efc252288ac555f0b000000000017a9141d24abbe3745bbe19792d7848e644d801723cd1d8700000000'
+        //   tx_id: tx.txid,
+        //   hex: tx.hex
         // };
-        ServerAPI.addTransaction(wager._id, real)
-      });
+        setTimeout(() => {
+          const fake = {
+            user_id: this.props.wallet.pubkey,
+            tx_id: 'bc91b066ca26a14ad772e552b3a12e100eadda38303a9dc03f24dec0ce4de783',
+            hex: '01000000011e36283b486e1ac14b0d28736dd47601f774325e296f8ed2e9cac07db6fff3b1010000006a4730440220710a384adf81bd54d84e5735bc96a9d37624ff3714047fbcb9025b1fb2e4a81002206aacc83ff8caa3980e3540001c40d9775a3d934f9ef1a599654487babc544bd6012103d55305bb9b480b4d5bda12a069ef63ffae30bb837a01aeeabb56cbfd36e9b1d4ffffffff027eb11700000000001976a9140d8cfbc26dcccdc96a1180fa92d04bc47efc252288ac555f0b000000000017a9141d24abbe3745bbe19792d7848e644d801723cd1d8700000000'
+          };
+          ServerAPI.addTransaction(wager._id, fake)
+        }, 2000);
+      // });
     })
 
     this.state.socket.on('tx added', (data) => {

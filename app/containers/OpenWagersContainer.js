@@ -31,7 +31,7 @@ class OpenWagersContainer extends Component {
       data.home_pubkey = pubkey
       data.away_pubkey = wager.away_pubkey
     }
-
+    console.log('WAGER ID: ', wager._id);
     this.props.dispatch(WagerActions.updateWagerRequest(wager._id, data))
   };
 
