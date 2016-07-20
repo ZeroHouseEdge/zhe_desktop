@@ -1,4 +1,4 @@
-import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER, PAY_SCRIPT, SCRIPT_PAYED } from '../actions/wallet';
+import { REGISTER_WALLET, WALLET_REGISTERED, WALLET_FAILED, CHANGE_CURRENCY, ADD_WALLET_WAGERS, ADD_WALLET_WAGER, UPDATE_WAGER, PAY_SCRIPT, SCRIPT_PAYED } from '../actions/wallet';
 
 const initialState = {
    isLoading: false,
@@ -100,6 +100,27 @@ export default function wallet(state = initialState, action) {
         wagers: [action.wager, ...state.wagers]
       })
 
+    case UPDATE_WAGER:
+      var wagers = state.wagers.map((w, i) => {
+        if(action.wager._id === w._id) {
+          return Object.assign({}, action.wager)
+        }
+        return w
+      })
+
+      return Object.assign({}, state, {
+        isLoading: false,
+        isPayingScript: false,
+        balance: state.balance,
+        unconfirmed: state.unconfirmed,
+        address: state.address,
+        currency: state.currency,
+        rate: state.rate,
+        pubkey: state.pubkey,
+        payout_pubkey: state.payout_pubkey,
+        wagers: wagers
+      })
+
     case PAY_SCRIPT:
       return Object.assign({}, state, {
         isLoading: false,
@@ -115,7 +136,7 @@ export default function wallet(state = initialState, action) {
       })
 
     case SCRIPT_PAYED:
-      const wagers = state.wagers.map((w, i) => {
+      var wagers = state.wagers.map((w, i) => {
         if (action.wager_id === w._id) {
           return Object.assign({}, w, {
             transactions: action.txs
