@@ -9,6 +9,26 @@ export function todaysGames() {
    });
 }
 
+export function getBoxscore(game_data_directory) {
+   const URL = `http://www.mlb.com/gdcross${game_data_directory}/boxscore.json`;
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      return json.data.boxscore;
+   });
+}
+
+export function getLinescore(game_data_directory) {
+   const URL = `http://www.mlb.com/gdcross${game_data_directory}/linescore.json`;
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      return json.data.game;
+   });
+}
+
 export function getLogo(file_code) {
    return `http://mlb.mlb.com/mlb/images/team_logos/124x150/${file_code}@2x.png`;
 }
@@ -22,4 +42,26 @@ export function formatStart(str) {
          morning = hour < 12 ? "AM" : "PM";
 
    return hourFormatted + ":" + minuteFormatted + morning;
+}
+
+export function fancyDate(day, date) {
+   const DAYS = {
+      "MON": "Monday",
+      "TUE": "Tuesday",
+      "WED": "Wednesday",
+      "THU": "Thursday",
+      "FRI": "Friday",
+      "SAT": "Saturday",
+      "SUN": "Sunday"
+   }
+
+   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+   const fullDay = DAYS[day];
+   const d = new Date(date);
+   const month = MONTHS[d.getMonth() + 1]
+   const dayNum = d.getDate()
+   const year = d.getFullYear()
+
+   return `${fullDay}, ${month} ${dayNum}, ${year}`;
 }

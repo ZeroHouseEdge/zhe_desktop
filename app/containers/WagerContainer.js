@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import HeaderContainer from './HeaderContainer';
+import WagerShow from '../components/Wagers/WagerShow';
 import _ from 'lodash';
 
 class WagerContainer extends Component {
@@ -9,14 +10,14 @@ class WagerContainer extends Component {
   }
 
   render() {
-    const { wager_id } = this.props.routeParams;
     return (
       <div>
         <HeaderContainer />
-        hi from wager: {wager_id}
-        <p>
-          {this.props.wager.home_team_name}
-        </p>
+        {
+          this.props.wager ?
+          <WagerShow wager={this.props.wager} /> :
+          "Loading wager..."
+        }
       </div>
     );
   }

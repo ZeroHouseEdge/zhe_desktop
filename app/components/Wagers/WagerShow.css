@@ -1,0 +1,45 @@
+.container {
+   width: 80%;
+   margin: 0 auto;
+   color: #000;
+}
+
+.matchup {
+   padding: 50px 0;
+   background: #FFF;
+}
+
+.team, .details {
+   display: inline-block;
+   vertical-align: top;
+}
+
+.team {
+   width: 25%;
+   text-align: center;
+}
+
+.team img {
+   width: 115px;
+}
+
+.team span {
+   display: block;
+}
+
+.details {
+   width: 50%;
+   text-align: center;
+   height: 200px;
+   /*background-color: red;*/
+}
+
+.details h2 {
+   font-size: 32px;
+   color: #000;
+   margin: 5px 0;
+}
+
+.details h4 {
+
+}

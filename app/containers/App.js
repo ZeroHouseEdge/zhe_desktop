@@ -19,7 +19,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props)
     this.props.dispatch(addSocket(socket))
     this.setState({
       socket: socket,
