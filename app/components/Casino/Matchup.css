@@ -1,0 +1,60 @@
+.matchupContainer {
+   cursor: pointer;
+   width: 30%;
+   display: inline-block;
+   background: #EEEEEE;
+   vertical-align: top;
+   margin: 5px;
+   color: #414141;
+}
+
+.matchupTitle {
+   border-bottom: 1px solid #ccc;
+   padding: 15px;
+   text-align: center;
+}
+
+.matchupTitle span {
+   display: inline-block;
+   width: 40%;
+   margin: 0 5px;
+}
+
+.matchupTitle span img {
+   width: 30px;
+   display: block;
+   margin: 0 auto;
+}
+
+.pitcher, .batter {
+   padding: 15px;
+   border-bottom: 1px solid #ccc;
+}
+
+.pitcher div, .batter div {
+   display: inline-block;
+   vertical-align: top;
+   margin-left: 15px;
+}
+
+.pitcher div description, .batter div description {
+   font-size: 16px;
+   font-family: 'Jigsaw Light';
+   text-transform: uppercase;
+   display: block;
+}
+
+.pitcher div dets, .batter div dets {
+   font-size: 14px;
+   display: block;
+}
+
+.pitcher img, .batter img {
+   width: 40px;
+   border-radius: 5px;
+}
+
+.balls, .strikes {
+   padding: 0 15px;
+   margin: 5px 0;
+}

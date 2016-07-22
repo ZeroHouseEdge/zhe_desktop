@@ -14,6 +14,10 @@ body {
   height: 100%;
 }
 
+body.casinoOn {
+  background: #D32F2F;
+}
+
 h2 {
   margin: 0;
   font-size: 2.25rem;
@@ -145,6 +149,11 @@ a:hover {
 .buttonContainer .buttonSecondary {
   background-color: #58A1FF;
   box-shadow: 0 2px 0 0 #2584ff;
+}
+
+.buttonContainer .buttonSecondary.alert {
+  background-color: #F44336;
+  box-shadow: 0 2px 0 0 #D32F2F;
 }
 
 .buttonContainer .buttonSecondary div:active {
@@ -400,4 +409,49 @@ a:hover {
   color: #fff;
   opacity: 1.0;
   padding: 10px 0;
+}
+
+.casino {
+  font-family: "Raleway";
+  font-size: 110px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 10px;
+}
+.casino span {
+  position: relative;
+  display: inline-block;
+  line-height: 77px;
+  text-transform: uppercase;
+}
+.casino span .light {
+  transform: translate(-50%, 50%);
+  position: absolute;
+  background-color: rgba(140, 140, 140, 0.5);
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+  border: solid 1px #ECDBB9;
+}
+.casino span .light.on {
+  background-color: #FCF8D2;
+  box-shadow: 3px 0px 10px 3px rgba(255, 235, 194, 0.18), -3px 0px 10px 3px rgba(255, 235, 194, 0.18), 0px 3px 10px 3px rgba(255, 235, 194, 0.18), 0px -3px 10px 3px rgba(255, 235, 194, 0.18), 6px 0px 10px 6px rgba(255, 235, 194, 0.1), -6px 0px 10px 6px rgba(255, 235, 194, 0.1), 0px 6px 10px 6px rgba(255, 235, 194, 0.1), 0px -6px 10px 6px rgba(255, 235, 194, 0.1);
+}
+
+/* BALLS+STRIKES */
+.ball, .strike {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #333;
+  margin: 0 2px;
+}
+
+.ball.active {
+  background: #ba0c2f;
+}
+
+.strike.active {
+  background: #4CAF50;
 }

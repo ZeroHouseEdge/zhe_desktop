@@ -5,6 +5,7 @@ import soccer from './soccer';
 import mlb from './mlb';
 import wagers from './wager';
 import socket from './socket';
+import casino from './casino';
 
 const rootReducer = combineReducers({
   routing,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   soccer,
   mlb,
   wagers,
-  socket
+  socket,
+  casino
 });
 
 export default rootReducer;

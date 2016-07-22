@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export function todaysGames() {
    const today = new Date();
    const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_${today.getFullYear()}/month_${('0' + (today.getMonth() + 1)).slice(-2)}/day_${('0' + (today.getDate())).slice(-2)}/master_scoreboard.json`;
@@ -33,6 +35,10 @@ export function getLogo(file_code) {
    return `http://mlb.mlb.com/mlb/images/team_logos/124x150/${file_code}@2x.png`;
 }
 
+export function getMugshot(pid) {
+   return `http://gdx.mlb.com/images/gameday/mugshots/mlb/${pid}@2x.jpg`
+}
+
 export function formatStart(str) {
    const date = new Date(str);
    const hour = date.getHours(),
@@ -64,4 +70,44 @@ export function fancyDate(day, date) {
    const year = d.getFullYear()
 
    return `${fullDay}, ${month} ${dayNum}, ${year}`;
+}
+
+export function diffPatch(gid, timestamp) {
+   const URL = `http://statsapi.mlb.com/api/v1/game/${gid}/feed/live/diffPatch?language=en&startTimecode=${timestamp}`
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      return json;
+   });
+}
+
+export function getTimestamp(subtract = 0) {
+   const pull = subtractTime(new Date(), subtract)
+   const year = pull.getFullYear()
+   const month = ('0' + (pull.getUTCMonth() + 1)).slice(-2)
+   const day = pull.getUTCDate()
+   const hour = ('0' + (pull.getUTCHours())).slice(-2)
+   const minutes = ('0' + (pull.getUTCMinutes())).slice(-2)
+   const seconds = ('0' + (pull.getUTCSeconds())).slice(-2)
+
+   const timestamp = `${year}${month}${day}_${hour}${minutes}${seconds}`;
+
+   return timestamp;
+}
+
+function subtractTime(date, minutes) {
+   return new Date(date.getTime() - minutes*60000);
+}
+
+export function updateMatchupData(game_pk) {
+   const today = new Date();
+   const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_${today.getFullYear()}/month_${('0' + (today.getMonth() + 1)).slice(-2)}/day_${('0' + (today.getDate())).slice(-2)}/master_scoreboard.json`;
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      const game = _.find(json.data.games.game, (g) => { return g.game_pk === game_pk });
+      return game
+   });
 }

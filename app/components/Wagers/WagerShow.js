@@ -7,7 +7,7 @@ import _ from 'lodash';
 export default class WagerShow extends Component {
    constructor(props) {
       super(props);
-      this.state = { fetchingData: true, linescore: {} }
+      this.state = { fetchingData: true, linescore: {}, pitches: [] }
    }
 
    componentWillMount() {
@@ -28,7 +28,7 @@ export default class WagerShow extends Component {
       const home_txid = home_tx ? `https://blockchain.info/tx/${home_tx.tx_id}`: '';
       const contractURL = `https://blockchain.info/address/${wager.script_address}`;
       return (
-         <div className={styles.container}>
+         <div className={styles.container} onClick={() => {console.log(this.state.pitches)}}>
             <section className={styles.matchup}>
                <div className={styles.team}>
                   <img src={MLB.getLogo(wager.away_file_code)} />
