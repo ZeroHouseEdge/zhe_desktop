@@ -1,3 +1,5 @@
+import { calculateBalance } from '../ticker/main';
+
 export function calculatePayout(m, o){
    const money = parseFloat(m);
    const odds = parseFloat(o);
@@ -21,4 +23,11 @@ export function formatOppositeLine(line){
    const res = Math.sign(line) > 0 ? Math.abs(line) * -1 : "+" + Math.abs(line);
 
    return res;
+}
+
+export function checkBalance(currency, balance, amount, rate) {
+   if (currency === 'BTC') { return balance > amount }
+   const currencies = { from: currency, to: 'BTC' };
+   const btcBalance = calculateBalance(currencies, balance, 0, rate);
+   return parseFloat(btcBalance[0]) - 0.015 > amount;
 }

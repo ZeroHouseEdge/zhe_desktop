@@ -133,12 +133,6 @@ class Matchup extends Component {
           <FontAwesome name='refresh fa-spin' />
         }
         </div>
-
-        <div className='buttonContainer'>
-          <div className='buttonPrimary' onClick={this.openModal}>
-            Bet
-          </div>
-        </div>
       </div>
     );
   }

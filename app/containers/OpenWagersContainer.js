@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import OpenWager from '../components/Wagers/OpenWager';
 import * as WagerActions from '../actions/wager';
 import * as API from '../api/server/main';
+import { checkBalance } from '../helpers/betting/main';
 
 class OpenWagersContainer extends Component {
   constructor(props, context) {
@@ -14,7 +15,9 @@ class OpenWagersContainer extends Component {
   }
 
   clicked = (wager) => {
-    if (this.props.wallet.isLoading) { return };
+    if (this.props.wallet.isLoading) { return; }
+    const enough = checkBalance(this.props.wallet.currency, this.props.wallet.unconfirmed, wager.value, this.props.wallet.rate)
+    if (!enough) { alert(`You don't have enough Bitcoin in your account to accept this bet`); return; }
 
     const user = this.props.wallet.pubkey;
     const pubkey = this.props.wallet.payout_pubkey;
