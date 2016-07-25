@@ -26,6 +26,7 @@ export function formatOppositeLine(line){
 }
 
 export function checkBalance(currency, balance, amount, rate) {
+   console.log('here')
    if (currency === 'BTC') { return balance > amount }
    const currencies = { from: currency, to: 'BTC' };
    const btcBalance = calculateBalance(currencies, balance, 0, rate);

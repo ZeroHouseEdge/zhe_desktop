@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import Sign from '../Sign';
 import styles from './ChooseTeam.css';
 import { getLogo } from '../../api/mlb/main';
-import { calculatePayout } from '../../helpers/betting/main';
+import { calculatePayout, checkBalance } from '../../helpers/betting/main';
 import { usdToBTC } from '../../helpers/ticker/main';
 
 class ChooseTeam extends Component {
@@ -56,6 +56,9 @@ class ChooseTeam extends Component {
 
   finished = () => {
     if (!this.state.team.length || this.state.value <=0) { return };
+    const enough = checkBalance(this.props.wallet.currency, this.props.wallet.unconfirmed, this.state.btcValue, this.props.wallet.rate)
+    if (!enough) { alert(`You don't have enough Bitcoin in your account to create this bet`); return; }
+
     this.props.saveValues(this.state);
     this.props.nextStep();
   };
