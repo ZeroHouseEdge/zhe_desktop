@@ -27,7 +27,7 @@ export default class WagerShow extends Component {
       const away_txid = away_tx ? `https://blockchain.info/tx/${away_tx.tx_id}` : '';
       const home_txid = home_tx ? `https://blockchain.info/tx/${home_tx.tx_id}`: '';
       const contractURL = `https://blockchain.info/address/${wager.script_address}`;
-      const innings = this.state.linescore.linescore ? this.state.linescore.linescore : []
+      const innings = this.state.linescore.linescore ? this.state.linescore.linescore : Array.apply(null, {length: 9}).map(Number.call, Number)
       const inningsLen = this.state.linescore.linescore && this.state.linescore.linescore.length >= 9 ? this.state.linescore.linescore.length : 9
       return (
          <div className={styles.container} onClick={() => console.log(this.state)}>
