@@ -12,7 +12,6 @@ class WagerContainer extends Component {
   render() {
     return (
       <div>
-        <HeaderContainer />
         {
           this.props.wager ?
           <WagerShow wager={this.props.wager} /> :

@@ -3,6 +3,7 @@ import fs from 'fs';
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import HeaderContainer from './HeaderContainer';
 import io from 'socket.io-client';
 import { createSocket, addSocket } from '../actions/socket';
 import * as WalletActions from '../actions/wallet';
@@ -87,6 +88,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <HeaderContainer />
         {this.props.children}
         {
           (() => {

@@ -18,6 +18,7 @@ class OpenWagersContainer extends Component {
     if (this.props.wallet.isLoading) { return; }
     const enough = checkBalance(this.props.wallet.currency, this.props.wallet.unconfirmed, wager.value, this.props.wallet.rate)
     if (!enough) { alert(`You don't have enough Bitcoin in your account to accept this bet`); return; }
+    if (this.props.wallet.pubkey === wager.author_id) { alert('You can\'t accept your own wager'); return; }
 
     const user = this.props.wallet.pubkey;
     const pubkey = this.props.wallet.payout_pubkey;

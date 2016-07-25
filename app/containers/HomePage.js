@@ -11,7 +11,6 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <HeaderContainer />
         <Home />
       </div>
     );

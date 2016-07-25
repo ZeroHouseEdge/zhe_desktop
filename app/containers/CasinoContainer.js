@@ -21,7 +21,6 @@ class CasinoContainer extends Component {
   render() {
     return (
       <div>
-        <HeaderContainer />
         <CasinoHome />
       </div>
     );

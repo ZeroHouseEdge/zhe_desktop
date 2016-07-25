@@ -21,7 +21,6 @@ class WalletContainer extends Component {
   render() {
     return (
       <div>
-        <HeaderContainer />
         {
           this.props.wallet.isLoading ?
           <div className={styles.loading}>
