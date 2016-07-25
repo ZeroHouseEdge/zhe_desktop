@@ -7,7 +7,7 @@ import _ from 'lodash';
 export default class WagerShow extends Component {
    constructor(props) {
       super(props);
-      this.state = { fetchingData: true, linescore: {}, pitches: [] }
+      this.state = { fetchingData: true, linescore: {} }
    }
 
    componentWillMount() {
@@ -27,8 +27,10 @@ export default class WagerShow extends Component {
       const away_txid = away_tx ? `https://blockchain.info/tx/${away_tx.tx_id}` : '';
       const home_txid = home_tx ? `https://blockchain.info/tx/${home_tx.tx_id}`: '';
       const contractURL = `https://blockchain.info/address/${wager.script_address}`;
+      const innings = this.state.linescore.linescore ? this.state.linescore.linescore : []
+      const inningsLen = this.state.linescore.linescore && this.state.linescore.linescore.length >= 9 ? this.state.linescore.linescore.length : 9
       return (
-         <div className={styles.container} onClick={() => {console.log(this.state.pitches)}}>
+         <div className={styles.container} onClick={() => console.log(this.state)}>
             <section className={styles.matchup}>
                <div className={styles.team}>
                   <img src={MLB.getLogo(wager.away_file_code)} />
@@ -65,6 +67,69 @@ export default class WagerShow extends Component {
                      "Paying to the contract..."
                      }
                   </span>
+               </div>
+               <div className={styles.linescoreContainer}>
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>{this.state.linescore.status}</th>
+                           {
+                              Array.apply(null, {length: inningsLen}).map(Number.call, Number).map((inn, i) => {
+                                 return <th key={i}>{inn + 1}</th>;
+                              })
+                           }
+                           <th>
+                              R
+                           </th>
+                           <th>
+                              H
+                           </th>
+                           <th>
+                              E
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>
+                              {this.state.linescore.away_name_abbrev}
+                           </td>
+                           {
+                              innings.map((inn, i) => {
+                                 return <td key={i}>{inn.away_inning_runs}</td>
+                              })
+                           }
+                           <td>
+                              {this.state.linescore.away_team_runs}
+                           </td>
+                           <td>
+                              {this.state.linescore.away_team_hits}
+                           </td>
+                           <td>
+                              {this.state.linescore.away_team_errors}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              {this.state.linescore.home_name_abbrev}
+                           </td>
+                           {
+                              innings.map((inn, i) => {
+                                 return <td key={i}>{inn.home_inning_runs}</td>
+                              })
+                           }
+                           <td>
+                              {this.state.linescore.home_team_runs}
+                           </td>
+                           <td>
+                              {this.state.linescore.home_team_hits}
+                           </td>
+                           <td>
+                              {this.state.linescore.home_team_errors}
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
                </div>
             </section>
          </div>
