@@ -78,7 +78,7 @@ export default class WagerShow extends Component {
                                  return <th key={i}>{inn + 1}</th>;
                               })
                            }
-                           <th>
+                           <th className={styles.score}>
                               R
                            </th>
                            <th>
@@ -99,7 +99,7 @@ export default class WagerShow extends Component {
                                  return <td key={i}>{inn.away_inning_runs}</td>
                               })
                            }
-                           <td>
+                           <td className={styles.score}>
                               {this.state.linescore.away_team_runs}
                            </td>
                            <td>
@@ -118,7 +118,7 @@ export default class WagerShow extends Component {
                                  return <td key={i}>{inn.home_inning_runs}</td>
                               })
                            }
-                           <td>
+                           <td className={styles.score}>
                               {this.state.linescore.home_team_runs}
                            </td>
                            <td>

@@ -60,3 +60,38 @@
    font-size: 20px;
    text-decoration: underline;
 }
+
+.linescoreContainer {
+   text-align: center;
+}
+
+.linescoreContainer table {
+   font-size: 14px;
+   font-family: 'Jigsaw Light';
+   border-collapse: collapse;
+   border-spacing: 0;
+   cellspacing: 0;
+   margin: 0 auto;
+}
+
+.linescoreContainer thead {
+   background: #f0f0f0;
+}
+
+.linescoreContainer tbody {
+   background: #f7f7f7;
+}
+
+.linescoreContainer td, .linescoreContainer th {
+   min-width: 24px;
+}
+
+.linescoreContainer td {
+   text-align: center;
+   padding: 5px;
+}
+
+.score {
+   font-weight: bold;
+   font-family: 'Jigsaw Medium';
+}
