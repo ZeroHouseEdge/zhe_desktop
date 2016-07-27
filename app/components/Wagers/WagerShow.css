@@ -1,7 +1,8 @@
 .container {
    width: 80%;
    margin: 0 auto;
-   color: #000;
+   /*color: #000;*/
+   color: #6a6a6a;
 }
 
 .matchup {
@@ -39,7 +40,8 @@
 }
 .details h2, .details h3, .details h4 {
    margin: 5px 0;
-   color: #414141;
+   /*color: #414141;*/
+   color: #6a6a6a;
 }
 
 .details h2 {

@@ -3,26 +3,26 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import styles from './Matchup.css';
-import { getLogo, getMugshot, getTimestamp, diffPatch, updateMatchupData } from '../../api/mlb/main';
+import { getLogo, getMugshot, getTimestamp, diffPatch, updateMatchupData, getPlayDetails, getPlayer } from '../../api/mlb/main';
 
 class Matchup extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { interval: null, over: false, count: null, batter: null, pitcher: null }
+    this.state = { canBet: false, shotClockInterval: null, playInterval: null, over: false, count: null, linescore: {}, batter: null, pitcher: null, details: null, lastPlay: {}, outs: null, shotClock: 0 }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.winning_pitcher) {
+    if (matchup.status.status !== 'In Progress') {
       this.setState({ over: true })
     } else {
-      console.log(matchup)
-      this.updateMatchup(matchup)
+      this.updatePlay(matchup)
     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.interval)
+    clearInterval(this.state.playInterval)
+    clearInterval(this.state.shotClockInterval)
   }
 
   newDiffPatch = (game_pk, timestamp, done) => {
@@ -31,33 +31,105 @@ class Matchup extends Component {
       })
   };
 
-  updateMatchup = (matchup) => {
+  updatePlay = (matchup) => {
     const timestamp = getTimestamp()
-    const interval = setInterval(() => {
+    const playInterval = setInterval(() => {
       this.newDiffPatch(matchup.game_pk, timestamp, (res) => {
-        console.log(res)
-        if (res.length) {
-          const pitch = _.find(res[0].diff, (obj, i) => { if(obj.value && obj.value.isPitch && obj.op === 'add') { return obj } })
-          updateMatchupData(matchup.game_pk).then((res) => {
-            this.setState({
-              batter: res.batter,
-              pitcher: res.pitcher
-            })
+        updateMatchupData(matchup.game_pk).then((linescore) => {
+          this.setState({
+            batter: linescore.batter,
+            pitcher: linescore.pitcher,
+            linescore: linescore
           })
-          console.log('pitch: ', pitch)
-          if(pitch) {
+        })
+        console.log('new res: ', res);
+        if (res.length) {
+          const play = _.find(res[0].diff, (obj, i) => { if(obj.op === 'add' && obj.path.indexOf('/liveData/plays/allPlays') > -1 ) { return obj } })
+          console.log('play: ', play)
+          if (play) {
+            getPlayer(matchup.id, play.value.matchup.batter)
+            getPlayer(matchup.id, play.value.matchup.pitcher)
+            if (play.value.playEvents.length) {
+              var cp = play.value.playEvents[play.value.playEvents.length - 1]
+              var call = cp.details.call
+              var count = cp.count
+
+              if (call === 'S') {
+                console.log('strike')
+              } else if (call === 'B' && cp.details.description !== 'Intent Ball') {
+                console.log('ball')
+              } else if (call === 'B' && cp.details.description === 'Intent Ball') {
+                console.log('push')
+              } else if (call === 'X') {
+                console.log('push')
+              } else {
+                console.log('wtf is this?')
+                console.log('wtf: ', call)
+              }
+              this.setState({
+                count: count
+              })
+              this.startShotClock()
+
+              // switch(call) {
+              //   case n:
+              //   code block
+              //   break;
+              //   case n:
+              //   code block
+              //   break;
+              //   default:
+              //   default code block
+              // }
+            }
+
+            if (play.value.about.isComplete) {
+              console.log("PLAY COMPLETED: ", play)
+            }
+            clearInterval(playInterval)
+            this.updatePlay(matchup)
+            return;
+          } else {
             this.setState({
-              count: pitch.value.count
+              count: { strikes: "0", balls: "0" }
             })
           }
-          clearInterval(interval)
-          this.updateMatchup(matchup)
-          return;
         }
       })
-    }, 5000)
+    }, 2000)
     this.setState({
-      interval: interval
+      playInterval: playInterval
+    })
+  };
+
+  resetShotClock = () => {
+    this.setState({
+      shotClock: 10
+    })
+    this.startShotClock()
+  };
+
+  startShotClock = () => {
+    this.setState({
+      shotClock: 10
+    })
+    const shotClockInterval = setInterval(() => {
+      var newNum = this.state.shotClock - 1;
+      if (newNum === 0) {
+        this.setState({
+          canBet: false,
+          shotClock: this.state.shotClock - 1
+        })
+        clearInterval(shotClockInterval)
+      } else {
+        this.setState({
+          canBet: true,
+          shotClock: this.state.shotClock - 1
+        })
+      }
+    }, 1000)
+    this.setState({
+      shotClockInterval: shotClockInterval
     })
   };
 
@@ -80,7 +152,10 @@ class Matchup extends Component {
     if (this.state.over) { return <span></span>; }
     const over = this.state.over ? { opacity: 0.3, background: '#000' } : null
     return (
-      <div className={styles.matchupContainer} style={over}>
+      <div className={styles.matchupContainer} style={over} onClick={() => console.log('linescore: ', this.props.matchup)}>
+        <div className={styles.shotClock}>
+          <span className={styles.shotClockDigit}>{this.state.shotClock}</span>
+        </div>
         <section className={styles.matchupTitle}>
           <span>
             <img src={getLogo(this.props.matchup.away_file_code)} />
@@ -94,12 +169,12 @@ class Matchup extends Component {
         </section>
         <div className={styles.pitcher}>
             {
-              this.state.pitcher ?
+              this.state.linescore.pitcher ?
               <span>
-                <img src={getMugshot(this.state.pitcher.id)} />
+                <img src={getMugshot(this.state.linescore.pitcher.id)} />
                 <div>
                   <description>Pitching</description>
-                  <dets>{this.state.pitcher.name_display_roster} #{this.state.pitcher.number}</dets>
+                  <dets>{this.state.linescore.pitcher.name_display_roster} #{this.state.pitcher.number}</dets>
                 </div>
               </span>
               : null
@@ -107,12 +182,12 @@ class Matchup extends Component {
         </div>
         <div className={styles.batter}>
           {
-            this.state.batter ?
+            this.state.linescore.batter ?
             <span>
-              <img src={getMugshot(this.state.batter.id)} />
+              <img src={getMugshot(this.state.linescore.batter.id)} />
               <div>
                 <description>At bat</description>
-                <dets>{this.state.batter.name_display_roster} #{this.state.batter.number} {this.state.batter.pos}</dets>
+                <dets>{this.state.linescore.batter.name_display_roster} #{this.state.linescore.batter.number} {this.state.linescore.batter.pos}</dets>
               </div>
             </span>
             : null
@@ -132,6 +207,12 @@ class Matchup extends Component {
           :
           <FontAwesome name='refresh fa-spin' />
         }
+        <p>
+        {
+          this.state.details ? `${this.state.details.displayName} - ${this.state.details.description}` : null
+        }
+        </p>
+        <p>{this.state.lastPlay.des}</p>
         </div>
       </div>
     );

@@ -74,6 +74,7 @@ export function fancyDate(day, date) {
 
 export function diffPatch(gid, timestamp) {
    const URL = `http://statsapi.mlb.com/api/v1/game/${gid}/feed/live/diffPatch?language=en&startTimecode=${timestamp}`
+   // console.log("diffPatch URL: ", URL)
    return fetch(URL)
    .then((res) => {
       return res.json();
@@ -103,6 +104,7 @@ function subtractTime(date, minutes) {
 export function updateMatchupData(game_pk) {
    const today = new Date();
    const URL = `http://mlb.mlb.com/gdcross/components/game/mlb/year_${today.getFullYear()}/month_${('0' + (today.getMonth() + 1)).slice(-2)}/day_${('0' + (today.getDate())).slice(-2)}/master_scoreboard.json`;
+   // console.log("URL: ", URL)
    return fetch(URL)
    .then((res) => {
       return res.json();
@@ -110,4 +112,29 @@ export function updateMatchupData(game_pk) {
       const game = _.find(json.data.games.game, (g) => { return g.game_pk === game_pk });
       return game
    });
+}
+
+export function getPlayDetails() {
+   const URL = `http://www.mlb.com/gdcross/components/game/mlb/year_2016/month_07/day_26/gid_2016_07_26_chnmlb_chamlb_1/game_events.json`
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      if(json.data.game.inning.length) {
+         return json.data.game.inning[json.data.game.inning.length - 1]
+      } else {
+         return json.data.game.inning
+      }
+   })
+}
+
+export function getPlayer(gid, pid) {
+   const URL = `http://mlb.mlb.com/gen/lineups/${gid}.json`
+   return fetch(URL)
+   .then((res) => {
+      return res.json();
+   }).then((json) => {
+      console.log(json);
+      return 'hi'
+   })
 }
