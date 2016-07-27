@@ -8,12 +8,12 @@ import { getLogo, getMugshot, getTimestamp, diffPatch, updateMatchupData, getPla
 class Matchup extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { canBet: false, shotClockInterval: null, playInterval: null, over: false, count: null, linescore: {}, batter: null, pitcher: null, details: null, lastPlay: {}, outs: null, shotClock: 0 }
+    this.state = { canBet: false, bet: '', shotClockInterval: null, playInterval: null, over: false, count: { strikes: '0', balls: '0' }, linescore: {}, details: null, shotClock: 0, result: null }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress') {
+    if (matchup.status.status !== 'In Progress' || matchup.id !== '2016/07/27/wasmlb-clemlb-1') {
       this.setState({ over: true })
     } else {
       this.updatePlay(matchup)
@@ -37,8 +37,6 @@ class Matchup extends Component {
       this.newDiffPatch(matchup.game_pk, timestamp, (res) => {
         updateMatchupData(matchup.game_pk).then((linescore) => {
           this.setState({
-            batter: linescore.batter,
-            pitcher: linescore.pitcher,
             linescore: linescore
           })
         })
@@ -47,40 +45,40 @@ class Matchup extends Component {
           const play = _.find(res[0].diff, (obj, i) => { if(obj.op === 'add' && obj.path.indexOf('/liveData/plays/allPlays') > -1 ) { return obj } })
           console.log('play: ', play)
           if (play) {
-            getPlayer(matchup.id, play.value.matchup.batter)
-            getPlayer(matchup.id, play.value.matchup.pitcher)
             if (play.value.playEvents.length) {
+
               var cp = play.value.playEvents[play.value.playEvents.length - 1]
+              if (!cp.isPitch) { console.log('not a pitch'); return; }
               var call = cp.details.call
               var count = cp.count
 
+              var result = null;
               if (call === 'S') {
-                console.log('strike')
-              } else if (call === 'B' && cp.details.description !== 'Intent Ball') {
-                console.log('ball')
-              } else if (call === 'B' && cp.details.description === 'Intent Ball') {
-                console.log('push')
-              } else if (call === 'X') {
-                console.log('push')
+                  result = 'Strike'
+              } else if (call === 'B' && cp.details.description != 'Intent Ball') {
+                result = 'Ball'
               } else {
-                console.log('wtf is this?')
-                console.log('wtf: ', call)
+                result = 'Push'
               }
-              this.setState({
-                count: count
-              })
-              this.startShotClock()
 
-              // switch(call) {
-              //   case n:
-              //   code block
-              //   break;
-              //   case n:
-              //   code block
-              //   break;
-              //   default:
-              //   default code block
-              // }
+              if (result === this.state.bet) {
+                console.log('You win!')
+              } else if (result.length && result !== this.state.bet) {
+                console.log('You lose')
+              }
+
+              this.setState({
+                details: cp.details,
+                count: count,
+                result: result,
+                bet: ''
+              })
+
+              this.startShotClock()
+            } else {
+              this.setState({
+                count: { strikes: "0", balls: "0" }
+              })
             }
 
             if (play.value.about.isComplete) {
@@ -89,14 +87,10 @@ class Matchup extends Component {
             clearInterval(playInterval)
             this.updatePlay(matchup)
             return;
-          } else {
-            this.setState({
-              count: { strikes: "0", balls: "0" }
-            })
           }
         }
       })
-    }, 2000)
+    }, 2500)
     this.setState({
       playInterval: playInterval
     })
@@ -118,13 +112,13 @@ class Matchup extends Component {
       if (newNum === 0) {
         this.setState({
           canBet: false,
-          shotClock: this.state.shotClock - 1
+          shotClock: 0
         })
         clearInterval(shotClockInterval)
       } else {
         this.setState({
           canBet: true,
-          shotClock: this.state.shotClock - 1
+          shotClock: newNum
         })
       }
     }, 1000)
@@ -148,24 +142,48 @@ class Matchup extends Component {
     return strikes;
   };
 
+  betMade = (bet) => {
+    if (!this.state.canBet) { alert('can\'t bet'); return; }
+    const calcedbet = this.state.bet === bet ? '' : bet
+    this.setState({
+      bet: calcedbet
+    })
+  };
+
   render() {
     if (this.state.over) { return <span></span>; }
     const over = this.state.over ? { opacity: 0.3, background: '#000' } : null
+    const cantBetGroupClass = this.state.canBet ? null : { opacity: 0.3  }
     return (
-      <div className={styles.matchupContainer} style={over} onClick={() => console.log('linescore: ', this.props.matchup)}>
+      <div className={styles.matchupContainer} style={over}>
         <div className={styles.shotClock}>
           <span className={styles.shotClockDigit}>{this.state.shotClock}</span>
         </div>
+        <div className={styles.bet}>
+          <span className={styles.betValue}>Your bet: {this.state.bet}</span>
+        </div>
         <section className={styles.matchupTitle}>
-          <span>
+          <div>
             <img src={getLogo(this.props.matchup.away_file_code)} />
-            {this.props.matchup.away_team_city}
-          </span>
+            <span>{this.props.matchup.away_team_city}</span>
+            <span>
+              {
+                this.state.linescore.linescore ?
+                this.state.linescore.linescore.r.away : null
+              }
+            </span>
+          </div>
           vs.
-          <span>
+          <div>
             <img src={getLogo(this.props.matchup.home_file_code)} />
-            {this.props.matchup.home_team_city}
-          </span>
+            <span>{this.props.matchup.home_team_city}</span>
+            <span>
+              {
+                this.state.linescore.linescore ?
+                this.state.linescore.linescore.r.home : null
+              }
+            </span>
+          </div>
         </section>
         <div className={styles.pitcher}>
             {
@@ -174,7 +192,7 @@ class Matchup extends Component {
                 <img src={getMugshot(this.state.linescore.pitcher.id)} />
                 <div>
                   <description>Pitching</description>
-                  <dets>{this.state.linescore.pitcher.name_display_roster} #{this.state.pitcher.number}</dets>
+                  <dets>{this.state.linescore.pitcher.name_display_roster} #{this.state.linescore.pitcher.number}</dets>
                 </div>
               </span>
               : null
@@ -193,7 +211,7 @@ class Matchup extends Component {
             : null
           }
         </div>
-        <div>
+        <div className={styles.countDetails}>
         {
           this.state.count ?
           <div>
@@ -203,16 +221,43 @@ class Matchup extends Component {
             <div className={styles.strikes}>
               S {this.renderStrikes() }
             </div>
+            <p className={styles.detailsDescription}>
+            {
+              this.state.details ? `${this.state.details.displayName} - ${this.state.details.description}` : null
+            }
+            </p>
           </div>
           :
           <FontAwesome name='refresh fa-spin' />
         }
-        <p>
-        {
-          this.state.details ? `${this.state.details.displayName} - ${this.state.details.description}` : null
-        }
-        </p>
-        <p>{this.state.lastPlay.des}</p>
+        </div>
+        <div>
+          <p>{this.state.result}</p>
+          <form>
+            {
+              this.state.canBet ?
+              'Can bet'
+              : 'Can\'t bet'
+            }
+            <group className="radio" style={cantBetGroupClass}>
+              <div>
+                <label for='Strike' onClick={() => this.betMade('Strike')}>Strike</label>
+                <input type='radio'
+                       value='Strike'
+                       name='Strike'
+                       checked={true}
+                />
+              </div>
+              <div>
+                <label for='Ball' onClick={() => this.betMade('Ball')}>Ball</label>
+                <input type='radio'
+                       value='Ball'
+                       name='Ball'
+                       checked={true}
+                />
+              </div>
+            </group>
+          </form>
         </div>
       </div>
     );
