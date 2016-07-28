@@ -8,6 +8,16 @@
    position: relative;
 }
 
+.matchupHeader {
+   display: flex;
+   background: #D32F2F;
+   margin: 0;
+}
+
+.matchupHeaderSection {
+   width: 33.333%;
+}
+
 .shotClock {
    /*background: #222;*/
    position: absolute;

@@ -9,12 +9,23 @@ import { getLogo, getMugshot, getTimestamp, diffPatch, updateMatchupData, getPla
 class Matchup extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { canBet: false, bet: null, shotClockInterval: null, playInterval: null, over: false, count: { strikes: '0', balls: '0' }, linescore: {}, details: null, shotClock: 0, result: null }
+    this.state = {
+      canBet: false,
+      pitch: null,
+      bet: null,
+      shotClockInterval: null,
+      playInterval: null,
+      over: false,
+      count: { strikes: '0', balls: '0' },
+      linescore: {},
+      details: null,
+      shotClock: 0,
+      result: null }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress' || matchup.id !== '2016/07/27/tbamlb-lanmlb-1') {
+    if (matchup.status.status !== 'In Progress') {
       this.setState({ over: true })
     } else {
       this.updatePlay(matchup)
@@ -75,20 +86,23 @@ class Matchup extends Component {
 
               var result = null;
 
-              if (event === 'Push') {
-                result = 'Phew. Push'
+              if (!this.state.bet) {
+                result = null
+              } else if (event === 'Push') {
+                result = 'Push'
               } else if (event === this.state.bet) {
-                result = 'You win!'
+                result = 'Win'
               } else if (this.state.bet && event !== this.state.bet) {
-                result = 'You lose'
+                result = 'Lose'
               } else {
-                result = 'You didnt bet'
+                result = null
               }
 
               this.setState({
                 details: cp.details,
                 count: count,
                 result: result,
+                pitch: null,
                 bet: null
               })
 
@@ -165,22 +179,66 @@ class Matchup extends Component {
     console.log('checked: ', value)
 
     this.setState({
-      bet: value
+      pitch: value
     })
+  };
+
+  placeBet = () => {
+    console.log('yo')
+    if (!this.state.pitch) { return; }
+    console.log('here: ', this.state.pitch)
+    this.setState({
+      bet: this.state.pitch
+    })
+  };
+
+  renderResult = (result) => {
+    const win = { color: '#4CAF50' }
+    const lose = { color: '#F44336' }
+    const push = { color: '#607D8B' }
+    switch (result) {
+      case 'Win':
+        return <FontAwesome name='check-square' style={win} />
+        break;
+      case 'Lose':
+        return <FontAwesome name='times' style={lose} />
+        break;
+      case 'Push':
+        return <i><FontAwesome name='plus' style={push} /><FontAwesome name='minus' style={push} /></i>
+        break;
+      default:
+        return null
+        break;
+    }
   };
 
   render() {
     if (this.state.over) { return <span></span>; }
     const over = this.state.over ? { opacity: 0.3, background: '#000' } : null
     const cantBetGroupClass = this.state.canBet ? null : { opacity: 0.3  }
+    const lockStyle = { color: '#F0E68C' }
     return (
       <div className={styles.matchupContainer} style={over}>
-        <div className={styles.shotClock}>
-          <span className={styles.shotClockDigit}>{this.state.shotClock}</span>
-        </div>
-        <div className={styles.bet}>
-          <span className={styles.betValue}>Your bet: {this.state.bet}</span>
-        </div>
+        <header className={styles.matchupHeader}>
+          <div className={styles.matchupHeaderSection}>
+            <span className={styles.betValue}>
+              {this.state.bet ? `Wager: ${this.state.bet}` : 'No bet'}
+            </span>
+          </div>
+          <div className={styles.matchupHeaderSection}>
+            <span>
+              {
+                this.renderResult(this.state.result)
+              }
+            </span>
+          </div>
+          <div className={styles.matchupHeaderSection}>
+            <span className={styles.shotClockDigit}>
+              {this.state.shotClock === 0 ? <FontAwesome name='lock' style={lockStyle} /> : this.state.shotClock}
+            </span>
+          </div>
+        </header>
+
         <section className={styles.matchupTitle}>
           <div>
             <img src={getLogo(this.props.matchup.away_file_code)} />
@@ -251,12 +309,16 @@ class Matchup extends Component {
         }
         </div>
         <div>
-          <p>{this.state.result}</p>
           <form style={cantBetGroupClass}>
-            <RadioGroup className='radio' name="bets" onChange={this.betMade} value={this.state.bet}>
+            <RadioGroup className='radio' name="bets" onChange={this.betMade} value={this.state.pitch}>
               <input type="radio" value="Strike" />Strike
               <input type="radio" value="Ball" />Ball
             </RadioGroup>
+            <div className='buttonContainer small'>
+              <div className='buttonPrimary' onClick={this.placeBet}>
+                Place bet
+              </div>
+            </div>
           </form>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default class WagerShow extends Component {
       const innings = this.state.linescore.linescore ? this.state.linescore.linescore : Array.apply(null, {length: 9}).map(Number.call, Number)
       const inningsLen = this.state.linescore.linescore && this.state.linescore.linescore.length >= 9 ? this.state.linescore.linescore.length : 9
       return (
-         <div className={styles.container} onClick={() => console.log(this.state)}>
+         <div className={styles.container} onClick={() => console.log(this.props)}>
             <section className={styles.matchup}>
                <div className={styles.team}>
                   <img src={MLB.getLogo(wager.away_file_code)} />
