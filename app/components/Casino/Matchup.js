@@ -2,18 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
+import RadioGroup from 'react-radio';
 import styles from './Matchup.css';
 import { getLogo, getMugshot, getTimestamp, diffPatch, updateMatchupData, getPlayDetails, getPlayer } from '../../api/mlb/main';
 
 class Matchup extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { canBet: false, bet: '', shotClockInterval: null, playInterval: null, over: false, count: { strikes: '0', balls: '0' }, linescore: {}, details: null, shotClock: 0, result: null }
+    this.state = { canBet: false, bet: null, shotClockInterval: null, playInterval: null, over: false, count: { strikes: '0', balls: '0' }, linescore: {}, details: null, shotClock: 0, result: null }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress' || matchup.id !== '2016/07/27/wasmlb-clemlb-1') {
+    if (matchup.status.status !== 'In Progress' || matchup.id !== '2016/07/27/tbamlb-lanmlb-1') {
       this.setState({ over: true })
     } else {
       this.updatePlay(matchup)
@@ -40,7 +41,13 @@ class Matchup extends Component {
             linescore: linescore
           })
         })
-        console.log('new res: ', res);
+        if (!Array.isArray(res)) {
+          console.log('weird data')
+          clearInterval(playInterval)
+          this.updatePlay(matchup)
+          return;
+        }
+        console.log('new res len: ', res.length);
         if (res.length) {
           const play = _.find(res[0].diff, (obj, i) => { if(obj.op === 'add' && obj.path.indexOf('/liveData/plays/allPlays') > -1 ) { return obj } })
           console.log('play: ', play)
@@ -48,30 +55,41 @@ class Matchup extends Component {
             if (play.value.playEvents.length) {
 
               var cp = play.value.playEvents[play.value.playEvents.length - 1]
-              if (!cp.isPitch) { console.log('not a pitch'); return; }
+              if (!cp.isPitch) {
+                console.log('not a pitch');
+                clearInterval(playInterval)
+                this.updatePlay(matchup)
+                return;
+              }
               var call = cp.details.call
               var count = cp.count
 
-              var result = null;
+              var event = null;
               if (call === 'S') {
-                  result = 'Strike'
+                event = 'Strike'
               } else if (call === 'B' && cp.details.description != 'Intent Ball') {
-                result = 'Ball'
+                event = 'Ball'
               } else {
-                result = 'Push'
+                event = 'Push'
               }
 
-              if (result === this.state.bet) {
-                console.log('You win!')
-              } else if (result.length && result !== this.state.bet) {
-                console.log('You lose')
+              var result = null;
+
+              if (event === 'Push') {
+                result = 'Phew. Push'
+              } else if (event === this.state.bet) {
+                result = 'You win!'
+              } else if (this.state.bet && event !== this.state.bet) {
+                result = 'You lose'
+              } else {
+                result = 'You didnt bet'
               }
 
               this.setState({
                 details: cp.details,
                 count: count,
                 result: result,
-                bet: ''
+                bet: null
               })
 
               this.startShotClock()
@@ -98,14 +116,14 @@ class Matchup extends Component {
 
   resetShotClock = () => {
     this.setState({
-      shotClock: 10
+      shotClock: 8
     })
     this.startShotClock()
   };
 
   startShotClock = () => {
     this.setState({
-      shotClock: 10
+      shotClock: 8
     })
     const shotClockInterval = setInterval(() => {
       var newNum = this.state.shotClock - 1;
@@ -142,11 +160,12 @@ class Matchup extends Component {
     return strikes;
   };
 
-  betMade = (bet) => {
-    if (!this.state.canBet) { alert('can\'t bet'); return; }
-    const calcedbet = this.state.bet === bet ? '' : bet
+  betMade = (value, e) => {
+    if (!this.state.canBet) { return; }
+    console.log('checked: ', value)
+
     this.setState({
-      bet: calcedbet
+      bet: value
     })
   };
 
@@ -233,30 +252,11 @@ class Matchup extends Component {
         </div>
         <div>
           <p>{this.state.result}</p>
-          <form>
-            {
-              this.state.canBet ?
-              'Can bet'
-              : 'Can\'t bet'
-            }
-            <group className="radio" style={cantBetGroupClass}>
-              <div>
-                <label for='Strike' onClick={() => this.betMade('Strike')}>Strike</label>
-                <input type='radio'
-                       value='Strike'
-                       name='Strike'
-                       checked={true}
-                />
-              </div>
-              <div>
-                <label for='Ball' onClick={() => this.betMade('Ball')}>Ball</label>
-                <input type='radio'
-                       value='Ball'
-                       name='Ball'
-                       checked={true}
-                />
-              </div>
-            </group>
+          <form style={cantBetGroupClass}>
+            <RadioGroup className='radio' name="bets" onChange={this.betMade} value={this.state.bet}>
+              <input type="radio" value="Strike" />Strike
+              <input type="radio" value="Ball" />Ball
+            </RadioGroup>
           </form>
         </div>
       </div>
