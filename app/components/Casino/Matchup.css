@@ -19,7 +19,6 @@
 }
 
 .shotClock {
-   /*background: #222;*/
    position: absolute;
    padding: 10px;
    top: -43px;
@@ -30,7 +29,7 @@
 .shotClockDigit {
   color: #FFF;
   display: block;
-  text-align: center;
+  text-align: right;
   font-family: 'Orbitron';
   font-size: 30px;
 }
@@ -45,7 +44,7 @@
 .betValue {
    color: #FFF;
    font-family: 'Jigsaw Light';
-   text-align: center;
+   text-align: left;
    display: block;
    font-size: 20px;
 }
@@ -110,3 +109,39 @@
    font-size: 18px;
    padding: 0 15px;
 }
+
+.betForm {
+   margin-bottom: 15px;
+}
+
+.valueContainer {
+   position: relative;
+   margin-bottom: 15px;
+}
+
+.valueContainer span {
+   position: absolute;
+   top: 6px;
+   left: 10px;
+   color: #ccc;
+   font-size: 18px;
+}
+
+.valueContainer input {
+   padding: 5px;
+   padding-right: 0;
+   border-radius: 2px;
+   height: auto;
+   border: 1px solid #CCCDC8;
+   background-color: #FAFAFA;
+   font-size: 16px;
+   width: 98%;
+   text-indent: 20px;
+}
+
+.withdrawSection input:active, input:focus {
+   outline: 0;
+   border: 1px solid #58A1FF;
+}
+
+

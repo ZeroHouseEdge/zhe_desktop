@@ -20,15 +20,17 @@ class Matchup extends Component {
       linescore: {},
       details: null,
       shotClock: 0,
-      result: null
+      result: null,
+      value: 1.00
     }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress'|| matchup.home_file_code !== 'chc') {
+    if (matchup.status.status !== 'In Progress' || matchup.away_file_code !== 'was') {
       this.setState({ over: true })
     } else {
+      console.log('matchup: ', matchup);
       this.updatePlay(matchup)
     }
   }
@@ -100,7 +102,7 @@ class Matchup extends Component {
               }
 
               if (result === 'Win' || result === 'Lose') {
-                this.props.updateScore(result)
+                this.props.updateScore(result, this.state.value)
               }
 
               this.setState({
@@ -199,7 +201,7 @@ class Matchup extends Component {
     const push = { color: '#607D8B' }
     switch (result) {
       case 'Win':
-        return <i><FontAwesome name='check-square' style={win} /></i>
+        return <i><FontAwesome name='check' style={win} /></i>
         break;
       case 'Lose':
         return <i><FontAwesome name='times' style={lose} /></i>
@@ -213,6 +215,12 @@ class Matchup extends Component {
     }
   };
 
+  valueChange = (e) => {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
   render() {
     if (this.state.over) { return <span></span>; }
     const over = this.state.over ? { opacity: 0.3, background: '#000' } : null
@@ -223,7 +231,7 @@ class Matchup extends Component {
         <header className={styles.matchupHeader}>
           <div className={styles.matchupHeaderSection}>
             <span className={styles.betValue}>
-              {this.state.bet ? `Wager: ${this.state.bet}` : 'No bet'}
+              {this.state.bet ? `$${this.state.value} - ${this.state.bet}` : 'No bet'}
             </span>
           </div>
           <div className={styles.matchupHeaderSection}>
@@ -310,15 +318,30 @@ class Matchup extends Component {
         }
         </div>
         <div>
-          <form style={cantBetGroupClass}>
+          <form className={styles.betForm} style={cantBetGroupClass}>
             <RadioGroup className='radio' name="bets" onChange={this.betMade} selectedValue={this.state.pitch}>
-              <label htmlFor='strike'>Strike</label>
-              <input type="radio" id='strike' value="Strike" />
-              <label htmlFor='ball'>Ball</label>
-              <input type="radio" id='ball' value="Ball" />
+              <div>
+                <label htmlFor={`strike-${this.props.matchup.id}`} className={this.state.pitch === 'Strike' ? 'checked' : null}>Strike</label>
+                <input type="radio" id={`strike-${this.props.matchup.id}`} value="Strike" />
+              </div>
+              <div>
+                <label htmlFor={`ball-${this.props.matchup.id}`} className={this.state.pitch === 'Ball' ? 'checked' : null}>Ball</label>
+                <input type="radio" id={`ball-${this.props.matchup.id}`} value="Ball" />
+              </div>
             </RadioGroup>
+            <div className={styles.valueContainer}>
+              <span className='fa fa-usd'></span>
+              <input
+                type='number'
+                autofocus='true'
+                defaultValue={this.state.value}
+                min='1'
+                max='5'
+                onChange={this.valueChange}
+              />
+            </div>
             <div className='buttonContainer small'>
-              <div className='buttonPrimary' onClick={this.placeBet}>
+              <div className='buttonSecondary alert' onClick={this.placeBet}>
                 Place bet
               </div>
             </div>

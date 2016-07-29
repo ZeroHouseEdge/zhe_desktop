@@ -456,21 +456,20 @@ a:hover {
   background: #4CAF50;
 }
 
-group.radio {
+.radio {
   display: flex;
-  border-radius: 3px;
-  overflow: hidden;
+  /*margin-bottom: 20px;*/
   border: 1px solid #ccc;
 }
-group.radio div {
+.radio div {
   flex: 1 1 auto;
   position: relative;
 }
-group.radio input {
-  position:absolute;
+.radio input {
+  position: absolute;
   left: -99999px;
 }
-group.radio label {
+.radio label {
   box-sizing: border-box;
   padding: 10px;
   background: #fff;
@@ -483,11 +482,11 @@ group.radio label {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-group.radio div:last-child label {
+.radio div:last-child label {
   border-right: 0;
 }
-group.radio input:checked + label {
-  background: #2b71b1;
+.radio label.checked {
+  background: #4CAF50;
   font-weight: 500;
   color: #fff;
 }
