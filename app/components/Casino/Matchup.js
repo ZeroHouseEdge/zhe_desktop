@@ -20,12 +20,13 @@ class Matchup extends Component {
       linescore: {},
       details: null,
       shotClock: 0,
-      result: null }
+      result: null
+    }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress') {
+    if (matchup.status.status !== 'In Progress'|| matchup.home_file_code !== 'chc') {
       this.setState({ over: true })
     } else {
       this.updatePlay(matchup)
@@ -98,11 +99,14 @@ class Matchup extends Component {
                 result = null
               }
 
+              if (result === 'Win' || result === 'Lose') {
+                this.props.updateScore(result)
+              }
+
               this.setState({
                 details: cp.details,
                 count: count,
                 result: result,
-                pitch: null,
                 bet: null
               })
 
@@ -175,8 +179,7 @@ class Matchup extends Component {
   };
 
   betMade = (value, e) => {
-    if (!this.state.canBet) { return; }
-    console.log('checked: ', value)
+    // if (!this.state.canBet) { return; }
 
     this.setState({
       pitch: value
@@ -184,9 +187,7 @@ class Matchup extends Component {
   };
 
   placeBet = () => {
-    console.log('yo')
-    if (!this.state.pitch) { return; }
-    console.log('here: ', this.state.pitch)
+    if (!this.state.pitch || !this.state.canBet) { return; }
     this.setState({
       bet: this.state.pitch
     })
@@ -198,10 +199,10 @@ class Matchup extends Component {
     const push = { color: '#607D8B' }
     switch (result) {
       case 'Win':
-        return <FontAwesome name='check-square' style={win} />
+        return <i><FontAwesome name='check-square' style={win} /></i>
         break;
       case 'Lose':
-        return <FontAwesome name='times' style={lose} />
+        return <i><FontAwesome name='times' style={lose} /></i>
         break;
       case 'Push':
         return <i><FontAwesome name='plus' style={push} /><FontAwesome name='minus' style={push} /></i>
@@ -310,9 +311,11 @@ class Matchup extends Component {
         </div>
         <div>
           <form style={cantBetGroupClass}>
-            <RadioGroup className='radio' name="bets" onChange={this.betMade} value={this.state.pitch}>
-              <input type="radio" value="Strike" />Strike
-              <input type="radio" value="Ball" />Ball
+            <RadioGroup className='radio' name="bets" onChange={this.betMade} selectedValue={this.state.pitch}>
+              <label htmlFor='strike'>Strike</label>
+              <input type="radio" id='strike' value="Strike" />
+              <label htmlFor='ball'>Ball</label>
+              <input type="radio" id='ball' value="Ball" />
             </RadioGroup>
             <div className='buttonContainer small'>
               <div className='buttonPrimary' onClick={this.placeBet}>

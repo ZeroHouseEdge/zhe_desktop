@@ -8,7 +8,29 @@ import Matchup from './Matchup';
 class CasinoHome extends Component {
   constructor(props, context) {
     super(props, context);
+    this.state = { score: -2 }
   }
+
+  updateScore = (betResult) => {
+    switch (betResult) {
+      case 'Win':
+        this.setState({
+          score: this.state.score + 1
+        })
+        return;
+        break;
+      case 'Lose':
+        this.setState({
+          score: this.state.score - 1
+        })
+        return;
+        break;
+      default:
+        console.log('what?')
+        return;
+        break;
+    }
+  };
 
   render() {
     return (
@@ -17,10 +39,11 @@ class CasinoHome extends Component {
           <Casino word='MLB' />
           <Casino word='Casino' />
         </header>
+        <h1>{this.state.score}</h1>
         <section>
           {
             this.props.casino.matchups.map((matchup, i) => {
-              return <Matchup key={i} matchup={matchup} />
+              return <Matchup key={i} matchup={matchup} updateScore={this.updateScore} />
             })
           }
         </section>

@@ -6,6 +6,12 @@ import HeaderContainer from './HeaderContainer';
 import CasinoHome from '../components/Casino/CasinoHome';
 
 class CasinoContainer extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      score: 0
+    }
+  }
   componentWillMount() {
     this.props.dispatch(fetchMatchups());
   }
@@ -17,6 +23,8 @@ class CasinoContainer extends Component {
   componentWillUnmount() {
     document.body.classList.toggle('casinoOn')
   }
+
+
 
   render() {
     return (
