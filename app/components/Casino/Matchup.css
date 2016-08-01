@@ -117,6 +117,11 @@
 .valueContainer {
    position: relative;
    margin-bottom: 15px;
+   text-align: center;
+}
+
+.valueContainer div {
+   margin: 10px 0px 10px 0px !important;
 }
 
 .valueContainer span {

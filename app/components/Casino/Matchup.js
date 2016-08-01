@@ -21,13 +21,13 @@ class Matchup extends Component {
       details: null,
       shotClock: 0,
       result: null,
-      value: 1.00
+      value: .25
     }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress' || matchup.away_file_code !== 'was') {
+    if (matchup.status.status !== 'In Progress' || matchup.home_file_code !== 'chc') {
       this.setState({ over: true })
     } else {
       console.log('matchup: ', matchup);
@@ -215,11 +215,15 @@ class Matchup extends Component {
     }
   };
 
-  valueChange = (e) => {
+  valueChange = (amount) => {
     this.setState({
-      value: e.target.value
+      value: amount
     })
-  }
+  };
+
+  activeValueButtons = (value) => {
+    return this.state.value === value ? 'buttonSecondary circle small active' : 'buttonSecondary circle small'
+  };
 
   render() {
     if (this.state.over) { return <span></span>; }
@@ -330,15 +334,26 @@ class Matchup extends Component {
               </div>
             </RadioGroup>
             <div className={styles.valueContainer}>
-              <span className='fa fa-usd'></span>
-              <input
-                type='number'
-                autofocus='true'
-                defaultValue={this.state.value}
-                min='1'
-                max='5'
-                onChange={this.valueChange}
-              />
+              <div className='buttonContainer circleContainer'>
+                <div className={this.activeValueButtons(.25)} onClick={() => this.valueChange(.25)}>
+                  $.25
+                </div>
+              </div>
+              <div className='buttonContainer circleContainer'>
+                <div className={this.activeValueButtons(.50)} onClick={() => this.valueChange(.50)}>
+                  $.50
+                </div>
+              </div>
+              <div className='buttonContainer circleContainer'>
+                <div className={this.activeValueButtons(1.00)} onClick={() => this.valueChange(1)}>
+                  $1
+                </div>
+              </div>
+              <div className='buttonContainer circleContainer'>
+                <div className={this.activeValueButtons(5.00)} onClick={() => this.valueChange(5)}>
+                  $5
+                </div>
+              </div>
             </div>
             <div className='buttonContainer small'>
               <div className='buttonSecondary alert' onClick={this.placeBet}>

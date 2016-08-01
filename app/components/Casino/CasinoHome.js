@@ -8,20 +8,20 @@ import Matchup from './Matchup';
 class CasinoHome extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { score: 0 }
+    this.state = { score: 1 }
   }
 
   updateScore = (betResult, value) => {
     switch (betResult) {
       case 'Win':
         this.setState({
-          score: this.state.score + value
+          score: this.state.score + parseInt(value)
         })
         return;
         break;
       case 'Lose':
         this.setState({
-          score: this.state.score - value
+          score: this.state.score - parseInt(value)
         })
         return;
         break;

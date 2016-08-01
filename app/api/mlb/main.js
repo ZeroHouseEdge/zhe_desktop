@@ -73,6 +73,8 @@ export function fancyDate(day, date) {
 }
 
 export function diffPatch(gid, timestamp) {
+   // http://statsapi.mlb.com/api/v1/game/448435/feed/live/diffPatch?language=en&startTimecode=20160801_014228
+   // http://statsapi.mlb.com/api/v1/game/448435/feed/live/diffPatch?language=en&startTimecode=20160802_014246
    const URL = `http://statsapi.mlb.com/api/v1/game/${gid}/feed/live/diffPatch?language=en&startTimecode=${timestamp}`
    // console.log("diffPatch URL: ", URL)
    return fetch(URL)
@@ -87,7 +89,7 @@ export function getTimestamp(subtract = 0) {
    const pull = subtractTime(new Date(), subtract)
    const year = pull.getFullYear()
    const month = ('0' + (pull.getUTCMonth() + 1)).slice(-2)
-   const day = pull.getUTCDate()
+   const day = ('0' + (pull.getUTCDate())).slice(-2)
    const hour = ('0' + (pull.getUTCHours())).slice(-2)
    const minutes = ('0' + (pull.getUTCMinutes())).slice(-2)
    const seconds = ('0' + (pull.getUTCSeconds())).slice(-2)
