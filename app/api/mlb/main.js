@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import fetch from 'isomorphic-fetch';
+import _ from 'lodash';
 
 export function todaysGames() {
    const today = new Date();
