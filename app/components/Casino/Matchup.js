@@ -21,13 +21,13 @@ class Matchup extends Component {
       details: null,
       shotClock: 0,
       result: null,
-      value: .25
+      value: 0.25
     }
   }
 
   componentDidMount() {
     const matchup = this.props.matchup;
-    if (matchup.status.status !== 'In Progress' || matchup.home_file_code !== 'chc') {
+    if (matchup.status.status !== 'In Progress') {
       this.setState({ over: true })
     } else {
       console.log('matchup: ', matchup);
@@ -216,6 +216,7 @@ class Matchup extends Component {
   };
 
   valueChange = (amount) => {
+    if (!this.state.canBet) { return; }
     this.setState({
       value: amount
     })
@@ -335,13 +336,13 @@ class Matchup extends Component {
             </RadioGroup>
             <div className={styles.valueContainer}>
               <div className='buttonContainer circleContainer'>
-                <div className={this.activeValueButtons(.25)} onClick={() => this.valueChange(.25)}>
-                  $.25
+                <div className={this.activeValueButtons(0.25)} onClick={() => this.valueChange(0.25)}>
+                  $0.25
                 </div>
               </div>
               <div className='buttonContainer circleContainer'>
-                <div className={this.activeValueButtons(.50)} onClick={() => this.valueChange(.50)}>
-                  $.50
+                <div className={this.activeValueButtons(0.50)} onClick={() => this.valueChange(0.50)}>
+                  $0.50
                 </div>
               </div>
               <div className='buttonContainer circleContainer'>
