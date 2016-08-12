@@ -43,7 +43,10 @@ for arg in sys.argv:
          methodToCall = getattr(toCallOn, command)
          result = methodToCall()
 
-      print(json.dumps({ 'data': bytes_to_str(result) }))
+      if isinstance(result, bytes):
+         print(json.dumps({ 'data': bytes_to_str(result) }))
+      else:
+         print(json.dumps({ 'data': result }))
    else:
       execute(arg)
 
