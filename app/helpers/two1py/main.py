@@ -34,10 +34,9 @@ if sys.argv[0] == 'sign':
    for i, inp in enumerate(tx.inputs):
       tx.sign_input(i, Transaction.SIG_HASH_ALL, server_privkey, script)
 
-   tx_id = provider.broadcast_transaction(tx.to_hex())
+   # tx_id = provider.broadcast_transaction(tx.to_hex())
 
    print(json.dumps({
-      'tx_id': tx_id,
       'hex': tx.to_hex()
    }))
 else:
