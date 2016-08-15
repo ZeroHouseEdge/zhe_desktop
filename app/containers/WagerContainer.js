@@ -13,8 +13,8 @@ class WagerContainer extends Component {
     return (
       <div>
         {
-          this.props.wager ?
-          <WagerShow wager={this.props.wager} /> :
+          this.props.wager && this.props.wallet ?
+          <WagerShow wager={this.props.wager} wallet={this.props.wallet} /> :
           "Loading wager..."
         }
       </div>

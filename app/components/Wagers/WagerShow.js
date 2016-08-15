@@ -3,11 +3,21 @@ import styles from './WagerShow.css';
 import * as MLB from '../../api/mlb/main';
 import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
+import * as API from '../../helpers/two1wallet/main';
 
 export default class WagerShow extends Component {
    constructor(props) {
       super(props);
-      this.state = { fetchingData: true, linescore: {} }
+      const author = props.wager.author_id === props.wallet.pubkey
+      const acceptor = props.wager.acceptor_id === props.wallet.pubkey
+      const bettor = author || acceptor
+      this.state = {
+         fetchingData: true,
+         linescore: {},
+         author: author,
+         acceptor: acceptor,
+         bettor: bettor
+      }
    }
 
    componentWillMount() {
@@ -18,6 +28,20 @@ export default class WagerShow extends Component {
          })
       });
    }
+
+   sign = () => {
+      if (!this.state.bettor) { return }
+      const pubkey = this.props.wallet.pubkey === this.props.wager.home_id ? this.props.wager.home_pubkey : this.props.wager.away_pubkey
+      const wager = this.props.wager
+      console.log('pubkey: ', pubkey)
+      console.log('tx: ', wager.winner_transaction.hex)
+      console.log('script: ', wager.script_hex)
+      if (this.props.wager.winner_transaction) {
+         API.fetchTwo1(['sign', pubkey, wager.winner_transaction.hex, wager.script_hex]).then((res) => {
+            console.log('res: ', res)
+         })
+      }
+   };
 
    render() {
       const wager = this.props.wager;
@@ -30,7 +54,7 @@ export default class WagerShow extends Component {
       const innings = this.state.linescore.linescore ? this.state.linescore.linescore : Array.apply(null, {length: 9}).map(Number.call, Number)
       const inningsLen = this.state.linescore.linescore && this.state.linescore.linescore.length >= 9 ? this.state.linescore.linescore.length : 9
       return (
-         <div className={styles.container} onClick={() => console.log(this.props)}>
+         <div className={styles.container}>
             <section className={styles.matchup}>
                <div className={styles.team}>
                   <img src={MLB.getLogo(wager.away_file_code)} />
@@ -132,6 +156,14 @@ export default class WagerShow extends Component {
                   </table>
                </div>
             </section>
+            {
+               this.state.bettor && this.props.wager.winner_transaction ?
+               <section>
+                  <button onClick={() => this.sign()}>sign</button>
+               </section>
+               :
+               null
+            }
          </div>
       );
    }
