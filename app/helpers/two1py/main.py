@@ -16,6 +16,7 @@ with open('{}/.two1/wallet/default_wallet.json'.format(expanduser('~'))) as data
 
 wallet = None
 wallet = wallet or Two1Wallet.import_from_mnemonic(mnemonic=wallet_data['master_seed'])
+provider = TwentyOneProvider()
 
 def execute(wallet_method):
    methodToCall = getattr(wallet, wallet_method)
