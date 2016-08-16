@@ -8,6 +8,7 @@ import * as API from '../../helpers/two1wallet/main';
 export default class WagerShow extends Component {
    constructor(props) {
       super(props);
+      console.log('props: ', props)
       const author = props.wager.author_id === props.wallet.pubkey
       const acceptor = props.wager.acceptor_id === props.wallet.pubkey
       const bettor = author || acceptor
