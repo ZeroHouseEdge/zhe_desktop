@@ -34,6 +34,8 @@ export default class WagerShow extends Component {
       if (!this.state.bettor) { return }
       const pubkey = this.props.wallet.pubkey === this.props.wager.home_id ? this.props.wager.home_pubkey : this.props.wager.away_pubkey
       const wager = this.props.wager
+      console.log('pubkey: ', pubkey)
+      console.log('wager: ', wager)
       if (this.props.wager.winner_transaction) {
          API.fetchTwo1(['sign', pubkey, wager.winner_transaction.hex, wager.script_hex]).then((res) => {
             console.log('res: ', res)
