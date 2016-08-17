@@ -70,8 +70,11 @@ export default class WagerShow extends Component {
 
    render() {
       const wager = this.props.wager;
+      console.log('wager: ', wager)
       const away_tx = _.find(wager.transactions, (tx) => { return tx.user_id === wager.away_id })
+      console.log('away_tx: ', away_tx)
       const home_tx = _.find(wager.transactions, (tx) => { return tx.user_id === wager.home_id })
+      console.log('home_tx: ', home_tx)
       const linescore = this.state.linescore;
       const away_txid = away_tx ? `https://blockchain.info/tx/${away_tx.tx_id}` : '';
       const home_txid = home_tx ? `https://blockchain.info/tx/${home_tx.tx_id}`: '';
