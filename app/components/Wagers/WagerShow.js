@@ -6,6 +6,7 @@ import _ from 'lodash';
 import * as API from '../../helpers/two1wallet/main';
 import { serverSignWager } from '../../api/server/main';
 import * as Betting from '../../helpers/betting/main';
+import { formatValue } from '../../helpers/ticker/main';
 
 export default class WagerShow extends Component {
    constructor(props) {
@@ -128,7 +129,7 @@ export default class WagerShow extends Component {
                               Risk
                            </span>
                            <span className={styles.betDetailData}>
-                              {Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager)}
+                              {formatValue(this.props.wallet.currency, Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager), this.props.wallet.rate)}
                            </span>
                         </aside>
                         <aside>
@@ -136,7 +137,7 @@ export default class WagerShow extends Component {
                               Win
                            </span>
                            <span className={styles.betDetailData}>
-                              {Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager)}
+                              {formatValue(this.props.wallet.currency, Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager), this.props.wallet.rate)}
                            </span>
                         </aside>
                      </div>
@@ -186,7 +187,7 @@ export default class WagerShow extends Component {
                               Risk
                            </span>
                            <span className={styles.betDetailData}>
-                              {Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager)}
+                              {formatValue(this.props.wallet.currency, Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager), this.props.wallet.rate)}
                            </span>
                         </aside>
                         <aside>
@@ -194,7 +195,7 @@ export default class WagerShow extends Component {
                               Win
                            </span>
                            <span className={styles.betDetailData}>
-                              {Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager)}
+                              {formatValue(this.props.wallet.currency, Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager), this.props.wallet.rate)}
                            </span>
                         </aside>
                      </div>

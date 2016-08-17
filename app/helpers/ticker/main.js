@@ -81,3 +81,20 @@ export function calculateBalance(currencies, balance, unconfirmed, rate) {
   }
   return res;
 }
+
+export function formatValue(currency, value, rate) {
+  switch(currency) {
+     case 'satoshis':
+        var val = btcToSatoshi(value, rate);
+        return val;
+        break;
+     case 'BTC':
+        return value;
+     case 'USD':
+        var val = btcToUSD(value, rate);
+        return val;
+        break;
+     default:
+        return value;
+}
+}
