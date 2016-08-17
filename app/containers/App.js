@@ -43,7 +43,7 @@ class App extends Component {
 
     this.state.socket.on('notify author', (data) => {
       console.log('notify author data: ', data)
-      WalletActions.updateWager(data.wager);
+      // WalletActions.updateWager(data.wager);
       const notif = new window.Notification('Wager accepted', {
         body: 'Your wager has been accepted'
       })
