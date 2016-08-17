@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
 import OpenWagersContainer from '../containers/OpenWagersContainer';
+import GraphContainer from '../containers/GraphContainer';
 import CreateBetContainer from '../containers/CreateBetContainer';
 import Logo from './Logo';
 import styles from './Home.css';

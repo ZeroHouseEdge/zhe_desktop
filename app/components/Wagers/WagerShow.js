@@ -4,6 +4,7 @@ import * as MLB from '../../api/mlb/main';
 import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
 import * as API from '../../helpers/two1wallet/main';
+import { serverSignWager } from '../../api/server/main';
 
 export default class WagerShow extends Component {
    constructor(props) {
@@ -23,12 +24,36 @@ export default class WagerShow extends Component {
 
    componentWillMount() {
       MLB.getLinescore(this.props.wager.game_data_directory).then((data) => {
+         console.log('linescore: ', data)
          this.setState({
             fetchingData: false,
             linescore: data
          })
       });
    }
+
+   renderAction = () => {
+      if (!this.state.bettor) { return; }
+      if (this.state.linescore.status !== 'Final') { console.log('Game is not over'); return; }
+      const wager = this.props.wager
+      if (wager.winner_transaction) {
+         console.log('user needs to sign')
+         return React.createElement('button',{ onClick: () => { this.sign() } }, 'user sign')
+      } else if (wager.transactions.length && !wager.winner_transaction) {
+         console.log('server needs to sign')
+         return React.createElement('button', { onClick: () => { this.serverSign() } }, 'server sign')
+      } else {
+         console.log('idk')
+      }
+   };
+
+   serverSign = () => {
+      console.log('here at server sign')
+      serverSignWager(this.props.wager._id)
+      .then((res) => {
+         console.log('serverSignWager res: ', res)
+      })
+   };
 
    sign = () => {
       if (!this.state.bettor) { return }
@@ -157,12 +182,7 @@ export default class WagerShow extends Component {
                </div>
             </section>
             {
-               this.state.bettor && this.props.wager.winner_transaction ?
-               <section>
-                  <button onClick={() => this.sign()}>sign</button>
-               </section>
-               :
-               null
+               this.renderAction()
             }
          </div>
       );

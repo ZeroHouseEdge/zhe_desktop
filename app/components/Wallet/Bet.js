@@ -9,10 +9,6 @@ class Bet extends Component {
     super(props, context);
   }
 
-  componentDidMount() {
-    console.log('wager: ', this.props.wager)
-  }
-
   render() {
     const linkUrl = `/wager/${this.props.wager._id}`;
     return (

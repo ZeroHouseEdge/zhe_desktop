@@ -497,3 +497,28 @@ a:hover {
   font-weight: 500;
   color: #fff;
 }
+
+/* Graph */
+.open-bet {
+  opacity: 0.9;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+  font-size: 1.4em;
+  text-shadow: 0 0 3px #fff;
+  opacity: 0.7;
+  transition: 0.5s;
+  transform: scale(1);
+  width: 25px;
+  height: 30px;
+}
+
+.open-bet.cubs {
+  content: url(http://mlb.mlb.com/mlb/images/team_logos/124x150/chc@2x.png);
+}
+
+.open-bet:hover {
+  opacity: 1.0;
+  height: 32px;
+  width: 26px;
+}

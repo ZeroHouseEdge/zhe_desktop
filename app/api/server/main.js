@@ -95,4 +95,24 @@ export function addTransaction(id, body) {
    );
 }
 
+export function serverSignWager(id) {
+   const URL = `${BASE_URL}/wagers/${id}/sign`;
+   return fetch(URL, {
+      headers: { 'content-type': 'application/json' },
+      method: 'put'
+   })
+   .then(response => response.json().then(json => ({ json, response })))
+   .then(({ json, response }) => {
+      if (!response.ok) {
+         return Promise.reject(json);
+      }
+
+      return json;
+   })
+   .then(
+      response => response,
+      error => error
+   );
+}
+
 

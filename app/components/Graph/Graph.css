@@ -1,0 +1,16 @@
+.graph_container {
+   position: relative;
+   min-height: 510px;
+}
+
+.bets_chart {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.canvas {
+   position: relative;
+   width: 510px;
+   height: 510px;
+}

@@ -81,6 +81,7 @@ class App extends Component {
     })
 
     this.state.socket.on('tx added', (data) => {
+      console.log("SCRIPT PAYED: ", data)
       this.props.dispatch(WalletActions.scriptPayed(data.wager_id, data.txs))
     })
   }
