@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
 import * as API from '../../helpers/two1wallet/main';
 import { serverSignWager } from '../../api/server/main';
+import * as Betting from '../../helpers/betting/main';
 
 export default class WagerShow extends Component {
    constructor(props) {
@@ -66,6 +67,18 @@ export default class WagerShow extends Component {
       }
    };
 
+   resultsStyle = (side) => {
+      const linescore = this.state.linescore
+      if (!linescore.status === 'Game Over' || !linescore.status === 'Final') { return `${styles.team}` }
+      const winning_side = {}
+      const losing_side = { opacity: '0.3' }
+
+      const winner = parseInt(linescore.home_team_runs) > linescore.away_team_runs ? 'home' : 'away'
+
+      const res = side === winner ? `${styles.team} wagerWinner` : `${styles.team} wagerLoser`
+      return res
+   }
+
    render() {
       const wager = this.props.wager;
       const away_tx = _.find(wager.transactions, (tx) => { return tx.user_id !== wager.home_id })
@@ -79,13 +92,13 @@ export default class WagerShow extends Component {
       return (
          <div className={styles.container}>
             <section className={styles.matchup}>
-               <div className={styles.team}>
+               <div className={this.resultsStyle('away')}>
                   <img src={MLB.getLogo(wager.away_file_code)} />
                   <span className={styles.record}>({linescore.away_win}-{linescore.away_loss})</span>
                   <span className={styles.user_tx}>
                      {
                      away_tx ?
-                     <a href={away_txid} target='_blank' data-hint='User paid to the script'>
+                     <a href={away_txid} target='_blank' data-hint='User funded their bet'>
                         <FontAwesome name='check-circle' />
                      </a>
                      :
@@ -107,7 +120,7 @@ export default class WagerShow extends Component {
                               Line
                            </span>
                            <span className={styles.betDetailData}>
-                              Even
+                              {Betting.calculateLine(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                         <aside className={styles.middleDetail}>
@@ -115,7 +128,7 @@ export default class WagerShow extends Component {
                               Risk
                            </span>
                            <span className={styles.betDetailData}>
-                              $1
+                              {Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                         <aside>
@@ -123,7 +136,7 @@ export default class WagerShow extends Component {
                               Win
                            </span>
                            <span className={styles.betDetailData}>
-                              $1
+                              {Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                      </div>
@@ -137,13 +150,13 @@ export default class WagerShow extends Component {
                      <a href={contractURL} target='_blank'>Contract</a>
                   </div>
                </div>
-               <div className={styles.team}>
+               <div className={this.resultsStyle('home')}>
                   <img src={MLB.getLogo(wager.home_file_code)} />
                   <span className={styles.record}>({linescore.home_win}-{linescore.home_loss})</span>
                   <span className={styles.user_tx}>
                      {
                      home_tx ?
-                     <a href={home_txid} target='_blank' data-hint='User paid to the script'>
+                     <a href={home_txid} target='_blank' data-hint='User funded their bet'>
                         <FontAwesome name='check-circle' />
                      </a>
                      :
@@ -165,7 +178,7 @@ export default class WagerShow extends Component {
                               Line
                            </span>
                            <span className={styles.betDetailData}>
-                              Even
+                              {Betting.calculateLine(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                         <aside className={styles.middleDetail}>
@@ -173,7 +186,7 @@ export default class WagerShow extends Component {
                               Risk
                            </span>
                            <span className={styles.betDetailData}>
-                              $1
+                              {Betting.calculateRisk(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                         <aside>
@@ -181,7 +194,7 @@ export default class WagerShow extends Component {
                               Win
                            </span>
                            <span className={styles.betDetailData}>
-                              $1
+                              {Betting.calculateWinnings(this.props.wallet.pubkey, this.props.wager)}
                            </span>
                         </aside>
                      </div>

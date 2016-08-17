@@ -522,3 +522,19 @@ a:hover {
   height: 32px;
   width: 26px;
 }
+
+@-webkit-keyframes goldPulse {
+  from { border-color: #ecb731; -webkit-box-shadow: 0 0 9px #ecb731; }
+  50% { border-color: #ecb731; -webkit-box-shadow: 0 0 28px #ecb731; }
+  to { border-color: #ecb731; -webkit-box-shadow: 0 0 9px #ecb731; }
+}
+
+.wagerWinner {
+  -webkit-animation-name: goldPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.wagerLoser {
+  opacity: 0.3;
+}

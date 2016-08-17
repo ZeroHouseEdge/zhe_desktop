@@ -26,13 +26,23 @@ export function formatOppositeLine(line){
 }
 
 export function checkBalance(currency, balance, amount, rate) {
-   console.log('here')
    if (currency === 'BTC') { return balance > amount }
    const currencies = { from: currency, to: 'BTC' };
    const btcBalance = calculateBalance(currencies, balance, 0, rate);
    return parseFloat(btcBalance[0]) - 0.015 > amount;
 }
 
-export function calculateRisk(pubkey, wager) {
+export function calculateRisk(user, wager) {
+   const risk = user === wager.author_id ? wager.value : calculatePayout(wager.value, wager.spread)
+   return risk
+}
 
+export function calculateWinnings(user, wager) {
+   const winnings = user === wager.author_id ? calculatePayout(wager.value, wager.spread) : wager.value
+   return winnings
+}
+
+export function calculateLine(user, wager) {
+   const line = user === wager.author_id ? formatLine(wager.spread) : formatOppositeLine(wager.spread)
+   return line
 }
