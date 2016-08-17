@@ -66,7 +66,7 @@ export function fancyDate(day, date) {
 
    const fullDay = DAYS[day];
    const d = new Date(date);
-   const month = MONTHS[d.getMonth() + 1]
+   const month = MONTHS[d.getMonth()]
    const dayNum = d.getDate()
    const year = d.getFullYear()
 

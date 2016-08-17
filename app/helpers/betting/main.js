@@ -32,3 +32,7 @@ export function checkBalance(currency, balance, amount, rate) {
    const btcBalance = calculateBalance(currencies, balance, 0, rate);
    return parseFloat(btcBalance[0]) - 0.015 > amount;
 }
+
+export function calculateRisk(pubkey, wager) {
+
+}

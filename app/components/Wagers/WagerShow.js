@@ -37,10 +37,8 @@ export default class WagerShow extends Component {
       if (this.state.linescore.status !== 'Final') { console.log('Game is not over'); return; }
       const wager = this.props.wager
       if (wager.winner_transaction) {
-         console.log('user needs to sign')
          return React.createElement('button',{ onClick: () => { this.sign() } }, 'user sign')
       } else if (wager.transactions.length && !wager.winner_transaction) {
-         console.log('server needs to sign')
          return React.createElement('button', { onClick: () => { this.serverSign() } }, 'server sign')
       } else {
          console.log('idk')
@@ -70,11 +68,8 @@ export default class WagerShow extends Component {
 
    render() {
       const wager = this.props.wager;
-      console.log('wager: ', wager)
       const away_tx = _.find(wager.transactions, (tx) => { return tx.user_id !== wager.home_id })
-      console.log('away_tx: ', away_tx)
       const home_tx = _.find(wager.transactions, (tx) => { return tx.user_id === wager.home_id })
-      console.log('home_tx: ', home_tx)
       const linescore = this.state.linescore;
       const away_txid = away_tx ? `https://blockchain.info/tx/${away_tx.tx_id}` : '';
       const home_txid = home_tx ? `https://blockchain.info/tx/${home_tx.tx_id}`: '';
@@ -97,6 +92,42 @@ export default class WagerShow extends Component {
                      "Paying to the contract..."
                      }
                   </span>
+                  <section className={styles.betDetails}>
+                     <h4>
+                        {
+                           this.props.wager.away_id === this.props.wallet.pubkey ?
+                           'Your wager'
+                           :
+                           'Opposing wager'
+                        }
+                     </h4>
+                     <div className={styles.betDataContainer}>
+                        <aside>
+                           <span className={styles.betDetailTitle}>
+                              Line
+                           </span>
+                           <span className={styles.betDetailData}>
+                              Even
+                           </span>
+                        </aside>
+                        <aside className={styles.middleDetail}>
+                           <span className={styles.betDetailTitle}>
+                              Risk
+                           </span>
+                           <span className={styles.betDetailData}>
+                              $1
+                           </span>
+                        </aside>
+                        <aside>
+                           <span className={styles.betDetailTitle}>
+                              Win
+                           </span>
+                           <span className={styles.betDetailData}>
+                              $1
+                           </span>
+                        </aside>
+                     </div>
+                  </section>
                </div>
                <div className={styles.details}>
                   <h2>{linescore.away_team_name} @ {linescore.home_team_name}</h2>
@@ -119,6 +150,42 @@ export default class WagerShow extends Component {
                      "Paying to the contract..."
                      }
                   </span>
+                  <section className={styles.betDetails}>
+                     <h4>
+                        {
+                           this.props.wager.home_id === this.props.wallet.pubkey ?
+                           'Your wager'
+                           :
+                           'Opposing wager'
+                        }
+                     </h4>
+                     <div className={styles.betDataContainer}>
+                        <aside>
+                           <span className={styles.betDetailTitle}>
+                              Line
+                           </span>
+                           <span className={styles.betDetailData}>
+                              Even
+                           </span>
+                        </aside>
+                        <aside className={styles.middleDetail}>
+                           <span className={styles.betDetailTitle}>
+                              Risk
+                           </span>
+                           <span className={styles.betDetailData}>
+                              $1
+                           </span>
+                        </aside>
+                        <aside>
+                           <span className={styles.betDetailTitle}>
+                              Win
+                           </span>
+                           <span className={styles.betDetailData}>
+                              $1
+                           </span>
+                        </aside>
+                     </div>
+                  </section>
                </div>
                <div className={styles.linescoreContainer}>
                   <table>
@@ -130,7 +197,7 @@ export default class WagerShow extends Component {
                                  return <th key={i}>{inn + 1}</th>;
                               })
                            }
-                           <th className={styles.score}>
+                           <th>
                               R
                            </th>
                            <th>
@@ -143,7 +210,7 @@ export default class WagerShow extends Component {
                      </thead>
                      <tbody>
                         <tr>
-                           <td>
+                           <td className={styles.linescoreTeam}>
                               {this.state.linescore.away_name_abbrev}
                            </td>
                            {
@@ -154,15 +221,15 @@ export default class WagerShow extends Component {
                            <td className={styles.score}>
                               {this.state.linescore.away_team_runs}
                            </td>
-                           <td>
+                           <td className={styles.hits}>
                               {this.state.linescore.away_team_hits}
                            </td>
-                           <td>
+                           <td className={styles.errors}>
                               {this.state.linescore.away_team_errors}
                            </td>
                         </tr>
                         <tr>
-                           <td>
+                           <td className={styles.linescoreTeam}>
                               {this.state.linescore.home_name_abbrev}
                            </td>
                            {
@@ -173,10 +240,10 @@ export default class WagerShow extends Component {
                            <td className={styles.score}>
                               {this.state.linescore.home_team_runs}
                            </td>
-                           <td>
+                           <td className={styles.hits}>
                               {this.state.linescore.home_team_hits}
                            </td>
-                           <td>
+                           <td className={styles.errors}>
                               {this.state.linescore.home_team_errors}
                            </td>
                         </tr>
