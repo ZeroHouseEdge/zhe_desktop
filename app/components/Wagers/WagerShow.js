@@ -3,15 +3,14 @@ import styles from './WagerShow.css';
 import * as MLB from '../../api/mlb/main';
 import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
+import WagerAction from './WagerShow/WagerAction';
 import * as API from '../../helpers/two1wallet/main';
-import { serverSignWager } from '../../api/server/main';
 import * as Betting from '../../helpers/betting/main';
 import { formatValue } from '../../helpers/ticker/main';
 
 export default class WagerShow extends Component {
    constructor(props) {
       super(props);
-      console.log('props: ', props)
       const author = props.wager.author_id === props.wallet.pubkey
       const acceptor = props.wager.acceptor_id === props.wallet.pubkey
       const bettor = author || acceptor
@@ -20,53 +19,19 @@ export default class WagerShow extends Component {
          linescore: {},
          author: author,
          acceptor: acceptor,
-         bettor: bettor
+         bettor: bettor,
+         message: ''
       }
    }
 
    componentWillMount() {
       MLB.getLinescore(this.props.wager.game_data_directory).then((data) => {
-         console.log('linescore: ', data)
          this.setState({
             fetchingData: false,
             linescore: data
          })
       });
    }
-
-   renderAction = () => {
-      if (!this.state.bettor) { return; }
-      if (this.state.linescore.status !== 'Final') { console.log('Game is not over'); return; }
-      const wager = this.props.wager
-      if (wager.winner_transaction) {
-         return React.createElement('button',{ onClick: () => { this.sign() } }, 'user sign')
-      } else if (wager.transactions.length && !wager.winner_transaction) {
-         return React.createElement('button', { onClick: () => { this.serverSign() } }, 'server sign')
-      } else {
-         console.log('idk')
-      }
-   };
-
-   serverSign = () => {
-      console.log('here at server sign')
-      serverSignWager(this.props.wager._id)
-      .then((res) => {
-         console.log('serverSignWager res: ', res)
-      })
-   };
-
-   sign = () => {
-      if (!this.state.bettor) { return }
-      const pubkey = this.props.wallet.pubkey === this.props.wager.home_id ? this.props.wager.home_pubkey : this.props.wager.away_pubkey
-      const wager = this.props.wager
-      console.log('pubkey: ', pubkey)
-      console.log('wager: ', wager)
-      if (this.props.wager.winner_transaction) {
-         API.fetchTwo1(['sign', pubkey, wager.winner_transaction.hex, wager.script_hex]).then((res) => {
-            console.log('res: ', res)
-         })
-      }
-   };
 
    resultsStyle = (side) => {
       const linescore = this.state.linescore
@@ -150,6 +115,7 @@ export default class WagerShow extends Component {
                   <div className={styles.contract}>
                      <a href={contractURL} target='_blank'>Contract</a>
                   </div>
+                  <WagerAction linescore={this.state.linescore} wager={this.props.wager} wallet={this.props.wallet} bettor={this.state.bettor} />
                </div>
                <div className={this.resultsStyle('home')}>
                   <img src={MLB.getLogo(wager.home_file_code)} />
@@ -265,9 +231,6 @@ export default class WagerShow extends Component {
                   </table>
                </div>
             </section>
-            {
-               this.renderAction()
-            }
          </div>
       );
    }
