@@ -22,13 +22,19 @@ export default class WagerAction extends Component {
       const wallet = this.props.wallet;
       const winner = parseInt(linescore.home_team_runs) > parseInt(linescore.away_team_runs) ? wager.home_id : wager.away_id;
 
-      if (wager.winner_transaction) {
+      if (wager.winner_transaction.tx_id) {
+         return React.createElement('h5', null,
+            React.createElement('a', { href: `https://blockchain.info/tx/${wager.winner_transaction.tx_id}`, target: '_blank', style: { color: '#06c' } }, 'Money has been paid out here')
+         )
+      } else if (wager.winner_transaction) {
          const msg = winner === wallet.pubkey ? 'Collect your money' : 'Send your opponent your money'
-         return React.createElement('div',{ className: 'buttonContainer', onClick: () => { this.sign() } },
+         return React.createElement('div',{ onClick: () => { this.sign() } },
             React.createElement('div', { className: 'buttonPrimary', style: { paddingTop: '15px', fontSize: '14px' } }, msg)
          )
       } else if (wager.transactions.length && !wager.winner_transaction) {
-         return React.createElement('div', { onClick: () => { this.serverSign() } }, 'server sign')
+         return React.createElement('div', { onClick: () => { this.serverSign() } },
+            React.createElement('div', { className: 'buttonPrimary', style: { paddingTop: '15px', fontSize: '14px' } }, 'server sign')
+         )
       } else {
          return null;
       }
@@ -49,7 +55,7 @@ export default class WagerAction extends Component {
          API.fetchTwo1(['sign', pubkey, wager.winner_transaction.hex, wager.script_hex]).then((res) => {
             console.log('res: ', res)
             const data = res[0]
-            updateWager(wager._id, data.tx_id, data.hex)
+            updateWager(wager._id, {tx_id: data.tx_id, hex: data.hex})
          })
       }
    };
