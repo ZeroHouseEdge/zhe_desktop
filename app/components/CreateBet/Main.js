@@ -40,7 +40,9 @@ class Main extends Component {
       home_file_code: this.state.game.home_file_code,
       away_file_code: this.state.game.away_file_code,
       spread: this.state.line,
-      value: this.state.btcValue
+      value: this.state.btcValue,
+      time: this.state.game.time,
+      time_zone: this.state.game.time_zone
     };
 
     const original_side = this.state.team === this.state.game.home_team_name ? 'home' : 'away';

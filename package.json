@@ -18,7 +18,7 @@
     "package": "cross-env NODE_ENV=production node -r babel-register package.js",
     "package-all": "npm run package -- --all",
     "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
-    "dev": "cross-env HOST=192.168.0.228 concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
+    "dev": "cross-env HOST=192.168.0.230 concurrently --kill-others \"npm run hot-server\" \"npm run start-hot\"",
     "mlb-test": "node -r babel-register app/api/mlb/test.js"
   },
   "bin": {

@@ -4,6 +4,7 @@ import * as MLB from '../../api/mlb/main';
 import FontAwesome from 'react-fontawesome';
 import _ from 'lodash';
 import WagerAction from './WagerShow/WagerAction';
+import WagerMessage from './WagerShow/WagerMessage';
 import * as API from '../../helpers/two1wallet/main';
 import * as Betting from '../../helpers/betting/main';
 import { formatValue } from '../../helpers/ticker/main';
@@ -115,6 +116,7 @@ export default class WagerShow extends Component {
                   <div className={styles.contract}>
                      <a href={contractURL} target='_blank'>Contract</a>
                   </div>
+                  <WagerMessage linescore={this.state.linescore} wager={this.props.wager} wallet={this.props.wallet} bettor={this.state.bettor} />
                   <WagerAction linescore={this.state.linescore} wager={this.props.wager} wallet={this.props.wallet} bettor={this.state.bettor} />
                </div>
                <div className={this.resultsStyle('home')}>

@@ -18,7 +18,9 @@ class OpenWagersContainer extends Component {
     if (this.props.wallet.isLoading) { return; }
     const enough = checkBalance(this.props.wallet.currency, this.props.wallet.unconfirmed, wager.value, this.props.wallet.rate)
     if (!enough) { alert(`You don't have enough Bitcoin in your account to accept this bet`); return; }
-    if (this.props.wallet.pubkey === wager.author_id) { alert('You can\'t accept your own wager'); return; }
+    if (this.props.wallet.pubkey === wager.author_id) { alert('You can\'t accept your own bet'); return; }
+    const start = new Date(`${wager.original_date} ${wager.time} PM`);
+    if (start < new Date()) { alert('Game has already started. You can\'t accept this bet'); return; }
 
     const user = this.props.wallet.pubkey;
     const pubkey = this.props.wallet.payout_pubkey;
@@ -35,7 +37,7 @@ class OpenWagersContainer extends Component {
       data.home_pubkey = pubkey
       data.away_pubkey = wager.away_pubkey
     }
-    console.log('WAGER ID: ', wager._id);
+
     this.props.dispatch(WagerActions.updateWagerRequest(wager._id, data))
   };
 
